@@ -4,9 +4,9 @@
             <h6>Latest Orders</h6>
         </div>
         <div class="card-body p-0">
-            <div class="selling-table-wrap selling-table-wrap--source">
+            <div class="selling-table-wrap">
                 <div class="table-responsive">
-                    <table class="table table-borderless">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -14,6 +14,7 @@
                                 <th>User</th>
                                 <th>Price</th>
                                 <th>Total</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,6 +24,12 @@
                                 <td>John Smith</td>
                                 <td class="fw-bold text-primary">299.00 EGP</td>
                                 <td class="fw-bold text-success">299.00 EGP</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-light">
+                                        <i class="uil uil-eye"></i>
+                                        <span>Show</span>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -30,6 +37,12 @@
                                 <td>Sarah Johnson</td>
                                 <td class="fw-bold text-primary">89.99 EGP</td>
                                 <td class="fw-bold text-success">179.98 EGP</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-light">
+                                        <i class="uil uil-eye"></i>
+                                        <span>Show</span>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>3</td>
@@ -37,6 +50,12 @@
                                 <td>Michael Brown</td>
                                 <td class="fw-bold text-primary">45.50 EGP</td>
                                 <td class="fw-bold text-success">136.50 EGP</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-light">
+                                        <i class="uil uil-eye"></i>
+                                        <span>Show</span>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>4</td>
@@ -44,6 +63,12 @@
                                 <td>Emily Davis</td>
                                 <td class="fw-bold text-primary">19.99 EGP</td>
                                 <td class="fw-bold text-success">79.96 EGP</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-light">
+                                        <i class="uil uil-eye"></i>
+                                        <span>Show</span>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>5</td>
@@ -51,6 +76,12 @@
                                 <td>David Wilson</td>
                                 <td class="fw-bold text-primary">129.99 EGP</td>
                                 <td class="fw-bold text-success">259.98 EGP</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-light">
+                                        <i class="uil uil-eye"></i>
+                                        <span>Show</span>
+                                    </a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

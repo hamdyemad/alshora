@@ -1,17 +1,7 @@
 <div class="col-xxl-6 mb-25">
     <div class="card border-0 px-25 h-100">
         <div class="card-header px-0 border-0">
-            <h6>Orders Overview (This Month Oct, 2025)</h6>
-            <div class="dropdown dropleft">
-                <a href="#" role="button" id="todo12" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="img/svg/more-horizontal.svg" alt="more-horizontal" class="svg">
-                </a>
-                <div class="dropdown-menu" aria-labelledby="todo12">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </div>
+            <h6>Orders Overview</h6>
         </div>
         <div class="p-0 card-body">
             <div class="revenueSourceChart px-0">

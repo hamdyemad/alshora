@@ -4,82 +4,99 @@
             <h6>Top Selling Products</h6>
         </div>
         <div class="card-body p-0">
-            <div class="selling-table-wrap selling-table-wrap--source">
+            <div class="selling-table-wrap">
                 <div class="table-responsive">
-                    <table class="table table-borderless">
+                    <table class="table">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Product Name</th>
                                 <th>Sold Count</th>
                                 <th>Price</th>
                                 <th>Total</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+                                <td>1</td>
                                 <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                        <div class="selling-product-img-wrapper order-bg-opacity-primary">
-                                            <img class="img-fluid rounded" src="{{ asset('/assets/img/author/robert-3.png') }}" alt="product" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
-                                        </div>
-                                        <span class="ms-3">Wireless Headphones</span>
-                                    </div>
+                                    <img class="rounded-circle" src="{{ asset('/assets/img/author/robert-3.png') }}" alt="product" style="width: 40px; height: 40px; object-fit: cover;">
+                                    <span class="ms-3">Wireless Headphones</span>
                                 </td>
                                 <td>156</td>
-                                <td>$89.99</td>
-                                <td class="fw-bold text-success">$14,038.44</td>
+                                <td>89.99 EGP</td>
+                                <td class="fw-bold text-success">14,038.44 EGP</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-light">
+                                        <i class="uil uil-eye"></i>
+                                        <span>Show</span>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
+                                <td>2</td>
                                 <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                        <div class="selling-product-img-wrapper order-bg-opacity-info">
-                                            <img class="img-fluid rounded" src="{{ asset('/assets/img/author/robert-3.png') }}" alt="product" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
-                                        </div>
-                                        <span class="ms-3">Smart Watch Pro</span>
-                                    </div>
+                                    <img class="rounded-circle" src="{{ asset('/assets/img/author/robert-3.png') }}" alt="product" style="width: 40px; height: 40px; object-fit: cover;">
+                                    <span class="ms-3">Smart Watch Pro</span>
                                 </td>
                                 <td>234</td>
-                                <td>$299.00</td>
-                                <td class="fw-bold text-success">$69,966.00</td>
+                                <td>299.00 EGP</td>
+                                <td class="fw-bold text-success">69,966.00 EGP</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-light">
+                                        <i class="uil uil-eye"></i>
+                                        <span>Show</span>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
+                                <td>3</td>
                                 <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                        <div class="selling-product-img-wrapper order-bg-opacity-secondary">
-                                            <img class="img-fluid rounded" src="{{ asset('/assets/img/author/robert-3.png') }}" alt="product" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
-                                        </div>
-                                        <span class="ms-3">Laptop Stand</span>
-                                    </div>
+                                    <img class="rounded-circle" src="{{ asset('/assets/img/author/robert-3.png') }}" alt="product" style="width: 40px; height: 40px; object-fit: cover;">
+                                    <span class="ms-3">Laptop Stand</span>
                                 </td>
                                 <td>189</td>
-                                <td>$45.50</td>
-                                <td class="fw-bold text-success">$8,599.50</td>
+                                <td>45.50 EGP</td>
+                                <td class="fw-bold text-success">8,599.50 EGP</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-light">
+                                        <i class="uil uil-eye"></i>
+                                        <span>Show</span>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
+                                <td>4</td>
                                 <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                        <div class="selling-product-img-wrapper order-bg-opacity-success">
-                                            <img class="img-fluid rounded" src="{{ asset('/assets/img/author/robert-3.png') }}" alt="product" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
-                                        </div>
-                                        <span class="ms-3">USB-C Cable Pack</span>
-                                    </div>
+                                    <img class="rounded-circle" src="{{ asset('/assets/img/author/robert-3.png') }}" alt="product" style="width: 40px; height: 40px; object-fit: cover;">
+                                    <span class="ms-3">USB-C Cable Pack</span>
                                 </td>
                                 <td>445</td>
-                                <td>$19.99</td>
-                                <td class="fw-bold text-success">$8,895.55</td>
+                                <td>19.99 EGP</td>
+                                <td class="fw-bold text-success">8,895.55 EGP</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-light">
+                                        <i class="uil uil-eye"></i>
+                                        <span>Show</span>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
+                                <td>5</td>
                                 <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                        <div class="selling-product-img-wrapper order-bg-opacity-warning">
-                                            <img class="img-fluid rounded" src="{{ asset('/assets/img/author/robert-3.png') }}" alt="product" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
-                                        </div>
-                                        <span class="ms-3">Mechanical Keyboard</span>
-                                    </div>
+                                    <img class="rounded-circle" src="{{ asset('/assets/img/author/robert-3.png') }}" alt="product" style="width: 40px; height: 40px; object-fit: cover;">
+                                    <span class="ms-3">Mechanical Keyboard</span>
                                 </td>
                                 <td>98</td>
-                                <td>$129.99</td>
-                                <td class="fw-bold text-success">$12,739.02</td>
+                                <td>129.99 EGP</td>
+                                <td class="fw-bold text-success">12,739.02 EGP</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-light">
+                                        <i class="uil uil-eye"></i>
+                                        <span>Show</span>
+                                    </a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

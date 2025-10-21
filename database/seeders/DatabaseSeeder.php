@@ -15,5 +15,17 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        
+        // Seed languages first (required for translations)
+        $this->call(LanguageSeeder::class);
+        
+        // Seed permissions with translations
+        $this->call(PermessionSeeder::class);
+        
+        // Seed roles with permissions
+        $this->call(RoleSeeder::class);
+        
+        // Seed users types
+        $this->call(UserTypeSeeder::class);
     }
 }

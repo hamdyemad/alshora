@@ -79,7 +79,11 @@
         ],
         'category managment' => [
             'title' => 'إدارة الفئات',
+            'category managment' => 'إدارة الفئات',
             'sub category managment' => 'إدارة الفئات الفرعية',
+            'department' => 'القسم',
+            'main category' => 'الفئة الرئيسية',
+            'sub category' => 'الفئة الفرعية',
         ],
         'product reviews' => [
             'title' => 'تقييمات المنتجات',
@@ -102,6 +106,8 @@
             'completed' => 'مكتمل',
             'canceled' => 'ملغي',
             'refunded' => 'مسترد',
+            'order stages' => 'مراحل الطلب',
+            'shipping methods' => 'طرق الشحن',
         ],
         'point managment' => [
             'title' => 'إدارة النقاط',
@@ -111,6 +117,10 @@
             'title' => 'الإنجازات',
             'positions' => 'المراكز',
             'advestments' => 'الإعلانات',
+        ],
+        'advertisements' => [
+            'title' => 'الإعلانات',
+            'positions' => 'مواضع الإعلانات',
         ],
         'notifications' => [
             'title' => 'الإشعارات',
@@ -127,5 +137,31 @@
             'about us' => 'من نحن',
             'contact us' => 'اتصل بنا',
             'messages' => 'الرسائل',
+        ],
+        'sections' => [
+            'catalog management' => 'إدارة الكتالوج',
+            'user management' => 'إدارة المستخدمين',
+            'order and fulfillment' => 'الطلبات والتنفيذ',
+            'points system' => 'نظام النقاط',
+            'financials' => 'الماليات',
+            'content and engagement' => 'المحتوى والتفاعل',
+            'reports' => 'التقارير',
+            'settings' => 'الإعدادات',
+        ],
+        'promocodes' => [
+            'title' => 'أكواد الخصم',
+        ],
+        'blog managment' => [
+            'title' => 'إدارة المدونة',
+            'categories' => 'الفئات',
+            'blogs' => 'المدونات',
+        ],
+        'reports' => [
+            'title' => 'التقارير',
+            'registerd users' => 'المستخدمين المسجلين',
+            'area users' => 'مستخدمي المنطقة',
+            'orders report' => 'تقرير الطلبات',
+            'product report' => 'تقرير المنتجات',
+            'points report' => 'تقرير النقاط',
         ],
     ];

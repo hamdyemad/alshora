@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_type_id');
             $table->string('uuid');
             $table->string('name');
             $table->string('email')->unique();
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->foreign('user_type_id')->references('id')->on('users_types')->onDelete('cascade');
             $table->timestamps();
         });
     }

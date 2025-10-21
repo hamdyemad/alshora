@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PaginationController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\AdminManagement\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,11 @@ Route::group(
     Route::redirect('/admin', 'admin/dashboard');
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        // Admin Management
+        Route::prefix('admin-management')->name('admin-management.')->group(function() {
+            Route::resource('roles', RoleController::class);
+        });
 
         // Vendors
         Route::resource('vendors', VendorController::class);

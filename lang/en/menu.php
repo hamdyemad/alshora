@@ -87,7 +87,11 @@
         ],
         'category managment' => [
             'title' => 'category management',
+            'category managment' => 'category management',
             'sub category managment' => 'sub category management',
+            'department' => 'department',
+            'main category' => 'main category',
+            'sub category' => 'sub category',
         ],
         'product reviews' => [
             'title' => 'product reviews',
@@ -110,6 +114,8 @@
             'completed' => 'completed',
             'canceled' => 'canceled',
             'refunded' => 'refunded',
+            'order stages' => 'order stages',
+            'shipping methods' => 'shipping methods',
         ],
         'point managment' => [
             'title' => 'point managment',
@@ -119,6 +125,10 @@
             'title' => 'achievements',
             'positions' => 'positions',
             'advestments' => 'advertisements',
+        ],
+        'advertisements' => [
+            'title' => 'advertisements',
+            'positions' => 'positions',
         ],
         'notifications' => [
             'title' => 'notifications',
@@ -135,5 +145,31 @@
             'about us' => 'about us',
             'contact us' => 'contact us',
             'messages' => 'messages',
+        ],
+        'sections' => [
+            'catalog management' => 'Catalog Management',
+            'user management' => 'User Management',
+            'order and fulfillment' => 'Order & Fulfillment',
+            'points system' => 'Points System',
+            'financials' => 'Financials',
+            'content and engagement' => 'Content & Engagement',
+            'reports' => 'Reports',
+            'settings' => 'Settings',
+        ],
+        'promocodes' => [
+            'title' => 'promocodes',
+        ],
+        'blog managment' => [
+            'title' => 'blog management',
+            'categories' => 'categories',
+            'blogs' => 'blogs',
+        ],
+        'reports' => [
+            'title' => 'reports',
+            'registerd users' => 'registered users',
+            'area users' => 'area users',
+            'orders report' => 'orders report',
+            'product report' => 'product report',
+            'points report' => 'points report',
         ],
     ];

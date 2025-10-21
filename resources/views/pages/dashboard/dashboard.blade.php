@@ -17,21 +17,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 {{-- Sales Overview Header --}}
+                @include('pages.dashboard.withdraw-transactions')
+                @include('pages.dashboard.vendors-withdraw-transactions')
                 @include('pages.dashboard.stats-overview')
+                @include('pages.dashboard.income-and-expenses')
 
-                {{-- Sales Reports Chart --}}
-                @include('pages.dashboard.sales-reports')
 
-                {{-- Charts Row: Sales, Earnings, Total Sales --}}
-                <div class="col-12">
-                    <div class="row">
-                        @include('pages.dashboard.sales-chart')
-                        @include('pages.dashboard.earnings-chart')
-                        @include('pages.dashboard.total-sales-chart')
-                    </div>
-                </div>
 
                 {{-- Statistics Cards --}}
                 @include('pages.dashboard.stats-cards')
@@ -40,15 +33,21 @@
                 <div class="col-12">
                     <div class="row">
                         @include('pages.dashboard.orders-overview')
-                        @include('pages.dashboard.top-selling-products')
+                    </div>
+                </div>
+                {{-- Charts Row: Sales, Earnings, Total Sales --}}
+                <div class="col-12">
+                    <div class="row">
+                        @include('pages.dashboard.total-sales-chart')
+                        @include('pages.dashboard.earnings-chart')
                     </div>
                 </div>
 
-                {{-- Latest Orders --}}
+                @include('pages.dashboard.top-selling-products')
                 @include('pages.dashboard.latest-orders')
-
-                {{-- Best Customers --}}
                 @include('pages.dashboard.best-customers')
+                @include('pages.dashboard.top-vendors')
+                @include('pages.dashboard.recent-activities')
 
             </div>
             <!-- ends: .row -->
