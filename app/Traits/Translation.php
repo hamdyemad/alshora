@@ -25,7 +25,7 @@ trait Translation
     return null;
   }
 
-  public function setTranslation(string $key, string $value, string $locale)
+  public function setTranslation(string $key, string $locale, string $value)
   {
       $lang = Language::where('code', $locale)->first();
 

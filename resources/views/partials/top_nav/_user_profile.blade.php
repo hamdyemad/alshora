@@ -1,9 +1,9 @@
 <li class="nav-author">
     <div class="dropdown-custom">
         <a href="javascript:;" class="nav-item-toggle"><img src="{{ asset('assets/img/author-nav.jpg') }}" alt="" class="rounded-circle">
-            @if(Auth::check())
+            {{-- @if(Auth::check())
                 <span class="nav-item__title">{{ Auth::user()->name }}<i class="las la-angle-down nav-item__arrow"></i></span>
-            @endif
+            @endif --}}
         </a>
         <div class="dropdown-wrapper">
             <div class="nav-author__info">
@@ -11,10 +11,9 @@
                     <img src="{{ asset('assets/img/author-nav.jpg') }}" alt="" class="rounded-circle">
                 </div>
                 <div>
-                    @if(Auth::check())
-                        <h6 class="text-capitalize">{{ Auth::user()->name }}</h6>
-                    @endif
-                    <span>UI Designer</span>
+                    {{-- @if(Auth::check())
+                        <h6 class="text-capitalize">{{ Auth::user()->profile->getTranslation('name', app()->getLocale()) }}</h6>
+                    @endif --}}
                 </div>
             </div>
             <div class="nav-author__options">

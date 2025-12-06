@@ -21,5 +21,11 @@ return [
     'Email Not Exists' => 'Email Not Exists',
     'reset code is ignored please reset again' => 'reset code is ignored please reset again',
     'logout success' => 'logout success',
+    'your register is success but the account is under review' => 'your register is success but the account is under review',
+    'unauthenticated' => 'Unauthenticated',
+    'lawyer_not_found' => 'Lawyer profile not found',
+    'old password is invalid' => 'Old password is invalid',
+    'your account is unactive' => 'your account is unactive',
+    'registered success' => 'registered success',
 
 ];

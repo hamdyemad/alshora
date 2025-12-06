@@ -15,8 +15,8 @@ class UserTypeSeeder extends Seeder
         $users_types = [
             'super_admin',
             'admin',
-            'vendor',
-            'vendor_users',
+            'lawyer',
+            'customer'
         ];
 
         foreach ($users_types as $user_type) {

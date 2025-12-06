@@ -1,0 +1,24 @@
+<?php
+
+return [
+    'lawyer_required' => 'Lawyer is required',
+    'lawyer_not_found' => 'Lawyer not found',
+    'lawyer_not_available' => 'Lawyer is not available',
+    'date_required' => 'Appointment date is required',
+    'date_must_be_future' => 'Appointment date must be today or in the future',
+    'day_required' => 'Day is required',
+    'invalid_day' => 'Invalid day selected',
+    'period_required' => 'Period is required',
+    'invalid_period' => 'Invalid period selected',
+    'time_slot_required' => 'Time slot is required',
+    'invalid_time_format' => 'Invalid time format',
+    'invalid_consultation_type' => 'Invalid consultation type',
+    'time_slot_not_available' => 'Selected time slot is not available in lawyer office hours',
+    'time_slot_already_booked' => 'This time slot is already booked',
+    'reserved_successfully' => 'Appointment reserved successfully',
+    'customer_not_found' => 'Customer profile not found',
+    'not_found' => 'Appointment not found',
+    'already_cancelled' => 'Appointment is already cancelled',
+    'cannot_cancel_completed' => 'Cannot cancel a completed appointment',
+    'cancelled_successfully' => 'Appointment cancelled successfully',
+];

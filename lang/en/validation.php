@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'success' => 'success',
+    'error' => 'error',
     'accepted' => 'The :attribute must be accepted.',
     'accepted_if' => 'The :attribute must be accepted when :other is :value.',
     'active_url' => 'The :attribute is not a valid URL.',

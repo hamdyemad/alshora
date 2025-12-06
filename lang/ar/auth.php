@@ -21,5 +21,12 @@ return [
     'Email Not Exists' => 'البريد الإلكتروني غير موجود',
     'reset code is ignored please reset again' => 'تم تجاهل رمز إعادة التعيين، يرجى إعادة التعيين مرة أخرى',
     'logout success' => 'تم تسجيل الخروج بنجاح',
+    'your register is success but the account is under review' => 'تم انشاء الحساب بنجاح ولكن حسابك تحت المراجعه',
+    'unauthenticated' => 'غير مصرح',
+    'lawyer_not_found' => 'الملف الشخصي للمحامي غير موجود',
+    'old password is invalid' => 'كلمة المرور القديمة غير صحيحة',
+    'your account is unactive' => 'حسابك غير مفعل',
+    'registered success' => 'تم انشاء الحساب بنجاح',
+
 
 ];

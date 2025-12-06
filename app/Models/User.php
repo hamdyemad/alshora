@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,11 +25,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,6 +44,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_blocked' => 'boolean',
     ];
 
     /**
@@ -57,6 +55,21 @@ class User extends Authenticatable
         return $this->belongsTo(UserType::class, 'user_type_id');
     }
 
+    /**
+     * Get the lawyer profile for the user.
+     */
+    public function lawyer()
+    {
+        return $this->hasOne(Lawyer::class, 'user_id');
+    }
+
+    /**
+     * Get the customer profile for the user.
+     */
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'user_id');
+    }
 
     /**
      * Get the roles for the user.
@@ -91,5 +104,12 @@ class User extends Authenticatable
             }
         }
         return false;
+    }
+
+    public function scopeBlocked(Builder $query) {
+        $query->where('is_blocked', 1);
+    }
+    public function scopeUnBlocked(Builder $query) {
+        $query->where('is_blocked', 1);
     }
 }

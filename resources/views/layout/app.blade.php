@@ -30,6 +30,9 @@
     {{-- Message Wrapper for Notifications --}}
     <div class="message-wrapper"></div>
     
+    {{-- Loading Overlay Stack --}}
+    @stack('after-body')
+    
     <div id="overlayer">
         <span class="loader-overlay">
             <div class="dm-spin-dots spin-lg">
@@ -98,6 +101,8 @@
         @elseif(session('warning'))
             showMessage('warning', "{{ session('warning') }}", 'exclamation-triangle');
         @endif
+
+        $(".select2").select2();
     </script>
 
     <style>

@@ -2,174 +2,46 @@
 
     return [
         'dashboard' => [
-            'title' => 'dashboard'
+            'title' => 'Dashboard'
         ],
-        'vendors' => [
-            'title' => 'vendors',
-            'all' => 'all',
-            'create' => 'create',
+        'lawyers' => [
+            'title' => 'Lawyers'
         ],
-        'become a vendor requests' => [
-            'title' => 'become a vendor requests',
-            'new' => 'new',
-            'accepted' => 'accepted',
-            'rejected' => 'rejected',
+        'follow-up with lawyers' => [
+            'title' => 'Follow-up with lawyers'
         ],
-
+        'monitoring comments' => [
+            'title' => 'Monitoring comments and ratings from consultants'
+        ],
+        'customers' => [
+            'title' => 'Customers'
+        ],
+        'reservations' => [
+            'title' => 'Reservations'
+        ],
+        'hosting' => [
+            'title' => 'Hosting'
+        ],
+        'support messages' => [
+            'title' => 'Support messages'
+        ],
+        'technical support clients' => [
+            'title' => 'Technical support for clients'
+        ],
+        'technical support consultants' => [
+            'title' => 'Technical support for consultants'
+        ],
+        'newsletter' => [
+            'title' => 'Newsletter'
+        ],
+        'email messages' => [
+            'title' => 'Email messages',
+            'reservations' => 'Reservations',
+            'judicial agenda' => 'Judicial agenda',
+        ],
         'layouts' => [
             'title' => 'layouts',
             'light mode' => 'light mode',
             'dark mode' => 'dark mode',
-            'top menu' => 'top menu',
-        ],
-        'users' => [
-            'title' => 'users',
-            'all' => 'all',
-            'create' => 'create',
-        ],
-        'accounting module' => [
-            'title' => 'accounting module',
-            'overview' => 'overview',
-            'balance' => 'balance',
-            'expenses keys' => 'expenses keys',
-            'expenses' => 'expenses',
-        ],
-        'withdraw module' => [
-            'title' => 'withdraw module',
-            'send money to vendors' => 'send money to vendors',
-            'all transactions' => 'all transactions',
-            'vendors accepted requests' => 'vendors accepted requests',
-            'vendors rejected requests' => 'vendors rejected requests',
-            'vendors new requests' => 'vendors new requests',
-        ],
-        'withdrawl module' => [
-            'title' => 'withdrawl module',
-            'send money to vendors' => 'send money to vendors',
-            'all transactions' => 'all transactions',
-            'vendors accepted requests' => 'vendors accepted requests',
-            'vendors rejected requests' => 'vendors rejected requests',
-            'vendors new requests' => 'vendors new requests',
-        ],
-        'products' => [
-            'title' => 'products',
-            'all' => 'all',
-            'create' => 'create',
-            'in stock' => 'in stock',
-            'out of stock' => 'out of stock',
-        ],
-        'area settings' => [
-            'title' => 'area settings',
-            'country' => 'country',
-            'city' => 'city',
-            'area' => 'area',
-            'region' => 'region',
-            'subregion' => 'subregion',
-        ],
-        'products setup' => [
-            'title' => 'products setup',
-            'all' => 'all',
-            'create' => 'create',
-        ],
-        'taxes' => [
-            'title' => 'taxes',
-            'all' => 'all',
-            'create' => 'create',
-        ],
-        'offers' => [
-            'title' => 'offers',
-            'all' => 'all',
-            'create' => 'create',
-        ],
-        'admin managment' => [
-            'title' => 'admin management',
-            'roles managment' => 'roles management',
-            'admin managment' => 'admin management',
-        ],
-        'category managment' => [
-            'title' => 'category management',
-            'category managment' => 'category management',
-            'sub category managment' => 'sub category management',
-            'department' => 'department',
-            'main category' => 'main category',
-            'sub category' => 'sub category',
-        ],
-        'product reviews' => [
-            'title' => 'product reviews',
-            'all' => 'all',
-            'accepted' => 'accepted',
-            'rejected' => 'rejected',
-            'new' => 'new',
-        ],
-        'promos' => [
-            'title' => 'promos',
-        ],
-        'order stages' => [
-            'title' => 'order stages',
-        ],
-        'orders' => [
-            'title' => 'orders',
-            'new' => 'new',
-            'inprogress' => 'inprogress',
-            'delivered' => 'delivered',
-            'completed' => 'completed',
-            'canceled' => 'canceled',
-            'refunded' => 'refunded',
-            'order stages' => 'order stages',
-            'shipping methods' => 'shipping methods',
-        ],
-        'point managment' => [
-            'title' => 'point managment',
-            'users points' => 'users points',
-        ],
-        'achievements' => [
-            'title' => 'achievements',
-            'positions' => 'positions',
-            'advestments' => 'advertisements',
-        ],
-        'advertisements' => [
-            'title' => 'advertisements',
-            'positions' => 'positions',
-        ],
-        'notifications' => [
-            'title' => 'notifications',
-            'send notification' => 'send notification',
-            'all notification' => 'all notifications',
-        ],
-        'system log' => [
-            'title' => 'system log',
-        ],
-        'system settings' => [
-            'title' => 'system settings',
-            'terms and conditions' => 'terms and conditions',
-            'privacy policy' => 'privacy policy',
-            'about us' => 'about us',
-            'contact us' => 'contact us',
-            'messages' => 'messages',
-        ],
-        'sections' => [
-            'catalog management' => 'Catalog Management',
-            'user management' => 'User Management',
-            'order and fulfillment' => 'Order & Fulfillment',
-            'points system' => 'Points System',
-            'financials' => 'Financials',
-            'content and engagement' => 'Content & Engagement',
-            'reports' => 'Reports',
-            'settings' => 'Settings',
-        ],
-        'promocodes' => [
-            'title' => 'promocodes',
-        ],
-        'blog managment' => [
-            'title' => 'blog management',
-            'categories' => 'categories',
-            'blogs' => 'blogs',
-        ],
-        'reports' => [
-            'title' => 'reports',
-            'registerd users' => 'registered users',
-            'area users' => 'area users',
-            'orders report' => 'orders report',
-            'product report' => 'product report',
-            'points report' => 'points report',
         ],
     ];

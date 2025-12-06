@@ -12,10 +12,10 @@
     <div class="navbar-right">
         <ul class="navbar-right__menu">
             @include('partials.top_nav._search')
-            @include('partials.top_nav._vendors_withdraw_requests')
-            @include('partials.top_nav._become_vendor_requests')
-            @include('partials.top_nav._orders')
-            @include('partials.top_nav._messages')
+            {{-- @include('partials.top_nav._vendors_withdraw_requests') --}}
+            {{-- @include('partials.top_nav._become_vendor_requests') --}}
+            {{-- @include('partials.top_nav._orders') --}}
+            {{-- @include('partials.top_nav._messages') --}}
             @include('partials.top_nav._notifications')
             @include('partials.top_nav._language_selector')
             @include('partials.top_nav._user_profile')

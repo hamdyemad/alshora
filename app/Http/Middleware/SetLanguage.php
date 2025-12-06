@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class SetLanguage
 {
+
     /**
      * Handle an incoming request.
      *

@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'success' => 'تم بنجاح',
+    'error' => 'فشل',
     'accepted' => 'يجب قبول :attribute.',
     'accepted_if' => 'يجب قبول :attribute عندما يكون :other هو :value.',
     'active_url' => ':attribute ليس عنوان URL صالحاً.',
@@ -158,6 +160,16 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'country_id' => 'الدولة',
+        'activity_id' => 'النشاط',
+        'email' => 'البريد الإلكتروني',
+        'password' => 'كلمة المرور',
+        'logo' => 'الشعار',
+        'banner' => 'البانر',
+        'documents' => 'المستندات',
+        'document_name' => 'اسم المستند',
+        'document_file' => 'ملف المستند',
+    ],
 
 ];
