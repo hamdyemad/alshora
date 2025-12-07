@@ -6,7 +6,7 @@
                 <a href="{{ route('admin.dashboard') }}"
                     class="{{ Request::is(LaravelLocalization::getCurrentLocale() . '/admin/dashboard') ? 'active' : '' }}">
                     <span class="nav-icon uil uil-create-dashboard"></span>
-                    <span class="menu-text">Dashboard</span>
+                    <span class="menu-text">{{ trans('menu.dashboard.title') }}</span>
                 </a>
             </li>
         @endcan
@@ -15,7 +15,7 @@
         <li>
             <a href="{{ route('admin.lawyers.index') }}">
                 <span class="nav-icon uil uil-balance-scale"></span>
-                <span class="menu-text">Lawyers</span>
+                <span class="menu-text">{{ trans('menu.lawyers.title') }}</span>
             </a>
         </li>
 
@@ -23,7 +23,7 @@
         <li>
             <a href="{{ route('admin.dashboard') }}">
                 <span class="nav-icon uil uil-clipboard-notes"></span>
-                <span class="menu-text">Follow-up with lawyers</span>
+                <span class="menu-text">{{ trans('menu.follow-up with lawyers.title') }}</span>
             </a>
         </li>
 
@@ -31,7 +31,7 @@
         <li>
             <a href="{{ route('admin.dashboard') }}">
                 <span class="nav-icon uil uil-star"></span>
-                <span class="menu-text">Monitoring comments and ratings</span>
+                <span class="menu-text">{{ trans('menu.monitoring comments.title') }}</span>
             </a>
         </li>
 
@@ -48,7 +48,7 @@
         <li>
             <a href="{{ route('admin.dashboard') }}">
                 <span class="nav-icon uil uil-calendar-alt"></span>
-                <span class="menu-text">Reservations</span>
+                <span class="menu-text">{{ trans('menu.reservations.title') }}</span>
             </a>
         </li>
 
@@ -65,7 +65,7 @@
         <li>
             <a href="{{ route('admin.dashboard') }}">
                 <span class="nav-icon uil uil-server"></span>
-                <span class="menu-text">Hosting</span>
+                <span class="menu-text">{{ trans('menu.hosting.title') }}</span>
             </a>
         </li>
 
@@ -73,7 +73,7 @@
         <li>
             <a href="{{ route('admin.dashboard') }}">
                 <span class="nav-icon uil uil-comment-message"></span>
-                <span class="menu-text">Support messages</span>
+                <span class="menu-text">{{ trans('menu.support messages.title') }}</span>
             </a>
         </li>
 
@@ -81,7 +81,7 @@
         <li>
             <a href="{{ route('admin.dashboard') }}">
                 <span class="nav-icon uil uil-headphones"></span>
-                <span class="menu-text">Technical support for clients</span>
+                <span class="menu-text">{{ trans('menu.technical support clients.title') }}</span>
             </a>
         </li>
 
@@ -89,7 +89,7 @@
         <li>
             <a href="{{ route('admin.dashboard') }}">
                 <span class="nav-icon uil uil-life-ring"></span>
-                <span class="menu-text">Technical support for consultants</span>
+                <span class="menu-text">{{ trans('menu.technical support consultants.title') }}</span>
             </a>
         </li>
 
@@ -97,7 +97,7 @@
         <li>
             <a href="{{ route('admin.news.index') }}">
                 <span class="nav-icon uil uil-envelope-alt"></span>
-                <span class="menu-text">Newsletter</span>
+                <span class="menu-text">{{ trans('menu.newsletter.title') }}</span>
             </a>
         </li>
 
@@ -105,7 +105,7 @@
         <li>
             <a href="{{ route('admin.sections-of-laws.index') }}">
                 <span class="nav-icon uil uil-books"></span>
-                <span class="menu-text">Sections of Laws</span>
+                <span class="menu-text">{{ trans('menu.sections_of_laws') }}</span>
             </a>
         </li>
 
@@ -113,7 +113,7 @@
         <li>
             <a href="{{ route('admin.instructions.index') }}">
                 <span class="nav-icon uil uil-file-info-alt"></span>
-                <span class="menu-text">Instructions</span>
+                <span class="menu-text">{{ trans('menu.instructions') }}</span>
             </a>
         </li>
 
@@ -121,7 +121,7 @@
         <li>
             <a href="{{ route('admin.branches-of-laws.index') }}">
                 <span class="nav-icon uil uil-sitemap"></span>
-                <span class="menu-text">Branches of Laws</span>
+                <span class="menu-text">{{ trans('menu.branches_of_laws') }}</span>
             </a>
         </li>
 
@@ -129,15 +129,15 @@
         <li class="has-child">
             <a href="#" class="">
                 <span class="nav-icon uil uil-envelope"></span>
-                <span class="menu-text">Email messages</span>
+                <span class="menu-text">{{ trans('menu.email messages.title') }}</span>
                 <span class="toggle-icon"></span>
             </a>
             <ul class="px-0">
                 <li>
-                    <a href="{{ route('admin.dashboard') }}">Reservations</a>
+                    <a href="{{ route('admin.dashboard') }}">{{ trans('menu.email messages.reservations') }}</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.dashboard') }}">Judicial agenda</a>
+                    <a href="{{ route('admin.dashboard') }}">{{ trans('menu.email messages.judicial agenda') }}</a>
                 </li>
             </ul>
         </li>
@@ -146,18 +146,21 @@
         <li class="has-child">
             <a href="#" class="">
                 <span class="nav-icon uil uil-map-marker"></span>
-                <span class="menu-text">Destinations</span>
+                <span class="menu-text">{{ trans('menu.destinations.title') }}</span>
                 <span class="toggle-icon"></span>
             </a>
             <ul class="px-0">
                 <li>
-                    <a href="{{ route('admin.area-settings.countries.index') }}">Countries</a>
+                    <a
+                        href="{{ route('admin.area-settings.countries.index') }}">{{ trans('menu.destinations.countries') }}</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.area-settings.cities.index') }}">Cities</a>
+                    <a
+                        href="{{ route('admin.area-settings.cities.index') }}">{{ trans('menu.destinations.cities') }}</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.area-settings.regions.index') }}">Regions</a>
+                    <a
+                        href="{{ route('admin.area-settings.regions.index') }}">{{ trans('menu.destinations.regions') }}</a>
                 </li>
             </ul>
         </li>
@@ -170,8 +173,10 @@
                 <span class="toggle-icon"></span>
             </a>
             <ul class="px-0">
-                <li class="l_sidebar"><a href="#" data-layout="light">{{ trans('menu.layouts.light mode') }}</a></li>
-                <li class="l_sidebar"><a href="#" data-layout="dark">{{ trans('menu.layouts.dark mode') }}</a></li>
+                <li class="l_sidebar"><a href="#" data-layout="light">{{ trans('menu.layouts.light mode') }}</a>
+                </li>
+                <li class="l_sidebar"><a href="#" data-layout="dark">{{ trans('menu.layouts.dark mode') }}</a>
+                </li>
             </ul>
         </li>
     </ul>

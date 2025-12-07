@@ -44,4 +44,13 @@
             'light mode' => 'light mode',
             'dark mode' => 'dark mode',
         ],
+        'sections_of_laws' => 'Sections of Laws',
+        'instructions' => 'Instructions',
+        'branches_of_laws' => 'Branches of Laws',
+        'destinations' => [
+            'title' => 'Destinations',
+            'countries' => 'Countries',
+            'cities' => 'Cities',
+            'regions' => 'Regions',
+        ],
     ];

@@ -44,4 +44,13 @@
             'light mode' => 'الوضع الفاتح',
             'dark mode' => 'الوضع الداكن',
         ],
+        'sections_of_laws' => 'أقسام القوانين',
+        'instructions' => 'التعليمات',
+        'branches_of_laws' => 'فروع القوانين',
+        'destinations' => [
+            'title' => 'الوجهات',
+            'countries' => 'الدول',
+            'cities' => 'المدن',
+            'regions' => 'المناطق',
+        ],
     ];
