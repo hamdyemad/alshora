@@ -21,11 +21,7 @@ class ReserveAppointmentRequest extends FormRequest
     {
         return [
             'lawyer_id' => 'required|exists:lawyers,id',
-            'appointment_date' => 'required|date|after_or_equal:today',
-            'day' => 'required|in:saturday,sunday,monday,tuesday,wednesday,thursday,friday',
-            'period' => 'required|in:morning,evening',
-            'time_slot' => 'required|date_format:H:i',
-            'consultation_type' => 'nullable|in:online,office',
+            'lawyer_office_hour_id' => 'required|exists:lawyer_office_hours,id',
             'notes' => 'nullable|string|max:1000',
         ];
     }

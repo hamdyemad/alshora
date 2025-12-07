@@ -462,83 +462,25 @@
                                 </div>
 
                                 {{-- Profile Image Upload --}}
-                                <div class="col-md-6 mb-25">
-                                    <div class="form-group">
-                                        <label class="il-gray fs-14 fw-500 mb-10">
-                                            {{ trans('lawyer.profile_image') }}
-                                        </label>
-                                        <div class="logo-upload-wrapper">
-                                            <div class="logo-preview-container" id="profile-image-preview-container">
-                                                @if (isset($lawyer) && $lawyer->profile_image)
-                                                    <img src="{{ asset('storage/' . $lawyer->profile_image->path) }}"
-                                                        alt="Profile Image" id="profile-image-preview"
-                                                        class="uploaded-image">
-                                                @else
-                                                    <div class="logo-placeholder" id="profile-image-placeholder">
-                                                        <i class="uil uil-user"></i>
-                                                        <p>{{ trans('lawyer.click_upload_profile') }}</p>
-                                                        <small>{{ trans('lawyer.recommended_size_profile') }}</small>
-                                                    </div>
-                                                @endif
-                                                <div class="logo-overlay">
-                                                    <button type="button" class="btn-change-image"
-                                                        onclick="document.getElementById('profile_image').click()">
-                                                        <i class="uil uil-camera"></i> {{ trans('lawyer.change') }}
-                                                    </button>
-                                                    <button type="button" class="btn-remove-image"
-                                                        onclick="removeImage('profile-image')"
-                                                        style="{{ isset($lawyer) && $lawyer->profile_image ? '' : 'display: none;' }}">
-                                                        <i class="uil uil-trash-alt"></i> {{ trans('lawyer.remove') }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <input type="file" class="d-none" id="profile_image" name="profile_image"
-                                                accept="image/*" onchange="previewImage(this, 'profile-image')">
-                                        </div>
-                                        @error('profile_image')
-                                            <div class="text-danger mt-2">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+                                {{-- Profile Image Upload --}}
+                                <x-image-upload 
+                                    name="profile_image"
+                                    :label="trans('lawyer.profile_image')"
+                                    :image="isset($lawyer) ? $lawyer->profile_image : null"
+                                    :placeholderText="trans('lawyer.click_upload_profile')"
+                                    :recommendedText="trans('lawyer.recommended_size_profile')"
+                                />
 
                                 {{-- ID Card Image Upload --}}
-                                <div class="col-md-6 mb-25">
-                                    <div class="form-group">
-                                        <label class="il-gray fs-14 fw-500 mb-10">
-                                            {{ trans('lawyer.id_card_image') }}
-                                        </label>
-                                        <div class="logo-upload-wrapper">
-                                            <div class="logo-preview-container" id="id-card-preview-container">
-                                                @if (isset($lawyer) && $lawyer->id_card)
-                                                    <img src="{{ asset('storage/' . $lawyer->id_card->path) }}"
-                                                        alt="ID Card" id="id-card-preview" class="uploaded-image">
-                                                @else
-                                                    <div class="logo-placeholder" id="id-card-placeholder">
-                                                        <i class="uil uil-credit-card"></i>
-                                                        <p>{{ trans('lawyer.click_upload_id_card') }}</p>
-                                                        <small>{{ trans('lawyer.recommended_size_id_card') }}</small>
-                                                    </div>
-                                                @endif
-                                                <div class="logo-overlay">
-                                                    <button type="button" class="btn-change-image"
-                                                        onclick="document.getElementById('id_card').click()">
-                                                        <i class="uil uil-camera"></i> {{ trans('lawyer.change') }}
-                                                    </button>
-                                                    <button type="button" class="btn-remove-image"
-                                                        onclick="removeImage('id-card')"
-                                                        style="{{ isset($lawyer) && $lawyer->id_card ? '' : 'display: none;' }}">
-                                                        <i class="uil uil-trash-alt"></i> {{ trans('lawyer.remove') }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <input type="file" class="d-none" id="id_card" name="id_card"
-                                                accept="image/*" onchange="previewImage(this, 'id-card')">
-                                        </div>
-                                        @error('id_card')
-                                            <div class="text-danger mt-2">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+                                {{-- ID Card Image Upload --}}
+                                <x-image-upload 
+                                    name="id_card"
+                                    :label="trans('lawyer.id_card_image')"
+                                    :image="isset($lawyer) ? $lawyer->id_card : null"
+                                    placeholderIcon="uil uil-credit-card"
+                                    :placeholderText="trans('lawyer.click_upload_id_card')"
+                                    :recommendedText="trans('lawyer.recommended_size_id_card')"
+                                />
 
                                 {{-- Location Section --}}
                                 <div class="col-12 mb-20 mt-20">
@@ -603,80 +545,6 @@
                                         </select>
                                         @error('region_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                {{-- Google Maps Location Picker --}}
-                                <div class="col-12 mb-25">
-                                    <div class="form-group">
-                                        <label class="il-gray fs-14 fw-500 mb-10 d-flex align-items-center">
-                                            <i class="uil uil-map-marker me-2"></i>
-                                            <span>{{ trans('lawyer.location_on_map') }}</span>
-                                            <small class="text-muted ms-2">({{ trans('lawyer.optional') }})</small>
-                                        </label>
-
-                                        <div class="map-container">
-                                            {{-- Search Box --}}
-                                            <div class="map-search-wrapper">
-                                                <div class="search-input-group">
-                                                    <i class="uil uil-search search-icon"></i>
-                                                    <input type="text" id="map-search" class="map-search-input"
-                                                        placeholder="{{ trans('lawyer.search_location') }}"
-                                                        autocomplete="off">
-                                                </div>
-                                                <small class="text-white d-block mt-2 opacity-75">
-                                                    <i class="uil uil-info-circle"></i> 
-                                                    {{ trans('lawyer.map_instruction') }}
-                                                </small>
-                                            </div>
-
-                                            {{-- Map Container --}}
-                                            @php
-                                                $mapLat = isset($lawyer) && $lawyer->latitude ? $lawyer->latitude : 30.0444;
-                                                $mapLng = isset($lawyer) && $lawyer->longitude ? $lawyer->longitude : 31.2357;
-                                                $mapZoom = isset($lawyer) && $lawyer->latitude ? 15 : 11;
-                                            @endphp
-                                            <gmp-map id="map" 
-                                                     center="{{ $mapLat }},{{ $mapLng }}" 
-                                                     zoom="{{ $mapZoom }}" 
-                                                     map-id="LAWYER_MAP">
-                                                @if(isset($lawyer) && $lawyer->latitude && $lawyer->longitude)
-                                                    <gmp-advanced-marker id="lawyer-marker" 
-                                                                       position="{{ $lawyer->latitude }},{{ $lawyer->longitude }}" 
-                                                                       gmp-clickable
-                                                                       title="Lawyer Location">
-                                                    </gmp-advanced-marker>
-                                                @endif
-                                            </gmp-map>
-                                        </div>
-
-                                        {{-- Hidden inputs for form submission --}}
-                                        <input type="hidden" id="latitude" name="latitude"
-                                            value="{{ isset($lawyer) ? $lawyer->latitude : old('latitude') }}">
-                                        <input type="hidden" id="longitude" name="longitude"
-                                            value="{{ isset($lawyer) ? $lawyer->longitude : old('longitude') }}">
-                                        
-                                        {{-- Coordinates Display --}}
-                                        <div class="mt-2 p-2 bg-light rounded" id="coordinates-display" style="display: none;">
-                                            <small class="d-block text-muted mb-1">
-                                                <i class="uil uil-map-pin"></i> {{ trans('lawyer.selected_coordinates') }}:
-                                            </small>
-                                            <div class="d-flex gap-3">
-                                                <span class="badge bg-primary">
-                                                    Lat: <span id="display-lat">-</span>
-                                                </span>
-                                                <span class="badge bg-primary">
-                                                    Lng: <span id="display-lng">-</span>
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        @error('latitude')
-                                            <div class="text-danger fs-12 mt-1">{{ $message }}</div>
-                                        @enderror
-                                        @error('longitude')
-                                            <div class="text-danger fs-12 mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -968,345 +836,125 @@
                     });
                 }
             });
-
-            // Image Preview Function
-            function previewImage(input, type) {
-                if (input.files && input.files[0]) {
-                    const reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        const container = document.getElementById(`${type}-preview-container`);
-                        const placeholder = document.getElementById(`${type}-placeholder`);
-                        const removeBtn = container.querySelector('.btn-remove-image');
-
-                        // Check if preview image already exists
-                        let previewImg = document.getElementById(`${type}-preview`);
-
-                        if (!previewImg) {
-                            // Create new image element
-                            previewImg = document.createElement('img');
-                            previewImg.id = `${type}-preview`;
-                            previewImg.className = 'uploaded-image';
-                            previewImg.alt = 'Preview';
-                            container.insertBefore(previewImg, container.firstChild);
-                        }
-
-                        // Set image source
-                        previewImg.src = e.target.result;
-
-                        // Hide placeholder and show remove button
-                        if (placeholder) placeholder.style.display = 'none';
-                        if (removeBtn) removeBtn.style.display = 'inline-block';
-                    };
-
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-
-            // Remove Image Function
-            function removeImage(type) {
-                const container = document.getElementById(`${type}-preview-container`);
-                const previewImg = document.getElementById(`${type}-preview`);
-                const placeholder = document.getElementById(`${type}-placeholder`);
-                const removeBtn = container.querySelector('.btn-remove-image');
-                const inputField = document.getElementById(type.replace('-', '_'));
-
-                // Remove preview image
-                if (previewImg) {
-                    previewImg.remove();
-                }
-
-                // Show placeholder and hide remove button
-                if (placeholder) placeholder.style.display = 'flex';
-                if (removeBtn) removeBtn.style.display = 'none';
-
-                // Clear file input
-                if (inputField) inputField.value = '';
-            }
         </script>
 
         {{-- Google Maps API with Places --}}
         <script async 
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyAumDLi1iYwwQaFMVbO3f1nXOPBwMKKM&libraries=places,maps,marker&v=beta&callback=initMap">
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyAumDLi1iYwwQaFMVbO3f1nXOPBwMKKM&libraries=places,maps,marker&v=weekly&callback=initMap">
         </script>
 
         <script>
+            document.addEventListener("DOMContentLoaded", initMap);
+
             function initMap() {
-                console.log('✅ initMap called');
-                
-                // Small delay to ensure DOM is ready
-                setTimeout(() => {
-                    const mapElement = document.querySelector('gmp-map');
-                    const searchInput = document.getElementById('map-search');
-                    
-                    if (!mapElement) {
-                        console.error('❌ Map element not found');
-                        return;
-                    }
-                    
-                    if (!searchInput) {
-                        console.error('❌ Search input not found');
-                        return;
-                    }
-                    
-                    console.log('✅ Map element found');
-                    console.log('✅ Search input found');
-                    
-                    // Initialize existing coordinates
-                    @if(isset($lawyer) && $lawyer->latitude && $lawyer->longitude)
-                        console.log('📍 Loading existing location: {{ $lawyer->latitude }}, {{ $lawyer->longitude }}');
-                        updateCoordinates({{ $lawyer->latitude }}, {{ $lawyer->longitude }});
-                        console.log('✅ Existing location loaded and will be preserved');
-                    @else
-                        console.log('ℹ️ No existing location - you can set one by clicking on the map');
-                    @endif
+                const map = document.querySelector("gmp-map");
+                const searchInput = document.getElementById("map-search");
 
-                    // Listen for ALL map click events (multiple listeners for compatibility)
-                    console.log('🔧 Adding click listeners to map...');
-                    
-                    // Primary listener: gmp-click (Google Maps Web Component)
-                    mapElement.addEventListener('gmp-click', (event) => {
-                        console.log('🗺️ gmp-click event fired!', event);
-                        console.log('📊 Event detail:', event.detail);
-                        
-                        if (event.detail && event.detail.latLng) {
-                            const lat = event.detail.latLng.lat;
-                            const lng = event.detail.latLng.lng;
-                            
-                            console.log('✅ Coordinates extracted:', lat, lng);
-                            console.log('🎯 Calling placeMarker...');
-                            
-                            placeMarker(lat, lng);
-                            setTimeout(() => placeMarker(lat, lng), 300);
-                            showLocationFeedback('📍 Location selected successfully!');
-                        } else {
-                            console.warn('⚠️ No latLng in event.detail');
-                        }
-                    });
-                    
-                    // Backup listener: Regular click event
-                    mapElement.addEventListener('click', (event) => {
-                        console.log('🖱️ Regular click event fired!', event);
-                        console.log('📊 Target:', event.target);
-                    });
-                    
-                    // Test listener to verify map is clickable
-                    mapElement.addEventListener('mousedown', (event) => {
-                        console.log('👆 Mouse down on map detected');
-                    });
-                    
-                    console.log('✅ All click listeners added to map');
+                if (!map || !searchInput) return console.error("Map or input missing");
 
-                    // Initialize Places Autocomplete
-                    initializeAutocomplete(mapElement, searchInput);
+                // Load existing coordinates
+                @if(isset($lawyer) && $lawyer->latitude && $lawyer->longitude)
+                    placeMarker({{ $lawyer->latitude }}, {{ $lawyer->longitude }});
+                @endif
 
-                }, 500);
+                // Enable map click
+                map.addEventListener("gmp-click", (event) => {
+                    if (!event.detail?.latLng) return;
+                    const { lat, lng } = event.detail.latLng;
+                    placeMarker(lat, lng);
+                });
+
+                initAutocomplete(map, searchInput);
             }
 
-            // Initialize Places Autocomplete
-            function initializeAutocomplete(mapElement, searchInput) {
-                if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
-                    console.error('❌ Google Maps Places API not loaded');
-                    setTimeout(() => initializeAutocomplete(mapElement, searchInput), 500);
-                    return;
+            // -------------------------
+            // Autocomplete
+            // -------------------------
+            function initAutocomplete(map, input) {
+                if (!google?.maps?.places) {
+                    return setTimeout(() => initAutocomplete(map, input), 300);
                 }
-                
-                console.log('✅ Google Maps Places API loaded');
-                
-                try {
-                    const autocomplete = new google.maps.places.Autocomplete(searchInput, {
-                        fields: ['geometry', 'name', 'formatted_address', 'place_id']
-                    });
-                    
-                    console.log('✅ Autocomplete created');
-                    
-                    autocomplete.addListener('place_changed', function() {
-                        const place = autocomplete.getPlace();
-                        
-                        if (!place.geometry || !place.geometry.location) {
-                            console.warn('⚠️ No geometry in place');
-                            alert('Please select a place from the dropdown');
-                            return;
-                        }
-                        
-                        const lat = place.geometry.location.lat();
-                        const lng = place.geometry.location.lng();
-                        
-                        console.log('✅ Place selected:', place.name || place.formatted_address);
-                        console.log('📍 Coordinates:', lat, lng);
-                        
-                        // Update map center and zoom (use string format for gmp-map)
-                        mapElement.setAttribute('center', `${lat},${lng}`);
-                        mapElement.setAttribute('zoom', '17');
-                        
-                        console.log('🗺️ Map centered at:', lat, lng);
-                        console.log('🔍 Zoom set to: 17');
-                        
-                        // Place marker immediately and again after delay to ensure visibility
-                        placeMarker(lat, lng);
-                        setTimeout(() => {
-                            console.log('⏱️ Re-placing marker after delay...');
-                            placeMarker(lat, lng);
-                        }, 500);
-                        
-                        showLocationFeedback(`Location found: ${place.name || place.formatted_address}`);
-                    });
-                    
-                    console.log('✅ Autocomplete listener added');
-                    console.log('🔍 Search is ready! Try typing a location...');
-                    
-                } catch (error) {
-                    console.error('❌ Error initializing autocomplete:', error);
-                }
+
+                const autocomplete = new google.maps.places.Autocomplete(input, {
+                    fields: ["geometry", "name", "formatted_address"],
+                });
+
+                autocomplete.addListener("place_changed", () => {
+                    const place = autocomplete.getPlace();
+                    if (!place.geometry) return alert("Select a place from the list");
+
+                    const lat = place.geometry.location.lat();
+                    const lng = place.geometry.location.lng();
+
+                    map.setAttribute("center", `${lat},${lng}`);
+                    map.setAttribute("zoom", "17");
+
+                    placeMarker(lat, lng);
+                    showMessage(`Location: ${place.name || place.formatted_address}`);
+                });
             }
 
-            // Place marker on map
+            // -------------------------
+            // Marker placement
+            // -------------------------
             function placeMarker(lat, lng) {
-                console.log('🎯 placeMarker called with:', lat, lng);
-                console.log('📊 Lat type:', typeof lat, 'Lng type:', typeof lng);
-                
-                const mapElement = document.querySelector('gmp-map');
-                if (!mapElement) {
-                    console.error('❌ Map element not found!');
-                    return;
-                }
-                
-                console.log('✅ Map element found');
-                
-                // Remove ALL existing markers first
-                const existingMarkers = document.querySelectorAll('gmp-advanced-marker');
-                console.log(`📊 Found ${existingMarkers.length} existing markers`);
-                existingMarkers.forEach(m => {
-                    console.log('🗑️ Removing marker:', m);
-                    m.remove();
+                const map = document.querySelector("gmp-map");
+                if (!map) return;
+
+                // Remove old markers
+                document.querySelectorAll("gmp-advanced-marker").forEach(m => m.remove());
+
+                const marker = document.createElement("gmp-advanced-marker");
+                marker.setAttribute("position", `${lat},${lng}`);
+                marker.setAttribute("title", "Selected Location");
+
+                // Enable dragging
+                marker.addEventListener("gmp-dragend", (event) => {
+                    const { lat, lng } = event.detail.latLng;
+                    updateInputs(lat, lng);
+                    placeMarker(lat, lng);
+                    showMessage("Location updated");
                 });
-                
-                // Create new marker element
-                const marker = document.createElement('gmp-advanced-marker');
-                const position = `${lat},${lng}`;
-                
-                console.log('🔨 Creating marker element');
-                console.log('📍 Position string:', position);
-                
-                // Set all required attributes
-                marker.setAttribute('position', position);
-                marker.setAttribute('title', 'Lawyer Location');
-                
-                // Add drag listener
-                marker.addEventListener('gmp-dragend', (event) => {
-                    if (event.detail && event.detail.latLng) {
-                        const newLat = event.detail.latLng.lat;
-                        const newLng = event.detail.latLng.lng;
-                        console.log('🖱️ Marker dragged to:', newLat, newLng);
-                        updateCoordinates(newLat, newLng);
-                        showLocationFeedback('Location updated by dragging!');
-                        // Re-place marker at new position
-                        setTimeout(() => placeMarker(newLat, newLng), 100);
-                    }
-                });
-                
-                console.log('📋 Marker element created:', marker);
-                console.log('📋 Marker attributes:', {
-                    position: marker.getAttribute('position'),
-                    title: marker.getAttribute('title')
-                });
-                
-                // Append to map
-                console.log('➕ Appending marker to map...');
-                mapElement.appendChild(marker);
-                
-                // Immediate verification
-                console.log('🔍 Verifying marker in DOM...');
-                const check1 = document.querySelector('gmp-advanced-marker');
-                console.log('Immediate check:', check1 ? '✅ Found' : '❌ Not found');
-                
-                // Delayed verification
-                setTimeout(() => {
-                    const check2 = document.querySelectorAll('gmp-advanced-marker');
-                    console.log(`📊 Markers in DOM after 100ms: ${check2.length}`);
-                    if (check2.length > 0) {
-                        console.log('✅✅✅ MARKER SUCCESSFULLY ADDED!');
-                        console.log('📍 Marker position:', check2[0].getAttribute('position'));
-                        console.log('🎯 Marker HTML:', check2[0].outerHTML);
-                    } else {
-                        console.error('❌❌❌ MARKER NOT IN DOM!');
-                        console.error('Map children:', mapElement.children);
-                        console.error('Map innerHTML:', mapElement.innerHTML);
-                    }
-                }, 100);
-                
-                // Update form coordinates
-                updateCoordinates(lat, lng);
-                
-                console.log('✅ placeMarker function completed');
+
+                map.appendChild(marker);
+                updateInputs(lat, lng);
             }
 
-            // Update coordinate fields
-            function updateCoordinates(lat, lng) {
+            // -------------------------
+            // Update form fields
+            // -------------------------
+            function updateInputs(lat, lng) {
                 const latitude = parseFloat(lat).toFixed(6);
                 const longitude = parseFloat(lng).toFixed(6);
 
-                // Update hidden form fields
-                document.getElementById('latitude').value = latitude;
-                document.getElementById('longitude').value = longitude;
-                
-                // Update visual display
-                const displayContainer = document.getElementById('coordinates-display');
-                const displayLat = document.getElementById('display-lat');
-                const displayLng = document.getElementById('display-lng');
-                
-                if (displayContainer && displayLat && displayLng) {
-                    displayLat.textContent = latitude;
-                    displayLng.textContent = longitude;
-                    displayContainer.style.display = 'block';
+                document.getElementById("latitude").value = latitude;
+                document.getElementById("longitude").value = longitude;
+
+                const latSpan = document.getElementById("display-lat");
+                const lngSpan = document.getElementById("display-lng");
+                const box = document.getElementById("coordinates-display");
+
+                if (latSpan && lngSpan && box) {
+                    latSpan.textContent = latitude;
+                    lngSpan.textContent = longitude;
+                    box.style.display = "block";
                 }
-                
-                console.log('✅ Coordinates saved:', latitude, longitude);
-                console.log('📌 These coordinates will be stored when you submit the form');
-            }
-            
-            // Show location feedback message
-            function showLocationFeedback(message) {
-                const feedbackDiv = document.createElement('div');
-                feedbackDiv.className = 'alert alert-success alert-dismissible fade show position-fixed';
-                feedbackDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
-                feedbackDiv.innerHTML = `
-                    <i class="uil uil-check-circle"></i> ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                `;
-                document.body.appendChild(feedbackDiv);
-                
-                setTimeout(() => {
-                    feedbackDiv.remove();
-                }, 3000);
             }
 
-            // Initialize when DOM is ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initMap);
-            } else {
-                initMap();
+            // -------------------------
+            // Toast message
+            // -------------------------
+            function showMessage(message) {
+                const box = document.createElement("div");
+                box.className = "alert alert-success position-fixed";
+                box.style.cssText = "top:20px; right:20px; z-index:9999;";
+                box.innerHTML = `<i class='uil uil-check-circle'></i> ${message}`;
+                document.body.appendChild(box);
+
+                setTimeout(() => box.remove(), 2500);
             }
-            
-            // Global test functions for debugging
-            window.testMarker = function(lat, lng) {
-                console.log('🧪 TEST: Manually placing marker at:', lat || 30.0444, lng || 31.2357);
-                placeMarker(lat || 30.0444, lng || 31.2357);
-            };
-            
-            window.checkMap = function() {
-                const map = document.querySelector('gmp-map');
-                const marker = document.querySelector('gmp-advanced-marker');
-                console.log('🗺️ Map element:', map);
-                console.log('📍 Marker element:', marker);
-                console.log('📊 Map center:', map?.getAttribute('center'));
-                console.log('🔍 Map zoom:', map?.getAttribute('zoom'));
-                if (marker) {
-                    console.log('📌 Marker position:', marker.getAttribute('position'));
-                }
-                return { map, marker };
-            };
         </script>
+
 
         {{-- City/Region Dynamic Loading Script --}}
         <script>

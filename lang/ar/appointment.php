@@ -21,4 +21,6 @@ return [
     'already_cancelled' => 'الموعد ملغي بالفعل',
     'cannot_cancel_completed' => 'لا يمكن إلغاء موعد مكتمل',
     'cancelled_successfully' => 'تم إلغاء الموعد بنجاح',
+    'invalid_office_hour' => 'ساعة العمل المحددة غير صحيحة',
+    'date_does_not_match_day' => 'التاريخ المحدد لا يتطابق مع يوم ساعة العمل',
 ];

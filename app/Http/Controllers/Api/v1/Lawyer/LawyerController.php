@@ -23,12 +23,9 @@ class LawyerController extends Controller
     public function index(Request $request)
     {
         try {
-            $filters = [
-                'active' => '1',
-            ];
+            $filters = $request->all();
             $per_page = request('per_page') ?? 0;
             $lawyers = $this->lawyerService->getAllLawyers($filters, $per_page);
-
             // Handle paginated response
             if($per_page > 0) {
                 $data = [

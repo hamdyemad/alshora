@@ -30,6 +30,7 @@ class LawyerResource extends JsonResource
             'consultation_price' => $this->consultation_price,
             'active' => $this->active,
             'register_grade' => new RegisterGradeResource($this->RegisterGrade),
+            'section_of_law' => $this->whenLoaded('sectionsOfLaws', SectionOfLawResource::collection($this->sectionsOfLaws)),
             'experience' => $this->getTranslation('experience', app()->getLocale()) ?? '',
             'latitude' => $this->latitude ?? '',
             'longitude' => $this->longitude ?? '',

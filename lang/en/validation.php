@@ -13,8 +13,14 @@ return [
     |
     */
 
-    'success' => 'success',
-    'error' => 'error',
+    'success' => 'Success',
+    'created_successfully' => 'Created successfully',
+    'updated_successfully' => 'Updated successfully',
+    'deleted_successfully' => 'Deleted successfully',
+    'not_found' => 'Not found',
+    'liked_successfully' => 'Liked successfully',
+    'unliked_successfully' => 'Unliked successfully',
+    'error' => 'Error',
     'accepted' => 'The :attribute must be accepted.',
     'accepted_if' => 'The :attribute must be accepted when :other is :value.',
     'active_url' => 'The :attribute is not a valid URL.',

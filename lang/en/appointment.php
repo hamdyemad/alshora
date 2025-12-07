@@ -21,4 +21,6 @@ return [
     'already_cancelled' => 'Appointment is already cancelled',
     'cannot_cancel_completed' => 'Cannot cancel a completed appointment',
     'cancelled_successfully' => 'Appointment cancelled successfully',
+    'invalid_office_hour' => 'Invalid office hour selected',
+    'date_does_not_match_day' => 'Selected date does not match the office hour day',
 ];

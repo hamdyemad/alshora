@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table mb-0 table-bordered">
+                        <table class="table mb-0 table-bordered table-striped">
                             <thead>
                                 <tr class="userDatatable-header">
                                     <th width="5%"><span class="userDatatable-title">#</span></th>

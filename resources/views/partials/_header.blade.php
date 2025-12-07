@@ -20,7 +20,7 @@
     @else
         <link rel="stylesheet" href="{{ asset('assets/css/style' . '.min.css') }}">
     @endif
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/logo.png') }}">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.0/css/line.css">
     <link rel="stylesheet" href="{{ asset('css/plugins/toastr.min.css') }}">
     @vite(['resources/scss/app.scss'])

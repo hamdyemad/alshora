@@ -21,8 +21,8 @@ class LangMiddleware
     public function handle(Request $request, Closure $next)
     {
         $languages = $this->languageService->getAll();
-        if($request->hasHeader('Accept-Language') && in_array($request->header('Accept-Language'), $languages->pluck('code')->toArray())) {
-            app()->setLocale($request->header('Accept-Language'));
+        if($request->hasHeader('lang') && in_array($request->header('lang'), $languages->pluck('code')->toArray())) {
+            app()->setLocale($request->header('lang'));
         }
         return $next($request);
     }

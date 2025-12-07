@@ -48,23 +48,41 @@ class AppointmentService
     {
         try {
             // Check if lawyer exists and is active
-            $lawyer = Lawyer::with('officeHours')->find($data['lawyer_id']);
+            $lawyer = Lawyer::find($data['lawyer_id']);
             
             if (!$lawyer || !$lawyer->active) {
                 throw new \Exception(__('appointment.lawyer_not_available'));
             }
 
-            // Verify lawyer has office hours for the selected day and period
-            $hasOfficeHours = $lawyer->officeHours()
-                ->where('day', $data['day'])
-                ->where('period', $data['period'])
-                ->where('from', '<=', $data['time_slot'])
-                ->where('to', '>=', $data['time_slot'])
-                ->exists();
-
-            if (!$hasOfficeHours) {
-                throw new \Exception(__('appointment.time_slot_not_available'));
+            // Get office hour
+            $officeHour = \App\Models\LawyerOfficeHour::find($data['lawyer_office_hour_id']);
+            if (!$officeHour || $officeHour->lawyer_id != $data['lawyer_id']) {
+                throw new \Exception(__('appointment.invalid_office_hour'));
             }
+
+            // Calculate appointment date if not provided
+            if (!isset($data['appointment_date'])) {
+                $appointmentDate = \Carbon\Carbon::parse($officeHour->day);
+                $timeSlot = \Carbon\Carbon::parse($appointmentDate->format('Y-m-d') . ' ' . $officeHour->from);
+                
+                // If the slot is in the past (e.g. today but earlier time), move to next week
+                if ($timeSlot->isPast()) {
+                    $appointmentDate->addWeek();
+                }
+                
+                $data['appointment_date'] = $appointmentDate->format('Y-m-d');
+            } else {
+                // Validate provided date matches day
+                $dayName = strtolower(date('l', strtotime($data['appointment_date'])));
+                if ($dayName !== $officeHour->day) {
+                    throw new \Exception(__('appointment.date_does_not_match_day'));
+                }
+            }
+
+            // Set derived data
+            $data['day'] = $officeHour->day;
+            $data['period'] = $officeHour->period;
+            $data['time_slot'] = $officeHour->from;
 
             // Check if the time slot is available
             if (!$this->appointmentRepository->isTimeSlotAvailable(
@@ -79,7 +97,14 @@ class AppointmentService
             $data['customer_id'] = $customer->id;
 
             // Create appointment
-            return $this->appointmentRepository->create($data);
+            $appointment = $this->appointmentRepository->create($data);
+
+            // Notify Lawyer
+            if ($lawyer->user) {
+                $lawyer->user->notify(new \App\Notifications\NewBookingNotification($appointment));
+            }
+
+            return $appointment;
         } catch (\Exception $e) {
             Log::error('Error reserving appointment: ' . $e->getMessage());
             throw $e;

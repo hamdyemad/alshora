@@ -18,12 +18,6 @@
                     </div>
                 </div>
 
-                {{-- Sales Overview Header --}}
-                @include('pages.dashboard.withdraw-transactions')
-                @include('pages.dashboard.vendors-withdraw-transactions')
-                @include('pages.dashboard.stats-overview')
-                @include('pages.dashboard.income-and-expenses')
-
 
 
                 {{-- Statistics Cards --}}
@@ -35,19 +29,6 @@
                         @include('pages.dashboard.orders-overview')
                     </div>
                 </div>
-                {{-- Charts Row: Sales, Earnings, Total Sales --}}
-                <div class="col-12">
-                    <div class="row">
-                        @include('pages.dashboard.total-sales-chart')
-                        @include('pages.dashboard.earnings-chart')
-                    </div>
-                </div>
-
-                @include('pages.dashboard.top-selling-products')
-                @include('pages.dashboard.latest-orders')
-                @include('pages.dashboard.best-customers')
-                @include('pages.dashboard.top-vendors')
-                @include('pages.dashboard.recent-activities')
 
             </div>
             <!-- ends: .row -->

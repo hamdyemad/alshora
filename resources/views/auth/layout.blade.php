@@ -11,7 +11,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/variables.css') }}">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.0/css/line.css">
     <link rel="stylesheet" href="{{ asset('css/plugins/toastr.min.css') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/logo.png') }}">
+    <style>
+        :root {
+            --color-primary: #BD9D60;
+            --bg-primary-hover: #dbc08d;
+            --bg-primary-focus: #dbc08d;
+        }
+    </style>
 </head>
 <body>
     <main class="main-content">

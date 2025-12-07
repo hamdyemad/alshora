@@ -2,8 +2,7 @@
     <div class="navbar-left">
         <div class="logo-area">
             <a class="navbar-brand" href="#">
-                <img class="dark" src="{{ asset('assets/img/logo-dark.svg') }}" alt="svg">
-                <img class="light" src="{{ asset('assets/img/logo-white.svg') }}" alt="img">
+                <img class="rounded-circle" style="width: 70px; height: 70px; min-width: 70px; min-height: 70px; object-fit: cover;" src="{{ asset('assets/img/logo.png') }}" alt="svg">
             </a>
             <a href="#" class="sidebar-toggle">
                 <img class="svg" src="{{ asset('assets/img/svg/align-center-alt.svg') }}" alt="img"></a>

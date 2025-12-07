@@ -21,7 +21,7 @@ class LawyerRepository implements LawyerRepositoryInterface
      */
     public function getAllWithFilters(array $filters = [], int $perPage = 10): LengthAwarePaginator
     {
-        $query = Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'attachments']);
+        $query = Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'attachments', 'sectionsOfLaws']);
 
         // Apply search filter
         if (!empty($filters['search'])) {
@@ -35,6 +35,13 @@ class LawyerRepository implements LawyerRepositoryInterface
         // Apply active filter
         if (isset($filters['active']) && $filters['active'] !== '') {
             $query->where('active', $filters['active']);
+        }
+
+        // Apply active filter
+        if (isset($filters['section_of_law_id']) && $filters['section_of_law_id'] !== '') {
+            $query->whereHas('sectionsOfLaws', function ($q) use ($filters) {
+                $q->where('section_of_law_id', $filters['section_of_law_id']);
+            });
         }
 
         // Apply date from filter
@@ -55,7 +62,7 @@ class LawyerRepository implements LawyerRepositoryInterface
      */
     public function findById($id): ?Lawyer
     {
-        return Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'attachments', 'officeHours', 'subscription', 'sectionsOfLaws'])->find($id);
+        return Lawyer::with(['user', 'city', 'sectionsOfLaws', 'region', 'phoneCountry', 'attachments', 'officeHours', 'subscription', 'sectionsOfLaws'])->find($id);
     }
 
     /**
@@ -216,7 +223,7 @@ class LawyerRepository implements LawyerRepositoryInterface
      */
     public function getAll(): Collection
     {
-        return Lawyer::with(['user', 'city', 'region', 'phoneCountry'])->latest()->get();
+        return Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'sectionsOfLaws'])->latest()->get();
     }
 
     /**

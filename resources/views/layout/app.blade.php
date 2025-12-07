@@ -54,7 +54,7 @@
             mapClockIcon: "{{ asset('assets/img/svg/clock-ticket1.sv') }}g"
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
+    {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script> --}}
     <script src="{{ asset('assets/js/plugins.min.js') }}"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script src="{{ asset('assets/js/script.min.js') }}"></script>
