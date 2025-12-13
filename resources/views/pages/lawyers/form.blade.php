@@ -11,7 +11,7 @@
             position: relative;
             isolation: isolate;
         }
-        
+
         .map-container gmp-map {
             border-radius: 0 0 12px 12px;
             overflow: hidden;
@@ -72,19 +72,19 @@
             cursor: crosshair;
             z-index: 1;
         }
-        
+
         /* Ensure map is interactive */
         gmp-map * {
             pointer-events: auto !important;
         }
-        
+
         /* Ensure marker is visible */
         gmp-advanced-marker {
             cursor: grab;
             z-index: 1000;
             pointer-events: auto !important;
         }
-        
+
         gmp-advanced-marker:active {
             cursor: grabbing;
         }
@@ -150,7 +150,7 @@
             border-color: #dc3545 !important;
             background-color: #fff5f5;
         }
-        
+
         .is-invalid + .select2-container--default .select2-selection--multiple:focus,
         .is-invalid + .select2-container--default.select2-container--focus .select2-selection--multiple {
             border-color: #dc3545 !important;
@@ -463,7 +463,7 @@
 
                                 {{-- Profile Image Upload --}}
                                 {{-- Profile Image Upload --}}
-                                <x-image-upload 
+                                <x-image-upload
                                     name="profile_image"
                                     :label="trans('lawyer.profile_image')"
                                     :image="isset($lawyer) ? $lawyer->profile_image : null"
@@ -472,8 +472,7 @@
                                 />
 
                                 {{-- ID Card Image Upload --}}
-                                {{-- ID Card Image Upload --}}
-                                <x-image-upload 
+                                <x-image-upload
                                     name="id_card"
                                     :label="trans('lawyer.id_card_image')"
                                     :image="isset($lawyer) ? $lawyer->id_card : null"
@@ -481,6 +480,118 @@
                                     :placeholderText="trans('lawyer.click_upload_id_card')"
                                     :recommendedText="trans('lawyer.recommended_size_id_card')"
                                 />
+
+                                {{-- ID Card Back Image Upload --}}
+                                <x-image-upload
+                                    name="id_card_back"
+                                    :label="trans('lawyer.id_card_back_image')"
+                                    :image="isset($lawyer) && isset($lawyer->id_card_back) ? $lawyer->id_card_back : null"
+                                    placeholderIcon="uil uil-credit-card"
+                                    :placeholderText="trans('lawyer.click_upload_id_card_back')"
+                                    :recommendedText="trans('lawyer.recommended_size_id_card')"
+                                />
+
+                                {{-- Lawyer License Card Image Upload --}}
+                                <x-image-upload
+                                    name="lawyer_license_card"
+                                    :label="trans('lawyer.lawyer_license_card_image')"
+                                    :image="isset($lawyer) && isset($lawyer->lawyer_license_card) ? $lawyer->lawyer_license_card : null"
+                                    placeholderIcon="uil uil-briefcase"
+                                    :placeholderText="trans('lawyer.click_upload_lawyer_license_card')"
+                                    :recommendedText="trans('lawyer.recommended_size_id_card')"
+                                />
+
+                                {{-- Social Media Section --}}
+                                <div class="col-12 mb-20 mt-20">
+                                    <h6 class="fw-500 color-dark border-bottom pb-15">
+                                        <i class="uil uil-share-alt me-2"></i>{{ trans('lawyer.social_media') }}
+                                    </h6>
+                                </div>
+
+                                {{-- Facebook URL --}}
+                                <div class="col-md-6 mb-25">
+                                    <div class="form-group">
+                                        <label for="facebook_url" class="il-gray fs-14 fw-500 mb-10">
+                                            <i class="uil uil-facebook text-primary me-1"></i>{{ trans('lawyer.facebook_url') }}
+                                        </label>
+                                        <input type="url"
+                                            class="form-control ih-medium ip-gray radius-xs b-light px-15 @error('facebook_url') is-invalid @enderror"
+                                            id="facebook_url" name="facebook_url"
+                                            value="{{ isset($lawyer) ? $lawyer->facebook_url : old('facebook_url') }}"
+                                            placeholder="https://facebook.com/profile">
+                                        @error('facebook_url')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                {{-- Instagram URL --}}
+                                <div class="col-md-6 mb-25">
+                                    <div class="form-group">
+                                        <label for="instagram_url" class="il-gray fs-14 fw-500 mb-10">
+                                            <i class="uil uil-instagram text-danger me-1"></i>{{ trans('lawyer.instagram_url') }}
+                                        </label>
+                                        <input type="url"
+                                            class="form-control ih-medium ip-gray radius-xs b-light px-15 @error('instagram_url') is-invalid @enderror"
+                                            id="instagram_url" name="instagram_url"
+                                            value="{{ isset($lawyer) ? $lawyer->instagram_url : old('instagram_url') }}"
+                                            placeholder="https://instagram.com/profile">
+                                        @error('instagram_url')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                {{-- WhatsApp URL --}}
+                                <div class="col-md-6 mb-25">
+                                    <div class="form-group">
+                                        <label for="whatsapp_url" class="il-gray fs-14 fw-500 mb-10">
+                                            <i class="uil uil-whatsapp text-success me-1"></i>{{ trans('lawyer.whatsapp_url') }}
+                                        </label>
+                                        <input type="url"
+                                            class="form-control ih-medium ip-gray radius-xs b-light px-15 @error('whatsapp_url') is-invalid @enderror"
+                                            id="whatsapp_url" name="whatsapp_url"
+                                            value="{{ isset($lawyer) ? $lawyer->whatsapp_url : old('whatsapp_url') }}"
+                                            placeholder="https://wa.me/1234567890">
+                                        @error('whatsapp_url')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                {{-- Telegram URL --}}
+                                <div class="col-md-6 mb-25">
+                                    <div class="form-group">
+                                        <label for="telegram_url" class="il-gray fs-14 fw-500 mb-10">
+                                            <i class="uil uil-telegram text-info me-1"></i>{{ trans('lawyer.telegram_url') }}
+                                        </label>
+                                        <input type="url"
+                                            class="form-control ih-medium ip-gray radius-xs b-light px-15 @error('telegram_url') is-invalid @enderror"
+                                            id="telegram_url" name="telegram_url"
+                                            value="{{ isset($lawyer) ? $lawyer->telegram_url : old('telegram_url') }}"
+                                            placeholder="https://t.me/username">
+                                        @error('telegram_url')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                {{-- Twitter URL --}}
+                                <div class="col-md-6 mb-25">
+                                    <div class="form-group">
+                                        <label for="twitter_url" class="il-gray fs-14 fw-500 mb-10">
+                                            <i class="uil uil-twitter text-primary me-1"></i>{{ trans('lawyer.twitter_url') }}
+                                        </label>
+                                        <input type="url"
+                                            class="form-control ih-medium ip-gray radius-xs b-light px-15 @error('twitter_url') is-invalid @enderror"
+                                            id="twitter_url" name="twitter_url"
+                                            value="{{ isset($lawyer) ? $lawyer->twitter_url : old('twitter_url') }}"
+                                            placeholder="https://twitter.com/username">
+                                        @error('twitter_url')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
                                 {{-- Location Section --}}
                                 <div class="col-12 mb-20 mt-20">
@@ -503,6 +614,26 @@
                                         @error('address')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+                                    </div>
+                                </div>
+
+                                {{-- Location Link --}}
+                                <div class="col-md-12 mb-25">
+                                    <div class="form-group">
+                                        <label for="location_link" class="il-gray fs-14 fw-500 mb-10">
+                                            <i class="uil uil-location-point me-1"></i>{{ trans('lawyer.location_link') }}
+                                        </label>
+                                        <input type="url"
+                                            class="form-control ih-medium ip-gray radius-xs b-light px-15 @error('location_link') is-invalid @enderror"
+                                            id="location_link" name="location_link"
+                                            value="{{ isset($lawyer) ? $lawyer->location_link : old('location_link') }}"
+                                            placeholder="https://maps.google.com/?q=latitude,longitude">
+                                        @error('location_link')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        <small class="text-muted d-block mt-2">
+                                            <i class="uil uil-info-circle"></i> {{ trans('lawyer.location_link_hint') }}
+                                        </small>
                                     </div>
                                 </div>
 
@@ -672,7 +803,7 @@
                     LoadingOverlay.animateProgressBar(30, 300).then(() => {
                             // Prepare form data
                             const formData = new FormData(lawyerForm);
-                            
+
                             // Log coordinates being submitted
                             const latitude = formData.get('latitude');
                             const longitude = formData.get('longitude');
@@ -680,7 +811,7 @@
                                 latitude: latitude || 'not set',
                                 longitude: longitude || 'not set'
                             });
-                            
+
                             if (latitude && longitude) {
                                 console.log('✅ Location will be saved to database');
                             } else {
@@ -839,7 +970,7 @@
         </script>
 
         {{-- Google Maps API with Places --}}
-        <script async 
+        <script async
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyAumDLi1iYwwQaFMVbO3f1nXOPBwMKKM&libraries=places,maps,marker&v=weekly&callback=initMap">
         </script>
 
@@ -967,9 +1098,9 @@
                 // Load regions when city changes
                 citySelect.on('change', function() {
                     const cityId = $(this).val();
-                    
+
                     console.log('City changed to:', cityId);
-                    
+
                     // Reset region dropdown
                     regionSelect.html('<option value="">Loading...</option>');
                     regionSelect.prop('disabled', true);
@@ -978,7 +1109,7 @@
                         // Fetch regions for selected city
                         const apiUrl = `/api/v1/area/regions/by-city/${cityId}`;
                         console.log('Fetching regions from:', apiUrl);
-                        
+
                         $.ajax({
                             url: apiUrl,
                             type: 'GET',
@@ -990,9 +1121,9 @@
                                 console.log('API Response:', response);
                                 console.log('Response data:', response.data);
                                 console.log('Data length:', response.data ? response.data.length : 0);
-                                
+
                                 regionSelect.html('<option value="">{{ trans("lawyer.select_region") }}</option>');
-                                
+
                                 if (response.status && response.data && response.data.length > 0) {
                                     response.data.forEach(function(region) {
                                         console.log('Adding region:', region);

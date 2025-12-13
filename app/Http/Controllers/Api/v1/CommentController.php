@@ -13,6 +13,11 @@ class CommentController extends Controller
 {
     use Res;
 
+
+    public function index(Request $request, $post_id) {
+        $comments = Comment::where('post_id', $post_id)->get();
+        return $this->sendRes(__('validation.success'), true, CommentResource::collection($comments));
+    }
     public function store(Request $request)
     {
         $request->validate([

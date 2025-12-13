@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use App\Models\Customer;
 use App\Models\Lawyer;
 use Illuminate\Support\Facades\Log;
+use App\Services\FirebaseNotificationService;
 
 class AppointmentService
 {
@@ -49,7 +50,7 @@ class AppointmentService
         try {
             // Check if lawyer exists and is active
             $lawyer = Lawyer::find($data['lawyer_id']);
-            
+
             if (!$lawyer || !$lawyer->active) {
                 throw new \Exception(__('appointment.lawyer_not_available'));
             }
@@ -63,13 +64,13 @@ class AppointmentService
             // Calculate appointment date if not provided
             if (!isset($data['appointment_date'])) {
                 $appointmentDate = \Carbon\Carbon::parse($officeHour->day);
-                $timeSlot = \Carbon\Carbon::parse($appointmentDate->format('Y-m-d') . ' ' . $officeHour->from);
-                
+                $timeSlot = \Carbon\Carbon::parse($appointmentDate->format('Y-m-d') . ' ' . $officeHour->from_time);
+
                 // If the slot is in the past (e.g. today but earlier time), move to next week
                 if ($timeSlot->isPast()) {
                     $appointmentDate->addWeek();
                 }
-                
+
                 $data['appointment_date'] = $appointmentDate->format('Y-m-d');
             } else {
                 // Validate provided date matches day
@@ -82,7 +83,7 @@ class AppointmentService
             // Set derived data
             $data['day'] = $officeHour->day;
             $data['period'] = $officeHour->period;
-            $data['time_slot'] = $officeHour->from;
+            $data['time_slot'] = $officeHour->from_time;
 
             // Check if the time slot is available
             if (!$this->appointmentRepository->isTimeSlotAvailable(
@@ -99,9 +100,16 @@ class AppointmentService
             // Create appointment
             $appointment = $this->appointmentRepository->create($data);
 
-            // Notify Lawyer
+            // Notify Lawyer via Database
             if ($lawyer->user) {
                 $lawyer->user->notify(new \App\Notifications\NewBookingNotification($appointment));
+            }
+
+            // Send Firebase notification to lawyer
+            try {
+                $firebaseService = app(FirebaseNotificationService::class);
+                $firebaseService->sendAppointmentNotificationToLawyer($lawyer, $appointment, $customer);
+            } catch (\Exception $e) {
             }
 
             return $appointment;

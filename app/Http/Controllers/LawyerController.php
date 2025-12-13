@@ -9,12 +9,13 @@ use App\Http\Resources\RegisterGradeResource;
 use App\Services\LanguageService;
 use App\Services\RegisterGradeService;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateOfficeHoursRequest;
 use Illuminate\Support\Facades\Log;
 
 class LawyerController extends Controller
 {
     public function __construct(
-        protected LawyerService $lawyerService, 
+        protected LawyerService $lawyerService,
         protected LanguageService $languageService,
         protected RegisterGradeService $registerGradeService
     ) {
@@ -43,10 +44,10 @@ class LawyerController extends Controller
 
         // Get lawyers with filters and pagination
         $lawyers = $this->lawyerService->getAllLawyers($filters, 10);
-        
+
         // Get languages for table headers
         $languages = $this->languageService->getAll();
-        
+
         return view('pages.lawyers.index', compact('lawyers', 'search', 'active', 'dateFrom', 'dateTo', 'languages', 'registerGrades'));
     }
 
@@ -71,7 +72,7 @@ class LawyerController extends Controller
 
         try {
             $this->lawyerService->createLawyer($validated);
-            
+
             // Check if request is AJAX
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json([
@@ -80,7 +81,7 @@ class LawyerController extends Controller
                     'redirect' => route('admin.lawyers.index')
                 ]);
             }
-            
+
             return redirect()->route('admin.lawyers.index')
                 ->with('success', __('Lawyer created successfully'));
         } catch (\Exception $e) {
@@ -97,7 +98,7 @@ class LawyerController extends Controller
                     'message' => __('Error creating lawyer: ') . $e->getMessage()
                 ], 422);
             }
-            
+
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('Error creating lawyer: ') . $e->getMessage());
@@ -143,10 +144,10 @@ class LawyerController extends Controller
     {
         $validated = $request->validated();
         $lawyer = $this->lawyerService->getLawyerById($id);
-        
+
         try {
             $this->lawyerService->updateLawyer($lawyer, $validated);
-            
+
             // Check if request is AJAX
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json([
@@ -155,7 +156,7 @@ class LawyerController extends Controller
                     'redirect' => route('admin.lawyers.index')
                 ]);
             }
-            
+
             return redirect()->route('admin.lawyers.index')
                 ->with('success', __('Lawyer updated successfully'));
         } catch (\Exception $e) {
@@ -166,7 +167,7 @@ class LawyerController extends Controller
                     'message' => __('Error updating lawyer: ') . $e->getMessage()
                 ], 422);
             }
-            
+
             return redirect()->back()
                 ->withInput()
                 ->with('error', __('Error updating lawyer: ') . $e->getMessage());
@@ -180,7 +181,7 @@ class LawyerController extends Controller
     {
         try {
             $this->lawyerService->deleteLawyer($id);
-            
+
             // Check if request is AJAX
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json([
@@ -189,7 +190,7 @@ class LawyerController extends Controller
                     'redirect' => route('admin.lawyers.index')
                 ]);
             }
-            
+
             return redirect()->route('admin.lawyers.index')
                 ->with('success', __('Lawyer deleted successfully'));
         } catch (\Exception $e) {
@@ -200,7 +201,7 @@ class LawyerController extends Controller
                     'message' => __('Error deleting lawyer: ') . $e->getMessage()
                 ], 422);
             }
-            
+
             return redirect()->route('admin.lawyers.index')
                 ->with('error', __('Error deleting lawyer: ') . $e->getMessage());
         }
@@ -209,32 +210,17 @@ class LawyerController extends Controller
     /**
      * Update office hours for a lawyer via AJAX
      */
-    public function updateOfficeHours(Request $request, string $id)
+    public function updateOfficeHours(UpdateOfficeHoursRequest $request, string $id)
     {
         try {
             $lawyer = $this->lawyerService->getLawyerById($id);
-            
-            // Get office hours data
-            $officeHoursData = $request->input('office_hours', []);
-            
-            // Clean empty strings to null for time fields
-            foreach ($officeHoursData as $day => $periods) {
-                foreach ($periods as $period => $data) {
-                    if (isset($data['from_time']) && empty($data['from_time'])) {
-                        $officeHoursData[$day][$period]['from_time'] = null;
-                    }
-                    if (isset($data['to_time']) && empty($data['to_time'])) {
-                        $officeHoursData[$day][$period]['to_time'] = null;
-                    }
-                    if (!isset($data['is_available'])) {
-                        $officeHoursData[$day][$period]['is_available'] = 0;
-                    }
-                }
-            }
-            
+
+            // Get validated office hours data (validation already handled by UpdateOfficeHoursRequest)
+            $officeHoursData = $request->validated()['office_hours'];
+
             // Update office hours
             $this->lawyerService->updateOfficeHours($lawyer, $officeHoursData);
-            
+
             return response()->json([
                 'success' => true,
                 'message' => __('lawyer.office_hours_updated_successfully')
@@ -259,8 +245,8 @@ class LawyerController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $lawyer->ads_enabled 
-                    ? __('lawyer.ads_enabled_successfully') 
+                'message' => $lawyer->ads_enabled
+                    ? __('lawyer.ads_enabled_successfully')
                     : __('lawyer.ads_disabled_successfully'),
                 'ads_enabled' => $lawyer->ads_enabled
             ]);
@@ -285,8 +271,8 @@ class LawyerController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $user->is_blocked 
-                    ? __('lawyer.blocked_successfully') 
+                'message' => $user->is_blocked
+                    ? __('lawyer.blocked_successfully')
                     : __('lawyer.unblocked_successfully'),
                 'is_blocked' => $user->is_blocked
             ]);
@@ -310,14 +296,14 @@ class LawyerController extends Controller
         try {
             $lawyer = $this->lawyerService->getLawyerById($id);
             $subscription = \App\Models\Subscription::findOrFail($request->subscription_id);
-            
+
             // Calculate expiry date
-            $startDate = $lawyer->subscription_expires_at && $lawyer->subscription_expires_at->isFuture() 
-                ? $lawyer->subscription_expires_at 
+            $startDate = $lawyer->subscription_expires_at && $lawyer->subscription_expires_at->isFuture()
+                ? $lawyer->subscription_expires_at
                 : now();
-            
+
             $expiryDate = $startDate->copy()->addMonths($subscription->number_of_months);
-            
+
             // Update lawyer subscription
             $lawyer->subscription_id = $subscription->id;
             $lawyer->subscription_expires_at = $expiryDate;
@@ -349,10 +335,10 @@ class LawyerController extends Controller
 
         try {
             $lawyer = $this->lawyerService->getLawyerById($id);
-            
+
             // Sync sections of laws
             $lawyer->sectionsOfLaws()->sync($request->sections_of_laws);
-            
+
             return response()->json([
                 'success' => true,
                 'message' => __('lawyer.specializations_updated_successfully')

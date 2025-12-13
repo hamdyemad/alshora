@@ -34,6 +34,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => 'required|string|max:255|exists:users,email',
             'password' => 'required|string|max:255',
+            'fcm_token' => 'nullable|string|max:255',
         ];
     }
 

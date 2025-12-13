@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                
+
                 <div class="userDatatable global-shadow border-light-0 p-30 bg-white radius-xl w-100 mb-30">
                     <div class="d-flex justify-content-between align-items-center mb-25">
                         <h4 class="mb-0 fw-500">{{ __('branches_of_laws.branches_of_laws_management') }}</h4>
@@ -36,10 +36,10 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="search" class="il-gray fs-14 fw-500 mb-10">{{ __('common.search') }}</label>
-                                                <input type="text" 
-                                                       class="form-control ih-medium ip-gray radius-xs b-light px-15" 
-                                                       id="search" 
-                                                       name="search" 
+                                                <input type="text"
+                                                       class="form-control ih-medium ip-gray radius-xs b-light px-15"
+                                                       id="search"
+                                                       name="search"
                                                        value="{{ $search ?? '' }}"
                                                        placeholder="{{ __('branches_of_laws.search_by_title') }}">
                                             </div>
@@ -47,8 +47,8 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="active" class="il-gray fs-14 fw-500 mb-10">{{ __('branches_of_laws.activation') }}</label>
-                                                <select class="form-control ih-medium ip-gray radius-xs b-light px-15" 
-                                                        id="active" 
+                                                <select class="form-control ih-medium ip-gray radius-xs b-light px-15"
+                                                        id="active"
                                                         name="active">
                                                     <option value="">{{ __('branches_of_laws.all') }}</option>
                                                     <option value="1" {{ ($active ?? '') == '1' ? 'selected' : '' }}>{{ __('branches_of_laws.active') }}</option>
@@ -59,20 +59,20 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="created_date_from" class="il-gray fs-14 fw-500 mb-10">{{ __('common.created_date_from') }}</label>
-                                                <input type="date" 
-                                                       class="form-control ih-medium ip-gray radius-xs b-light px-15" 
-                                                       id="created_date_from" 
-                                                       name="created_date_from" 
+                                                <input type="date"
+                                                       class="form-control ih-medium ip-gray radius-xs b-light px-15"
+                                                       id="created_date_from"
+                                                       name="created_date_from"
                                                        value="{{ $dateFrom ?? '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="created_date_to" class="il-gray fs-14 fw-500 mb-10">{{ __('common.created_date_to') }}</label>
-                                                <input type="date" 
-                                                       class="form-control ih-medium ip-gray radius-xs b-light px-15" 
-                                                       id="created_date_to" 
-                                                       name="created_date_to" 
+                                                <input type="date"
+                                                       class="form-control ih-medium ip-gray radius-xs b-light px-15"
+                                                       id="created_date_to"
+                                                       name="created_date_to"
                                                        value="{{ $dateTo ?? '' }}">
                                             </div>
                                         </div>
@@ -144,7 +144,7 @@
                                         <td>
                                             <div class="userDatatable-content text-center">
                                                 @if($branchOfLaw->image)
-                                                    <img src="{{ asset('storage/' . $branchOfLaw->image->path) }}" 
+                                                    <img src="{{ asset('storage/' . $branchOfLaw->image->path) }}"
                                                          alt="{{ $branchOfLaw->getTranslation('title', app()->getLocale()) }}"
                                                          class="rounded"
                                                          style="width: 50px; height: 50px; object-fit: cover;">
@@ -155,8 +155,8 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content text-center">
-                                                <a href="" 
-                                                   class="badge badge-info" 
+                                                <a href="{{ route('admin.branches-of-laws.laws.index', $branchOfLaw) }}"
+                                                   class="badge badge-info"
                                                    style="border-radius: 6px; padding: 8px 14px; text-decoration: none; font-size: 14px;">
                                                     <i class="uil uil-file-check-alt me-1"></i>{{ $branchOfLaw->laws_count }}
                                                 </a>
@@ -193,10 +193,10 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="javascript:void(0);" 
-                                                       class="remove" 
+                                                    <a href="javascript:void(0);"
+                                                       class="remove"
                                                        title="{{ trans('common.delete') }}"
-                                                       data-bs-toggle="modal" 
+                                                       data-bs-toggle="modal"
                                                        data-bs-target="#modal-delete-branch"
                                                        data-item-id="{{ $branchOfLaw->id }}"
                                                        data-item-name="{{ $branchOfLaw->getTranslation('title', 'en') ?? 'Branch' }}">
@@ -219,7 +219,7 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     {{-- Pagination --}}
                     @if($branchesOfLaws->hasPages())
                         <div class="d-flex justify-content-end mt-25">
@@ -232,7 +232,7 @@
     </div>
 
     {{-- Delete Confirmation Modal Component --}}
-    <x-delete-modal 
+    <x-delete-modal
         modalId="modal-delete-branch"
         :title="__('branches_of_laws.confirm_delete')"
         :message="__('branches_of_laws.delete_confirmation')"

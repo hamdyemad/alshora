@@ -24,12 +24,12 @@
                                     $profileImage = $lawyer->profile_image;
                                 @endphp
                                 @if($profileImage)
-                                    <img src="{{ asset('storage/' . $profileImage->path) }}" 
-                                         alt="{{ $lawyer->getTranslation('name', app()->getLocale()) }}" 
-                                         class="rounded-circle shadow" 
+                                    <img src="{{ asset('storage/' . $profileImage->path) }}"
+                                         alt="{{ $lawyer->getTranslation('name', app()->getLocale()) }}"
+                                         class="rounded-circle shadow"
                                          style="width: 100px; height: 100px; object-fit: cover;">
                                 @else
-                                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center shadow" 
+                                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center shadow"
                                          style="width: 100px; height: 100px;">
                                         <i class="uil uil-user" style="font-size: 48px; color: #ccc;"></i>
                                     </div>
@@ -47,7 +47,7 @@
                                     @endif
                                 </div>
                                 <p class="text-muted mb-2">
-                                    <i class="uil uil-star"></i> 
+                                    <i class="uil uil-star"></i>
                                     <span class="fw-bold">0</span> (0 {{ trans('lawyer.client_review') }})
                                 </p>
                                 <p class="mb-0">
@@ -260,9 +260,9 @@
                                 <div class="view-item">
                                     <label class="il-gray fs-14 fw-500 mb-10 d-block">{{ trans('lawyer.ads_enabled') }}</label>
                                     <div class="form-check form-switch form-switch-primary form-switch-md">
-                                        <input type="checkbox" 
-                                               class="form-check-input" 
-                                               id="adsToggle" 
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               id="adsToggle"
                                                {{ $lawyer->ads_enabled ? 'checked' : '' }}
                                                onchange="toggleAds({{ $lawyer->id }}, this)">
                                     </div>
@@ -274,9 +274,9 @@
                                 <div class="view-item">
                                     <label class="il-gray fs-14 fw-500 mb-10 d-block">{{ trans('lawyer.blocked') }}</label>
                                     <div class="form-check form-switch form-switch-danger form-switch-md">
-                                        <input type="checkbox" 
-                                               class="form-check-input" 
-                                               id="blockToggle" 
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               id="blockToggle"
                                                {{ $lawyer->user->is_blocked ? 'checked' : '' }}
                                                onchange="toggleBlock({{ $lawyer->id }}, this)">
                                     </div>
@@ -298,9 +298,9 @@
                                             $profileImage = $lawyer->profile_image;
                                         @endphp
                                         @if($profileImage)
-                                            <img src="{{ asset('storage/' . $profileImage->path) }}" 
-                                                 alt="Profile Image" 
-                                                 class="img-fluid rounded shadow-sm" 
+                                            <img src="{{ asset('storage/' . $profileImage->path) }}"
+                                                 alt="Profile Image"
+                                                 class="img-fluid rounded shadow-sm"
                                                  style="max-width: 300px; max-height: 300px; object-fit: cover;">
                                         @else
                                             <div class="text-center p-4 bg-light rounded" style="max-width: 300px;">
@@ -320,9 +320,9 @@
                                             $idCard = $lawyer->id_card;
                                         @endphp
                                         @if($idCard)
-                                            <img src="{{ asset('storage/' . $idCard->path) }}" 
-                                                 alt="ID Card" 
-                                                 class="img-fluid rounded shadow-sm" 
+                                            <img src="{{ asset('storage/' . $idCard->path) }}"
+                                                 alt="ID Card"
+                                                 class="img-fluid rounded shadow-sm"
                                                  style="max-width: 400px; max-height: 300px; object-fit: cover;">
                                         @else
                                             <div class="text-center p-4 bg-light rounded" style="max-width: 400px;">
@@ -333,6 +333,100 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-6 mb-25">
+                                <div class="view-item">
+                                    <label class="il-gray fs-14 fw-500 mb-10">{{ trans('lawyer.id_card_back_image') }}</label>
+                                    <div class="mt-10">
+                                        @php
+                                            $idCardBack = $lawyer->id_card_back;
+                                        @endphp
+                                        @if($idCardBack)
+                                            <img src="{{ asset('storage/' . $idCardBack->path) }}"
+                                                 alt="ID Card Back"
+                                                 class="img-fluid rounded shadow-sm"
+                                                 style="max-width: 400px; max-height: 300px; object-fit: cover;">
+                                        @else
+                                            <div class="text-center p-4 bg-light rounded" style="max-width: 400px;">
+                                                <i class="uil uil-credit-card" style="font-size: 48px; color: #ccc;"></i>
+                                                <p class="text-muted mt-2 mb-0">{{ trans('lawyer.no_image') }}</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-25">
+                                <div class="view-item">
+                                    <label class="il-gray fs-14 fw-500 mb-10">{{ trans('lawyer.lawyer_license_card_image') }}</label>
+                                    <div class="mt-10">
+                                        @php
+                                            $lawyerLicenseCard = $lawyer->lawyer_license_card;
+                                        @endphp
+                                        @if($lawyerLicenseCard)
+                                            <img src="{{ asset('storage/' . $lawyerLicenseCard->path) }}"
+                                                 alt="Lawyer License Card"
+                                                 class="img-fluid rounded shadow-sm"
+                                                 style="max-width: 400px; max-height: 300px; object-fit: cover;">
+                                        @else
+                                            <div class="text-center p-4 bg-light rounded" style="max-width: 400px;">
+                                                <i class="uil uil-briefcase" style="font-size: 48px; color: #ccc;"></i>
+                                                <p class="text-muted mt-2 mb-0">{{ trans('lawyer.no_image') }}</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Social Media Section --}}
+                            <div class="col-12 mb-30 mt-20">
+                                <h6 class="fw-500 color-dark border-bottom pb-15 mb-20">
+                                    <i class="uil uil-share-alt me-2"></i>{{ trans('lawyer.social_media') }}
+                                </h6>
+                            </div>
+
+                            @if($lawyer->facebook_url || $lawyer->instagram_url || $lawyer->whatsapp_url || $lawyer->telegram_url || $lawyer->twitter_url)
+                                <div class="col-12 mb-25">
+                                    <div class="d-flex flex-wrap gap-3">
+                                        @if($lawyer->facebook_url)
+                                            <a href="{{ $lawyer->facebook_url }}" target="_blank" class="btn btn-primary btn-sm">
+                                                <i class="uil uil-facebook me-1"></i>{{ trans('lawyer.facebook_url') }}
+                                            </a>
+                                        @endif
+
+                                        @if($lawyer->instagram_url)
+                                            <a href="{{ $lawyer->instagram_url }}" target="_blank" class="btn btn-danger btn-sm">
+                                                <i class="uil uil-instagram me-1"></i>{{ trans('lawyer.instagram_url') }}
+                                            </a>
+                                        @endif
+
+                                        @if($lawyer->whatsapp_url)
+                                            <a href="{{ $lawyer->whatsapp_url }}" target="_blank" class="btn btn-success btn-sm">
+                                                <i class="uil uil-whatsapp me-1"></i>{{ trans('lawyer.whatsapp_url') }}
+                                            </a>
+                                        @endif
+
+                                        @if($lawyer->telegram_url)
+                                            <a href="{{ $lawyer->telegram_url }}" target="_blank" class="btn btn-info btn-sm">
+                                                <i class="uil uil-telegram me-1"></i>{{ trans('lawyer.telegram_url') }}
+                                            </a>
+                                        @endif
+
+                                        @if($lawyer->twitter_url)
+                                            <a href="{{ $lawyer->twitter_url }}" target="_blank" class="btn btn-primary btn-sm">
+                                                <i class="uil uil-twitter me-1"></i>{{ trans('lawyer.twitter_url') }}
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-12 mb-25">
+                                    <div class="alert alert-light">
+                                        <i class="uil uil-info-circle me-2"></i>
+                                        {{ __('common.no_data_available') }}
+                                    </div>
+                                </div>
+                            @endif
 
                             {{-- Location Information --}}
                             <div class="col-12 mb-30 mt-20">
@@ -367,6 +461,21 @@
                                     </p>
                                 </div>
                             </div>
+
+                            @if($lawyer->location_link)
+                                <div class="col-md-12 mb-25">
+                                    <div class="view-item">
+                                        <label class="il-gray fs-14 fw-500 mb-10">
+                                            <i class="uil uil-location-point me-1"></i>{{ trans('lawyer.location_link') }}
+                                        </label>
+                                        <p class="fs-15">
+                                            <a href="{{ $lawyer->location_link }}" target="_blank" class="btn btn-sm btn-primary">
+                                                <i class="uil uil-map-marker me-1"></i>{{ __('common.open_in_google_maps') }}
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            @endif
 
                             @if($lawyer->latitude && $lawyer->longitude)
                                 <div class="col-md-12 mb-25">
@@ -433,7 +542,7 @@
                                         {{ trans('lawyer.no_office_hours_set') }}. {{ trans('lawyer.click_edit_to_add') }}
                                     </div>
                                 @endif
-                                
+
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead class="table-light">
@@ -453,10 +562,10 @@
                                                 $days = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
                                                 $periods = ['morning', 'evening'];
                                                 // Check if officeHours relation exists and is loaded
-                                                $officeHours = isset($lawyer->officeHours) && $lawyer->officeHours 
+                                                $officeHours = isset($lawyer->officeHours) && $lawyer->officeHours
                                                     ? $lawyer->officeHours->keyBy(function($item) {
                                                         return $item->day . '_' . $item->period;
-                                                    }) 
+                                                    })
                                                     : collect();
                                             @endphp
 
@@ -562,7 +671,7 @@
                                     </div>
                                     <h3 class="mb-3">{{ trans('lawyer.rating') }}: 1 / 5</h3>
                                     <p class="text-muted mb-4">(0 {{ trans('lawyer.client_opinion') }})</p>
-                                    
+
                                     <div class="alert alert-info">
                                         <i class="uil uil-info-circle me-2"></i>{{ trans('lawyer.no_reviews_yet') }}
                                     </div>
@@ -660,23 +769,23 @@
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <input type="time" 
-                                                        name="office_hours[{{ $day }}][{{ $period }}][from_time]" 
+                                                    <input type="time"
+                                                        name="office_hours[{{ $day }}][{{ $period }}][from_time]"
                                                         class="form-control form-control-sm"
                                                         value="{{ $existingHour->from_time ?? '' }}">
                                                 </td>
                                                 <td>
-                                                    <input type="time" 
-                                                        name="office_hours[{{ $day }}][{{ $period }}][to_time]" 
+                                                    <input type="time"
+                                                        name="office_hours[{{ $day }}][{{ $period }}][to_time]"
                                                         class="form-control form-control-sm"
                                                         value="{{ $existingHour->to_time ?? '' }}">
                                                 </td>
                                                 <td class="text-center align-middle">
                                                     <div class="form-check form-switch d-inline-block">
                                                         <input type="hidden" name="office_hours[{{ $day }}][{{ $period }}][is_available]" value="0">
-                                                        <input type="checkbox" 
-                                                            class="form-check-input" 
-                                                            name="office_hours[{{ $day }}][{{ $period }}][is_available]" 
+                                                        <input type="checkbox"
+                                                            class="form-check-input"
+                                                            name="office_hours[{{ $day }}][{{ $period }}][is_available]"
                                                             value="1"
                                                             {{ ($existingHour->is_available ?? 0) == 1 ? 'checked' : '' }}>
                                                     </div>
@@ -824,7 +933,7 @@
     // Toggle Ads
     function toggleAds(lawyerId, checkbox) {
         const url = `{{ route('admin.lawyers.toggle-ads', ':id') }}`.replace(':id', lawyerId);
-        
+
         fetch(url, {
             method: 'POST',
             headers: {
@@ -853,7 +962,7 @@
     // Toggle Block
     function toggleBlock(lawyerId, checkbox) {
         const url = `{{ route('admin.lawyers.toggle-block', ':id') }}`.replace(':id', lawyerId);
-        
+
         fetch(url, {
             method: 'POST',
             headers: {
@@ -882,14 +991,14 @@
     // Renew Subscription
     function renewSubscription(lawyerId) {
         const subscriptionId = document.getElementById('subscription_id').value;
-        
+
         if (!subscriptionId) {
             showToast('{{ trans("lawyer.select_subscription") }}', 'error');
             return;
         }
-        
+
         const url = `{{ route('admin.lawyers.renew-subscription', ':id') }}`.replace(':id', lawyerId);
-        
+
         fetch(url, {
             method: 'POST',
             headers: {
@@ -905,11 +1014,11 @@
         .then(data => {
             if (data.success) {
                 showToast(data.message, 'success');
-                
+
                 // Close modal
                 const modal = bootstrap.Modal.getInstance(document.getElementById('renewSubscriptionModal'));
                 modal.hide();
-                
+
                 // Reload page after short delay
                 setTimeout(() => {
                     window.location.reload();
@@ -933,7 +1042,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         `;
         document.body.appendChild(toast);
-        
+
         setTimeout(() => {
             toast.remove();
         }, 5000);
@@ -952,17 +1061,17 @@
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = '{{ route("admin.lawyers.destroy", $lawyer->id) }}';
-            
+
             const csrfToken = document.createElement('input');
             csrfToken.type = 'hidden';
             csrfToken.name = '_token';
             csrfToken.value = '{{ csrf_token() }}';
-            
+
             const methodInput = document.createElement('input');
             methodInput.type = 'hidden';
             methodInput.name = '_method';
             methodInput.value = 'DELETE';
-            
+
             form.appendChild(csrfToken);
             form.appendChild(methodInput);
             document.body.appendChild(form);
@@ -973,13 +1082,13 @@
     function saveOfficeHours() {
         const form = document.getElementById('officeHoursForm');
         const formData = new FormData(form);
-        
+
         // Show loading state
         const saveBtn = event.target;
         const originalText = saveBtn.innerHTML;
         saveBtn.disabled = true;
         saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>{{ trans("common.saving") }}...';
-        
+
         fetch('{{ route("admin.lawyers.update-office-hours", $lawyer->id) }}', {
             method: 'POST',
             headers: {
@@ -1000,11 +1109,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 `;
                 document.body.appendChild(alertDiv);
-                
+
                 // Close modal
                 const modal = bootstrap.Modal.getInstance(document.getElementById('editOfficeHoursModal'));
                 modal.hide();
-                
+
                 // Reload page after 1 second to show updated data
                 setTimeout(() => {
                     location.reload();
@@ -1023,7 +1132,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
             document.body.appendChild(alertDiv);
-            
+
             // Restore button state
             saveBtn.disabled = false;
             saveBtn.innerHTML = originalText;
@@ -1043,20 +1152,20 @@
     // Save Specializations
     function saveSpecializations() {
         const selectedSections = $('#sections_of_laws_modal').val();
-        
+
         if (!selectedSections || selectedSections.length === 0) {
             showToast('{{ trans("lawyer.select_at_least_one_specialization") }}', 'error');
             return;
         }
-        
+
         // Show loading state
         const saveBtn = event.target;
         const originalText = saveBtn.innerHTML;
         saveBtn.disabled = true;
         saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>{{ trans("common.saving") }}...';
-        
+
         const url = '{{ route("admin.lawyers.update-specializations", $lawyer->id) }}';
-        
+
         fetch(url, {
             method: 'POST',
             headers: {
@@ -1072,11 +1181,11 @@
         .then(data => {
             if (data.success) {
                 showToast(data.message, 'success');
-                
+
                 // Close modal
                 const modal = bootstrap.Modal.getInstance(document.getElementById('editSpecializationsModal'));
                 modal.hide();
-                
+
                 // Reload page after short delay
                 setTimeout(() => {
                     window.location.reload();
@@ -1087,7 +1196,7 @@
         })
         .catch(error => {
             showToast(error.message, 'error');
-            
+
             // Restore button state
             saveBtn.disabled = false;
             saveBtn.innerHTML = originalText;

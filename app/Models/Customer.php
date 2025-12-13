@@ -62,9 +62,10 @@ class Customer extends Model
     /**
      * Get the logo attachment
      */
-    public function logo(): MorphMany
+    public function logo()
     {
-        return $this->morphMany(Attachment::class, 'attachable')->where('type', 'logo');
+        return $this->morphOne(Attachment::class, 'attachable')->where('type', 'logo');
+
     }
 
     /**

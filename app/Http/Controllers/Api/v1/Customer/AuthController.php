@@ -9,6 +9,7 @@ use App\Http\Requests\Api\Lawyer\LoginRequest;
 use App\Http\Requests\Api\Lawyer\RegisterRequest;
 use App\Http\Requests\Api\Lawyer\ResetPasswordRequest;
 use App\Http\Requests\Api\Lawyer\UpdateProfileRequest;
+use App\Http\Requests\Api\RegisterRequest as ApiRegisterRequest;
 use App\Http\Resources\LawyerResource;
 use App\Services\LawyerService;
 use App\Traits\Res;
@@ -27,18 +28,18 @@ class AuthController extends Controller
     /**
      * Register a new lawyer
      */
-    public function register(RegisterRequest $request)
+    public function register(ApiRegisterRequest $request)
     {
         try {
             // Prepare data for lawyer creation
             $data = $request->validated();
-            
+
             // Set active to 0 by default for new registrations (pending admin approval)
             $data['active'] = 0;
 
             // Create the lawyer
             $lawyer = $this->lawyerService->register($data);
-            
+
             return $this->sendRes(
                 __('auth.your register is success but the account is under review'),
                 true,
@@ -76,9 +77,9 @@ class AuthController extends Controller
     // {
     //     try {
     //         // Get authenticated user from token
-    //         $user = $request->user();            
+    //         $user = $request->user();
     //         // Get lawyer data with relations
-    //         $lawyer = $this->lawyerService->getLawyerById($user->lawyer->id);            
+    //         $lawyer = $this->lawyerService->getLawyerById($user->lawyer->id);
     //         // Return successful response with lawyer resource
     //         return $this->sendRes(
     //             __('validation.success'),
@@ -125,7 +126,7 @@ class AuthController extends Controller
     //     } catch (\Exception $e) {
     //         return $this->sendRes($e->getMessage(), false, [], [], 500);
     //     }
-        
+
     // }
 
     // public function resetPassword(ResetPasswordRequest $request) {
@@ -153,13 +154,13 @@ class AuthController extends Controller
     //     } catch (\Exception $e) {
     //         return $this->sendRes($e->getMessage(), false, [], [], 500);
     //     }
-        
+
     // }
 
     // public function changePassword(ChangePasswordRequest $request) {
     //     try {
     //         // Get authenticated user from token
-    //         $user = $request->user();    
+    //         $user = $request->user();
     //         $res = $this->lawyerService->changePassword($user, $request->all());
     //         if($res['status']) {
     //             return $this->sendRes(
@@ -182,7 +183,7 @@ class AuthController extends Controller
     //     } catch (\Exception $e) {
     //         return $this->sendRes($e->getMessage(), false, [], [], 500);
     //     }
-        
+
     // }
 
 }

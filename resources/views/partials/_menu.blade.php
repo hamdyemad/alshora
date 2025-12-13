@@ -27,11 +27,12 @@
             </a>
         </li>
 
-        {{-- Monitoring comments and ratings from consultants --}}
+        {{-- Reviews of Lawyers --}}
         <li>
-            <a href="{{ route('admin.dashboard') }}">
+            <a href="{{ route('admin.reviews.index') }}"
+                class="{{ Request::is(LaravelLocalization::getCurrentLocale() . '/admin/reviews*') ? 'active' : '' }}">
                 <span class="nav-icon uil uil-star"></span>
-                <span class="menu-text">{{ trans('menu.monitoring comments.title') }}</span>
+                <span class="menu-text">{{ trans('menu.reviews.title') }}</span>
             </a>
         </li>
 
@@ -46,7 +47,8 @@
 
         {{-- Reservations --}}
         <li>
-            <a href="{{ route('admin.dashboard') }}">
+            <a href="{{ route('admin.reservations.index') }}"
+                class="{{ Request::is(LaravelLocalization::getCurrentLocale() . '/admin/reservations*') ? 'active' : '' }}">
                 <span class="nav-icon uil uil-calendar-alt"></span>
                 <span class="menu-text">{{ trans('menu.reservations.title') }}</span>
             </a>
@@ -118,27 +120,26 @@
         </li>
 
         {{-- Branches of Laws --}}
-        <li>
-            <a href="{{ route('admin.branches-of-laws.index') }}">
-                <span class="nav-icon uil uil-sitemap"></span>
+        <li class="has-child {{ request()->routeIs('admin.branches-of-laws.*') ? 'open' : '' }}">
+            <a href="#" class="{{ request()->routeIs('admin.branches-of-laws.*') ? 'active' : '' }}">
+                <span class="nav-icon uil uil-layers"></span>
                 <span class="menu-text">{{ trans('menu.branches_of_laws') }}</span>
             </a>
+            <ul>
+                <li><a href="{{ route('admin.branches-of-laws.index') }}" class="{{ request()->routeIs('admin.branches-of-laws.index') ? 'active' : '' }}">{{ trans('menu.all_branches') }}</a></li>
+                <li><a href="{{ route('admin.branches-of-laws.create') }}" class="{{ request()->routeIs('admin.branches-of-laws.create') ? 'active' : '' }}">{{ trans('menu.add_branch') }}</a></li>
+            </ul>
         </li>
 
-        {{-- Email messages (with children) --}}
-        <li class="has-child">
-            <a href="#" class="">
-                <span class="nav-icon uil uil-envelope"></span>
-                <span class="menu-text">{{ trans('menu.email messages.title') }}</span>
-                <span class="toggle-icon"></span>
+        {{-- Contracts --}}
+        <li class="has-child {{ request()->routeIs('admin.drafting-contracts.*', 'admin.drafting-lawsuits.*') ? 'open' : '' }}">
+            <a href="#" class="{{ request()->routeIs('admin.drafting-contracts.*', 'admin.drafting-lawsuits.*') ? 'active' : '' }}">
+                <span class="nav-icon uil uil-file-contract-dollar"></span>
+                <span class="menu-text">{{ trans('menu.contracts.title') }}</span>
             </a>
-            <ul class="px-0">
-                <li>
-                    <a href="{{ route('admin.dashboard') }}">{{ trans('menu.email messages.reservations') }}</a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.dashboard') }}">{{ trans('menu.email messages.judicial agenda') }}</a>
-                </li>
+            <ul>
+                <li><a href="{{ route('admin.drafting-contracts.index') }}" class="{{ request()->routeIs('admin.drafting-contracts.*') ? 'active' : '' }}">{{ trans('menu.contracts.drafting_contracts') }}</a></li>
+                <li><a href="{{ route('admin.drafting-lawsuits.index') }}" class="{{ request()->routeIs('admin.drafting-lawsuits.*') ? 'active' : '' }}">{{ trans('menu.contracts.drafting_lawsuits') }}</a></li>
             </ul>
         </li>
 

@@ -19,6 +19,12 @@ use App\Http\Controllers\SectionOfLawController;
 use App\Http\Controllers\InstructionController;
 use App\Http\Controllers\BranchOfLawController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\DraftingContractController;
+use App\Http\Controllers\DraftingLawsuitController;
+use App\Http\Controllers\LawController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +93,27 @@ Route::group(
 
         // Branches of Laws
         Route::resource('branches-of-laws', BranchOfLawController::class);
+
+        // Laws within Branches
+        Route::resource('branches-of-laws.laws', LawController::class);
+
+        // Contracts
+        Route::resource('drafting-contracts', DraftingContractController::class);
+        Route::resource('drafting-lawsuits', DraftingLawsuitController::class);
+
+        // Reviews
+        Route::resource('reviews', ReviewController::class);
+        Route::post('reviews/{review}/approve', [ReviewController::class, 'approve'])->name('reviews.approve');
+        Route::post('reviews/{review}/reject', [ReviewController::class, 'reject'])->name('reviews.reject');
+
+        // Reservations
+        Route::resource('reservations', ReservationController::class)->only(['index', 'show']);
+        Route::post('reservations/{reservation}/status', [ReservationController::class, 'updateStatus'])->name('reservations.update-status');
+
+        // Notifications routes
+        Route::get('notifications/unread', [NotificationController::class, 'getUnreadNotifications'])->name('notifications.unread');
+        Route::post('notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+        Route::post('notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
     });
 });
 

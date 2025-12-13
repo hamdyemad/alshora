@@ -20,6 +20,7 @@ use App\Interfaces\BranchOfLawRepositoryInterface;
 use App\Interfaces\RegisterGradeInterface;
 use App\Interfaces\SubscriptionRepositoryInterface;
 use App\Interfaces\AppointmentRepositoryInterface;
+use App\Interfaces\ReservationRepositoryInterface;
 use App\Repositories\CountryRepository;
 use App\Repositories\CityRepository;
 use App\Repositories\RegionRepository;
@@ -38,6 +39,7 @@ use App\Repositories\BranchOfLawRepository;
 use App\Repositories\RegisterGradeRepository;
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\AppointmentRepository;
+use App\Repositories\ReservationRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -67,6 +69,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RegisterGradeInterface::class, RegisterGradeRepository::class);
         $this->app->bind(SubscriptionRepositoryInterface::class, SubscriptionRepository::class);
         $this->app->bind(AppointmentRepositoryInterface::class, AppointmentRepository::class);
+        $this->app->bind(ReservationRepositoryInterface::class, ReservationRepository::class);
     }
 
     /**

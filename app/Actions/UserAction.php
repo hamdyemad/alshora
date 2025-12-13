@@ -44,11 +44,24 @@ class UserAction {
             if(!Hash::check($data['password'], $user->password)) {
                 return $this->sendData(__('auth.password'), false, [], [], 401);
             }
+            // Update FCM token if provided
+            if (isset($data['fcm_token']) && !empty($data['fcm_token'])) {
+                $user->fcm_token = $data['fcm_token'];
+                $user->save();
+            }
+
             $token = $user->createToken('Login');
-            $data = [
-                'token' => $token->plainTextToken
+            $responseData = [
+                'token' => $token->plainTextToken,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'user_type' => $user->user_type_id,
+                    'fcm_token_updated' => isset($data['fcm_token']) && !empty($data['fcm_token'])
+                ]
             ];
-            return $this->sendData(__('validation.success'), true, $data, [], 200);
+            return $this->sendData(__('validation.success'), true, $responseData, [], 200);
         } else {
             return $this->sendData(__('auth.Email Not Exists'), false, [], [], 401);
         }

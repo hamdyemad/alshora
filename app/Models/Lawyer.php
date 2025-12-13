@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Lawyer extends Model
 {
     use Translation, SoftDeletes;
-    
+
     protected $table = 'lawyers';
     protected $guarded = [];
 
@@ -90,6 +90,22 @@ class Lawyer extends Model
     }
 
     /**
+     * Get ID card back attachment
+     */
+    public function id_card_back()
+    {
+        return $this->morphOne(Attachment::class, 'attachable')->where('type', 'id_card_back');
+    }
+
+    /**
+     * Get lawyer license card attachment
+     */
+    public function lawyer_license_card()
+    {
+        return $this->morphOne(Attachment::class, 'attachable')->where('type', 'lawyer_license_card');
+    }
+
+    /**
      * Get the registration grade (degree of registration)
      */
     public function registrationGrade()
@@ -111,5 +127,17 @@ class Lawyer extends Model
     public function sectionsOfLaws()
     {
         return $this->belongsToMany(SectionOfLaw::class, 'lawyer_section_of_law');
+    }
+
+    /**
+     * Get all reviews for the lawyer
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function getNameAttribute() {
+        return $this->getTranslation('name', app()->getLocale());
     }
 }

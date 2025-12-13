@@ -100,6 +100,24 @@ class LawyerRepository implements LawyerRepositoryInterface
                 ]);
             }
 
+            if(isset($incommingData['id_card_back'])) {
+                // Store new image
+                $path = $incommingData['id_card_back']->store("lawyers/{$lawyer->id}", 'public');
+                $lawyer->attachments()->create([
+                    'path' => $path,
+                    'type' => 'id_card_back',
+                ]);
+            }
+
+            if(isset($incommingData['lawyer_license_card'])) {
+                // Store new image
+                $path = $incommingData['lawyer_license_card']->store("lawyers/{$lawyer->id}", 'public');
+                $lawyer->attachments()->create([
+                    'path' => $path,
+                    'type' => 'lawyer_license_card',
+                ]);
+            }
+
             // Set Translations
             $lawyer->setTranslation('name', 'en', $incommingData['name_en']);
             $lawyer->setTranslation('name', 'ar', $incommingData['name_ar']);
@@ -144,6 +162,8 @@ class LawyerRepository implements LawyerRepositoryInterface
         (isset($incommingData['instagram_url'])) ? $data['instagram_url'] = $incommingData['instagram_url'] : null;
         (isset($incommingData['telegram_url'])) ? $data['telegram_url'] = $incommingData['telegram_url'] : null;
         (isset($incommingData['twitter_url'])) ? $data['twitter_url'] = $incommingData['twitter_url'] : null;
+        (isset($incommingData['whatsapp_url'])) ? $data['whatsapp_url'] = $incommingData['whatsapp_url'] : null;
+        (isset($incommingData['location_link'])) ? $data['location_link'] = $incommingData['location_link'] : null;
         (isset($incommingData['registration_number'])) ? $data['registration_number'] = $incommingData['registration_number'] : null;
         return $data;
     }
@@ -179,6 +199,16 @@ class LawyerRepository implements LawyerRepositoryInterface
             // Handle ID card image upload
             if (isset($incommingData['id_card'])) {
                 $this->storeImage($lawyer, $incommingData['id_card'], 'id_card');
+            }
+
+            // Handle ID card back image upload
+            if (isset($incommingData['id_card_back'])) {
+                $this->storeImage($lawyer, $incommingData['id_card_back'], 'id_card_back');
+            }
+
+            // Handle lawyer license card image upload
+            if (isset($incommingData['lawyer_license_card'])) {
+                $this->storeImage($lawyer, $incommingData['lawyer_license_card'], 'lawyer_license_card');
             }
 
             // Update translations
@@ -240,7 +270,6 @@ class LawyerRepository implements LawyerRepositoryInterface
         $lawyer->attachments()->create([
             'path' => $path,
             'type' => $type,
-            'size' => $file->getSize(),
         ]);
     }
 

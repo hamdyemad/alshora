@@ -107,8 +107,13 @@ class AppointmentRepository implements AppointmentRepositoryInterface
     /**
      * Check if time slot is available
      */
-    public function isTimeSlotAvailable(int $lawyerId, string $date, string $timeSlot): bool
+    public function isTimeSlotAvailable(int $lawyerId, string $date, ?string $timeSlot): bool
     {
+        // If timeSlot is null, return false (not available)
+        if ($timeSlot === null) {
+            return false;
+        }
+
         return !Appointment::where('lawyer_id', $lawyerId)
             ->where('appointment_date', $date)
             ->where('time_slot', $timeSlot)

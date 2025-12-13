@@ -10,8 +10,8 @@
         'follow-up with lawyers' => [
             'title' => 'المتابعة مع المحامين'
         ],
-        'monitoring comments' => [
-            'title' => 'مراقبة التعليقات والتقييمات من المستشارين'
+        'reviews' => [
+            'title' => 'تقييمات المحامين'
         ],
         'customers' => [
             'title' => 'العملاء'
@@ -46,7 +46,14 @@
         ],
         'sections_of_laws' => 'أقسام القوانين',
         'instructions' => 'التعليمات',
-        'branches_of_laws' => 'فروع القوانين',
+        'branches_of_laws' => 'فروع القانون',
+        'all_branches' => 'جميع الفروع',
+        'add_branch' => 'إضافة فرع',
+        'contracts' => [
+            'title' => 'العقود',
+            'drafting_contracts' => 'صياغة العقود',
+            'drafting_lawsuits' => 'صياغة الدعاوى',
+        ],
         'destinations' => [
             'title' => 'الوجهات',
             'countries' => 'الدول',

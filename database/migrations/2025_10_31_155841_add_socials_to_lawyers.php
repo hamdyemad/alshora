@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('lawyers', function (Blueprint $table) {
-            $table->foreignId('facebook_url')->nullable();
-            $table->foreignId('twitter_url')->nullable();
-            $table->foreignId('instagram_url')->nullable();
-            $table->foreignId('telegram_url')->nullable();
+            $table->string('facebook_url')->nullable();
+            $table->string('twitter_url')->nullable();
+            $table->string('instagram_url')->nullable();
+            $table->string('telegram_url')->nullable();
         });
     }
 
@@ -24,11 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('facebook_url');
-            $table->dropColumn('twitter_url');
-            $table->dropColumn('instagram_url');
-            $table->dropColumn('telegram_url');
+        Schema::table('lawyers', function (Blueprint $table) {
+            $table->dropColumn(['facebook_url', 'twitter_url', 'instagram_url', 'telegram_url']);
         });
     }
 };

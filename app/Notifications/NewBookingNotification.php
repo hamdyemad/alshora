@@ -43,7 +43,7 @@ class NewBookingNotification extends Notification
     {
         return [
             'appointment_id' => $this->appointment->id,
-            'customer_name' => $this->appointment->customer->user->name ?? 'Unknown Customer',
+            'customer_name' => $this->appointment->customer->name ?? 'Unknown Customer',
             'date' => $this->appointment->appointment_date->format('Y-m-d'),
             'time' => $this->appointment->time_slot->format('H:i'),
             'message' => 'New appointment booking request',

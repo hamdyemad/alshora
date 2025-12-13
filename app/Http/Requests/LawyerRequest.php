@@ -44,7 +44,15 @@ class LawyerRequest extends FormRequest
             'experience_ar' => 'nullable|string',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'id_card' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'id_card_back' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'lawyer_license_card' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'active' => 'nullable|boolean',
+            'facebook_url' => 'nullable|url|max:500',
+            'instagram_url' => 'nullable|url|max:500',
+            'telegram_url' => 'nullable|url|max:500',
+            'twitter_url' => 'nullable|url|max:500',
+            'whatsapp_url' => 'nullable|url|max:500',
+            'location_link' => 'nullable|url|max:1000',
         ];
 
         // Email validation - unique for new lawyers, or unique except current lawyer when updating
@@ -52,7 +60,7 @@ class LawyerRequest extends FormRequest
             // Get the user_id from the lawyer
             $lawyer = \App\Models\Lawyer::find($lawyerId);
             $userIdToIgnore = $lawyer ? $lawyer->user_id : null;
-            
+
             $rules['email'] = [
                 'required',
                 'email',

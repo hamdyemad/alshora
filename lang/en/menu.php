@@ -10,8 +10,8 @@
         'follow-up with lawyers' => [
             'title' => 'Follow-up with lawyers'
         ],
-        'monitoring comments' => [
-            'title' => 'Monitoring comments and ratings from consultants'
+        'reviews' => [
+            'title' => 'Reviews of Lawyers'
         ],
         'customers' => [
             'title' => 'Customers'
@@ -47,6 +47,13 @@
         'sections_of_laws' => 'Sections of Laws',
         'instructions' => 'Instructions',
         'branches_of_laws' => 'Branches of Laws',
+        'all_branches' => 'All Branches',
+        'add_branch' => 'Add Branch',
+        'contracts' => [
+            'title' => 'Contracts',
+            'drafting_contracts' => 'Drafting Contracts',
+            'drafting_lawsuits' => 'Drafting Lawsuits',
+        ],
         'destinations' => [
             'title' => 'Destinations',
             'countries' => 'Countries',
