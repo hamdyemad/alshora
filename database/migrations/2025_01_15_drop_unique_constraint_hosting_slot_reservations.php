@@ -12,13 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('hosting_slot_reservations', function (Blueprint $table) {
-            if (Schema::hasTable('hosting_slot_reservations')) {
-                $indexName = 'hosting_slot_reservations_lawyer_id_hosting_time_id_unique';
-                $sm = Schema::getConnection()->getDoctrineSchemaManager();
-                $indexes = $sm->listTableIndexes('hosting_slot_reservations');
-                if (isset($indexes[$indexName])) {
-                    $table->dropUnique(['lawyer_id', 'hosting_time_id']);
-                }
+            try {
+                $table->dropUnique(['lawyer_id', 'hosting_time_id']);
+            } catch (\Exception $e) {
+                // Index doesn't exist, skip
             }
         });
     }
