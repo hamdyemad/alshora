@@ -20,7 +20,10 @@
             'title' => 'Reservations'
         ],
         'hosting' => [
-            'title' => 'Hosting'
+            'title' => 'Hosting',
+            'hosting' => 'Hosting',
+            'hosting_settings' => 'Hosting Settings',
+            'hosting_reservations' => 'Hosting Reservations'
         ],
         'support messages' => [
             'title' => 'Support messages'

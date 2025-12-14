@@ -20,7 +20,10 @@
             'title' => 'الحجوزات'
         ],
         'hosting' => [
-            'title' => 'الاستضافة'
+            'title' => 'الاستضافة',
+            'hosting' => 'الاستضافة',
+            'hosting_settings' => 'إعدادات الاستضافة',
+            'hosting_reservations' => 'حجوزات الاستضافة'
         ],
         'support messages' => [
             'title' => 'رسائل الدعم'

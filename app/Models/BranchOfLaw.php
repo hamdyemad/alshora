@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BranchOfLaw extends Model
 {
     use Translation, SoftDeletes;
-    
+
     protected $table = 'branches_of_laws';
     protected $guarded = [];
 
@@ -23,6 +23,17 @@ class BranchOfLaw extends Model
     public function attachments()
     {
         return $this->morphMany(Attachment::class, 'attachable');
+    }
+
+
+    function getTitleAttribute()
+    {
+        return $this->getTranslation('title', app()->getLocale());
+    }
+
+    function getDescriptionAttribute()
+    {
+        return $this->getTranslation('description', app()->getLocale());
     }
 
     /**

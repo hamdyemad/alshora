@@ -85,7 +85,7 @@ class AppointmentController extends Controller
 
             if ($perPage > 0) {
                 $data = [
-                    'data' => $appointments->items(),
+                    'items' => $appointments->items(),
                     'pagination' => [
                         'current_page' => $appointments->currentPage(),
                         'last_page' => $appointments->lastPage(),

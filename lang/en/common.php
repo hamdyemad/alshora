@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'validation_errors' => 'Validation Errors:',
     'id' => 'ID',
     'dashboard' => 'Dashboard',
     'add_new' => 'Add New',
@@ -18,6 +19,8 @@ return [
     'back' => 'Back',
     'search' => 'Search',
     'filter' => 'Filter',
+    'filters' => 'Filters',
+    'clear_filters' => 'Clear Filters',
     'export' => 'Export',
     'import' => 'Import',
     'download' => 'Download',
@@ -54,6 +57,8 @@ return [
     'total' => 'Total',
     'date_from' => 'Date From',
     'date_to' => 'Date To',
+    'from_date' => 'From Date',
+    'to_date' => 'To Date',
     'created_date_from' => 'Created From',
     'created_date_to' => 'Created To',
     'basic_information' => 'Basic Information',

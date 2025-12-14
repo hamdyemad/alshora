@@ -295,4 +295,143 @@ class FirebaseNotificationService
 
         return $this->sendToDevice($user->fcm_token, $title, $body, $data);
     }
+
+    /**
+     * Send hosting slot reservation approved notification
+     */
+    public function sendHostingSlotApprovedNotification($lawyer, $reservation)
+    {
+        if (!$lawyer->user->fcm_token) {
+            Log::warning('Lawyer does not have FCM token', ['lawyer_id' => $lawyer->id]);
+            return false;
+        }
+
+        $title = trans('notification.hosting_slot_approved_title');
+        $body = trans('notification.hosting_slot_approved_body', [
+            'day' => trans('hosting.' . strtolower($reservation->hostingTime->day)),
+            'time' => $reservation->hostingTime->from_time . ' - ' . $reservation->hostingTime->to_time
+        ]);
+
+        $data = [
+            'type' => 'hosting_slot_approved',
+            'reservation_id' => (string)$reservation->id,
+            'hosting_time_id' => (string)$reservation->hosting_time_id,
+            'day' => $reservation->hostingTime->day,
+            'from_time' => $reservation->hostingTime->from_time,
+            'to_time' => $reservation->hostingTime->to_time
+        ];
+
+        Log::info('Sending hosting slot approved notification', [
+            'lawyer_id' => $lawyer->id,
+            'reservation_id' => $reservation->id
+        ]);
+
+        return $this->sendToDevice($lawyer->user->fcm_token, $title, $body, $data);
+    }
+
+    /**
+     * Send hosting slot reservation rejected notification
+     */
+    public function sendHostingSlotRejectedNotification($lawyer, $reservation)
+    {
+        if (!$lawyer->user->fcm_token) {
+            Log::warning('Lawyer does not have FCM token', ['lawyer_id' => $lawyer->id]);
+            return false;
+        }
+
+        $title = trans('notification.hosting_slot_rejected_title');
+        $body = trans('notification.hosting_slot_rejected_body', [
+            'day' => trans('hosting.' . strtolower($reservation->hostingTime->day)),
+            'time' => $reservation->hostingTime->from_time . ' - ' . $reservation->hostingTime->to_time,
+            'reason' => $reservation->admin_notes ?? trans('notification.no_reason_provided')
+        ]);
+
+        $data = [
+            'type' => 'hosting_slot_rejected',
+            'reservation_id' => (string)$reservation->id,
+            'hosting_time_id' => (string)$reservation->hosting_time_id,
+            'day' => $reservation->hostingTime->day,
+            'from_time' => $reservation->hostingTime->from_time,
+            'to_time' => $reservation->hostingTime->to_time,
+            'reason' => $reservation->admin_notes ?? ''
+        ];
+
+        Log::info('Sending hosting slot rejected notification', [
+            'lawyer_id' => $lawyer->id,
+            'reservation_id' => $reservation->id
+        ]);
+
+        return $this->sendToDevice($lawyer->user->fcm_token, $title, $body, $data);
+    }
+
+    /**
+     * Send appointment approved notification to customer
+     */
+    public function sendAppointmentApprovedNotification($customer, $appointment, $lawyer)
+    {
+        if (!$customer->fcm_token) {
+            Log::warning('Customer does not have FCM token', ['customer_id' => $customer->id]);
+            return false;
+        }
+
+        $title = trans('notification.appointment_approved_title');
+        $body = trans('notification.appointment_approved_body', [
+            'lawyer' => $lawyer->user->name ?? 'Lawyer',
+            'date' => \Carbon\Carbon::parse($appointment->appointment_date)->format('M d, Y'),
+            'time' => \Carbon\Carbon::parse($appointment->time_slot)->format('h:i A')
+        ]);
+
+        $data = [
+            'type' => 'appointment_approved',
+            'appointment_id' => (string)$appointment->id,
+            'lawyer_id' => (string)$lawyer->id,
+            'lawyer_name' => $lawyer->user->name ?? '',
+            'appointment_date' => $appointment->appointment_date,
+            'time_slot' => $appointment->time_slot,
+            'status' => 'approved'
+        ];
+
+        Log::info('Sending appointment approved notification to customer', [
+            'customer_id' => $customer->id,
+            'appointment_id' => $appointment->id
+        ]);
+
+        return $this->sendToDevice($customer->fcm_token, $title, $body, $data);
+    }
+
+    /**
+     * Send appointment rejected notification to customer
+     */
+    public function sendAppointmentRejectedNotification($customer, $appointment, $lawyer, $reason)
+    {
+        if (!$customer->fcm_token) {
+            Log::warning('Customer does not have FCM token', ['customer_id' => $customer->id]);
+            return false;
+        }
+
+        $title = trans('notification.appointment_rejected_title');
+        $body = trans('notification.appointment_rejected_body', [
+            'lawyer' => $lawyer->user->name ?? 'Lawyer',
+            'date' => \Carbon\Carbon::parse($appointment->appointment_date)->format('M d, Y'),
+            'reason' => $reason
+        ]);
+
+        $data = [
+            'type' => 'appointment_rejected',
+            'appointment_id' => (string)$appointment->id,
+            'lawyer_id' => (string)$lawyer->id,
+            'lawyer_name' => $lawyer->user->name ?? '',
+            'appointment_date' => $appointment->appointment_date,
+            'time_slot' => $appointment->time_slot,
+            'status' => 'rejected',
+            'reason' => $reason
+        ];
+
+        Log::info('Sending appointment rejected notification to customer', [
+            'customer_id' => $customer->id,
+            'appointment_id' => $appointment->id
+        ]);
+
+        return $this->sendToDevice($customer->fcm_token, $title, $body, $data);
+    }
 }

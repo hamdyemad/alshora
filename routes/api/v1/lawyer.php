@@ -16,6 +16,8 @@ Route::group(['prefix' => 'lawyer'], function() {
     Route::post('office-work', [OfficeWorkController::class, 'updateOfficeWork'])->middleware('auth:sanctum', 'lawyer');
     Route::get('appointments', [\App\Http\Controllers\Api\v1\Lawyer\AppointmentController::class, 'index'])->middleware('auth:sanctum', 'lawyer');
     Route::put('appointments/{id}/status', [\App\Http\Controllers\Api\v1\Lawyer\AppointmentController::class, 'updateStatus'])->middleware('auth:sanctum', 'lawyer');
+    Route::post('appointments/{id}/approve', [\App\Http\Controllers\Api\v1\Lawyer\AppointmentController::class, 'approve'])->middleware('auth:sanctum', 'lawyer');
+    Route::post('appointments/{id}/reject', [\App\Http\Controllers\Api\v1\Lawyer\AppointmentController::class, 'reject'])->middleware('auth:sanctum', 'lawyer');
     Route::get('/{lawyer_id}', [LawyerController::class, 'show'])->middleware('auth:sanctum');
 });
 

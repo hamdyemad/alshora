@@ -25,6 +25,8 @@ use App\Http\Controllers\DraftingContractController;
 use App\Http\Controllers\DraftingLawsuitController;
 use App\Http\Controllers\LawController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\HostingController;
+use App\Http\Controllers\HostingReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,6 +116,19 @@ Route::group(
         Route::get('notifications/unread', [NotificationController::class, 'getUnreadNotifications'])->name('notifications.unread');
         Route::post('notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
         Route::post('notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+
+        // Hosting routes
+        Route::prefix('hosting')->name('hosting.')->group(function() {
+            Route::get('/', [HostingController::class, 'index'])->name('index');
+            Route::get('/settings', [HostingController::class, 'settings'])->name('settings');
+            Route::post('/settings', [HostingController::class, 'storeSettings'])->name('settings.store');
+
+            // Hosting reservations management
+            Route::get('/reservations', [HostingReservationController::class, 'index'])->name('reservations.index');
+            Route::get('/reservations/{reservation}', [HostingReservationController::class, 'show'])->name('reservations.show');
+            Route::post('/reservations/{reservation}/approve', [HostingReservationController::class, 'approve'])->name('reservations.approve');
+            Route::post('/reservations/{reservation}/reject', [HostingReservationController::class, 'reject'])->name('reservations.reject');
+        });
     });
 });
 

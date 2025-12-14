@@ -17,6 +17,21 @@ return [
     'appointment_completed_title' => 'Appointment Completed',
     'appointment_completed_body' => 'Your appointment on :date at :time has been marked as completed',
 
+    'appointment_approved_title' => 'Appointment Approved',
+    'appointment_approved_body' => 'Your appointment with :lawyer on :date at :time has been approved',
+
+    'appointment_rejected_title' => 'Appointment Rejected',
+    'appointment_rejected_body' => 'Your appointment with :lawyer on :date has been rejected. Reason: :reason',
+
+    // Hosting slot reservation notifications
+    'hosting_slot_approved_title' => 'Hosting Slot Approved',
+    'hosting_slot_approved_body' => 'Your hosting slot request for :day from :time has been approved',
+
+    'hosting_slot_rejected_title' => 'Hosting Slot Rejected',
+    'hosting_slot_rejected_body' => 'Your hosting slot request for :day from :time has been rejected. Reason: :reason',
+
+    'no_reason_provided' => 'No reason provided',
+
     // General notifications
     'notification_sent' => 'Notification sent successfully',
     'notification_failed' => 'Failed to send notification',

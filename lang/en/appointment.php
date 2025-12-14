@@ -23,4 +23,10 @@ return [
     'cancelled_successfully' => 'Appointment cancelled successfully',
     'invalid_office_hour' => 'Invalid office hour selected',
     'date_does_not_match_day' => 'Selected date does not match the office hour day',
+    'updated_successfully' => 'Appointment updated successfully',
+    'approved_successfully' => 'Appointment approved successfully',
+    'rejected_successfully' => 'Appointment rejected successfully',
+    'unauthorized' => 'You are not authorized to perform this action',
+    'cannot_approve_non_pending' => 'Can only approve pending appointments',
+    'cannot_reject_non_pending' => 'Can only reject pending appointments',
 ];

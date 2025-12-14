@@ -42,6 +42,33 @@ class Handler extends ExceptionHandler
         });
     }
 
+
+    public function render($request, Throwable $e)
+    {
+        if ($request->expectsJson() || $request->is('api/*')) {
+            $statusCode = method_exists($e, 'getStatusCode')
+                ? $e->getStatusCode()
+                : 500;
+
+            return $this->sendRes(
+                $e->getMessage(),
+                false,
+                [],
+                app()->isProduction()
+                    ? []
+                    : [
+                        'exception' => class_basename($e),
+                        'message' => $e->getMessage(),
+                        'file' => $e->getFile(),
+                        'line' => $e->getLine(),
+                    ],
+                $statusCode
+            );
+        }
+
+        return parent::render($request, $e);
+    }
+
     /**
      * Handle unauthenticated users for API
      */

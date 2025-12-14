@@ -45,6 +45,7 @@ return [
     'created_successfully' => 'تم إنشاء فرع القانون بنجاح',
     'updated_successfully' => 'تم تحديث فرع القانون بنجاح',
     'deleted_successfully' => 'تم حذف فرع القانون بنجاح',
+    'retrieved_successfully' => 'تم استرجاع فروع القوانين بنجاح',
     'not_found' => 'فرع القانون غير موجود',
     'error_creating' => 'خطأ في إنشاء فرع القانون',
     'error_updating' => 'خطأ في تحديث فرع القانون',

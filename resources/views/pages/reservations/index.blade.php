@@ -183,14 +183,11 @@
                                                     <option value="pending" {{ $appointment->status == 'pending' ? 'selected' : '' }}>
                                                         {{ trans('reservation.pending') }}
                                                     </option>
-                                                    <option value="confirmed" {{ $appointment->status == 'confirmed' ? 'selected' : '' }}>
-                                                        {{ trans('reservation.confirmed') }}
+                                                    <option value="approved" {{ $appointment->status == 'approved' ? 'selected' : '' }}>
+                                                        {{ trans('reservation.approved') }}
                                                     </option>
-                                                    <option value="completed" {{ $appointment->status == 'completed' ? 'selected' : '' }}>
-                                                        {{ trans('reservation.completed') }}
-                                                    </option>
-                                                    <option value="cancelled" {{ $appointment->status == 'cancelled' ? 'selected' : '' }}>
-                                                        {{ trans('reservation.cancelled') }}
+                                                    <option value="rejected" {{ $appointment->status == 'rejected' ? 'selected' : '' }}>
+                                                        {{ trans('reservation.rejected') }}
                                                     </option>
                                                 </select>
                                             </td>

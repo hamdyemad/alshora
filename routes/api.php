@@ -11,6 +11,8 @@ Route::get('/user', function (Request $request) {
 // API v1 routes
 Route::prefix('v1')->group(function () {
     require __DIR__ . '/api/v1/reviews.php';
+    require __DIR__ . '/api/v1/hosting.php';
+    require __DIR__ . '/api/v1/branches_of_laws.php';
 });
 
 // Notification routes

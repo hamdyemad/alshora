@@ -137,6 +137,14 @@ class Lawyer extends Model
         return $this->hasMany(Review::class);
     }
 
+    /**
+     * Get the hosting slot reservations for the lawyer
+     */
+    public function hostingSlotReservations()
+    {
+        return $this->hasMany(HostingSlotReservation::class);
+    }
+
     public function getNameAttribute() {
         return $this->getTranslation('name', app()->getLocale());
     }

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Law extends Model
 {
     use Translation, SoftDeletes;
-    
+
     protected $table = 'laws';
     protected $guarded = [];
 
@@ -24,4 +24,17 @@ class Law extends Model
     {
         return $this->belongsTo(BranchOfLaw::class);
     }
+
+
+    function getTitleAttribute()
+    {
+        return $this->getTranslation('title', app()->getLocale());
+    }
+
+    function getDescriptionAttribute()
+    {
+        return $this->getTranslation('description', app()->getLocale());
+    }
+
+
 }

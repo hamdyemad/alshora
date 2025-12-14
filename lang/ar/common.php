@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'validation_errors' => 'أخطاء التحقق:',
     'id' => 'رقم التعريف',
     'dashboard' => 'لوحة التحكم',
     'add_new' => 'إضافة جديد',
@@ -18,6 +19,8 @@ return [
     'back' => 'رجوع',
     'search' => 'بحث',
     'filter' => 'تصفية',
+    'filters' => 'الفلاتر',
+    'clear_filters' => 'مسح الفلاتر',
     'export' => 'تصدير',
     'import' => 'استيراد',
     'download' => 'تنزيل',
@@ -54,6 +57,8 @@ return [
     'total' => 'الإجمالي',
     'date_from' => 'من تاريخ',
     'date_to' => 'إلى تاريخ',
+    'from_date' => 'من تاريخ',
+    'to_date' => 'إلى تاريخ',
     'created_date_from' => 'تاريخ الإنشاء من',
     'created_date_to' => 'تاريخ الإنشاء إلى',
     'basic_information' => 'المعلومات الأساسية',

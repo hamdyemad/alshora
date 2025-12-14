@@ -28,9 +28,8 @@ return [
 
     // Status values
     'pending' => 'Pending',
-    'confirmed' => 'Confirmed',
-    'completed' => 'Completed',
-    'cancelled' => 'Cancelled',
+    'approved' => 'Approved',
+    'rejected' => 'Rejected',
 
     // Appointment information
     'appointment_information' => 'Appointment Information',

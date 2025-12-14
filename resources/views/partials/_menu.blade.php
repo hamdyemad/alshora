@@ -64,11 +64,29 @@
         </li>
 
         {{-- Hosting --}}
-        <li>
-            <a href="{{ route('admin.dashboard') }}">
+        <li class="has-child {{ request()->routeIs('admin.hosting.*') ? 'open' : '' }}">
+            <a href="#" class="{{ request()->routeIs('admin.hosting.*') ? 'active' : '' }}">
                 <span class="nav-icon uil uil-server"></span>
                 <span class="menu-text">{{ trans('menu.hosting.title') }}</span>
+                <span class="toggle-icon"></span>
             </a>
+            <ul class="px-0">
+                <li>
+                    <a href="{{ route('admin.hosting.index') }}" class="{{ request()->routeIs('admin.hosting.index') ? 'active' : '' }}">
+                        {{ trans('menu.hosting.hosting') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.hosting.settings') }}" class="{{ request()->routeIs('admin.hosting.settings') ? 'active' : '' }}">
+                        {{ trans('menu.hosting.hosting_settings') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.hosting.reservations.index') }}" class="{{ request()->routeIs('admin.hosting.reservations.*') ? 'active' : '' }}">
+                        {{ trans('menu.hosting.hosting_reservations') }}
+                    </a>
+                </li>
+            </ul>
         </li>
 
         {{-- Support messages --}}

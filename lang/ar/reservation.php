@@ -28,9 +28,8 @@ return [
 
     // Status values
     'pending' => 'في الانتظار',
-    'confirmed' => 'مؤكد',
-    'completed' => 'مكتمل',
-    'cancelled' => 'ملغي',
+    'approved' => 'مقبول',
+    'rejected' => 'مرفوض',
 
     // Appointment information
     'appointment_information' => 'معلومات الموعد',

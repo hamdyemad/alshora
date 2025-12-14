@@ -17,7 +17,7 @@ class PostController extends Controller
     {
         $per_page = request('per_page') ?? 0;
 
-        $posts = Post::with(['user', 'likes', 'comments'])
+        $posts = Post::with(['user', 'likes', 'comments.user'])
             ->withCount(['likes', 'comments'])
             ->latest();
 

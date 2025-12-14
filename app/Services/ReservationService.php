@@ -37,7 +37,7 @@ class ReservationService
     public function updateAppointmentStatus(int $id, string $status): bool
     {
         // Validate status
-        $validStatuses = ['pending', 'confirmed', 'completed', 'cancelled'];
+        $validStatuses = ['pending', 'approved', 'rejected'];
         if (!in_array($status, $validStatuses)) {
             throw new \InvalidArgumentException('Invalid status provided');
         }
@@ -56,9 +56,8 @@ class ReservationService
         return [
             'total_appointments' => array_sum($statusCounts),
             'pending_count' => $statusCounts['pending'] ?? 0,
-            'confirmed_count' => $statusCounts['confirmed'] ?? 0,
-            'completed_count' => $statusCounts['completed'] ?? 0,
-            'cancelled_count' => $statusCounts['cancelled'] ?? 0,
+            'approved_count' => $statusCounts['approved'] ?? 0,
+            'rejected_count' => $statusCounts['rejected'] ?? 0,
             'recent_appointments' => $recentAppointments,
             'status_counts' => $statusCounts
         ];
@@ -94,7 +93,7 @@ class ReservationService
     public function getFilterOptions(): array
     {
         $lawyers = Lawyer::with('user')->get();
-        $statuses = ['pending', 'confirmed', 'completed', 'cancelled'];
+        $statuses = ['pending', 'approved', 'rejected'];
 
         return [
             'lawyers' => $lawyers,
@@ -116,7 +115,7 @@ class ReservationService
 
         // Validate status
         if (!empty($filters['status'])) {
-            $validStatuses = ['pending', 'confirmed', 'completed', 'cancelled'];
+            $validStatuses = ['pending', 'approved', 'rejected'];
             if (in_array($filters['status'], $validStatuses)) {
                 $validatedFilters['status'] = $filters['status'];
             }

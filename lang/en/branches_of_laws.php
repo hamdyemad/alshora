@@ -45,6 +45,7 @@ return [
     'created_successfully' => 'Branch of law created successfully',
     'updated_successfully' => 'Branch of law updated successfully',
     'deleted_successfully' => 'Branch of law deleted successfully',
+    'retrieved_successfully' => 'Branches of laws retrieved successfully',
     'not_found' => 'Branch of law not found',
     'error_creating' => 'Error creating branch of law',
     'error_updating' => 'Error updating branch of law',

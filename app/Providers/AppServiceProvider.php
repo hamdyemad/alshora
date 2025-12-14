@@ -17,10 +17,13 @@ use App\Interfaces\NewsRepositoryInterface;
 use App\Interfaces\SectionOfLawRepositoryInterface;
 use App\Interfaces\InstructionRepositoryInterface;
 use App\Interfaces\BranchOfLawRepositoryInterface;
+use App\Interfaces\DraftingContractRepositoryInterface;
+use App\Interfaces\DraftingLawsuitRepositoryInterface;
 use App\Interfaces\RegisterGradeInterface;
 use App\Interfaces\SubscriptionRepositoryInterface;
 use App\Interfaces\AppointmentRepositoryInterface;
 use App\Interfaces\ReservationRepositoryInterface;
+use App\Interfaces\HostingSlotReservationRepositoryInterface;
 use App\Repositories\CountryRepository;
 use App\Repositories\CityRepository;
 use App\Repositories\RegionRepository;
@@ -36,10 +39,14 @@ use App\Repositories\NewsRepository;
 use App\Repositories\SectionOfLawRepository;
 use App\Repositories\InstructionRepository;
 use App\Repositories\BranchOfLawRepository;
+use App\Repositories\DraftingContractRepository;
+use App\Repositories\DraftingLawsuitRepository;
 use App\Repositories\RegisterGradeRepository;
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\AppointmentRepository;
 use App\Repositories\ReservationRepository;
+use App\Repositories\HostingSlotReservationRepository;
+use App\Services\HostingSlotReservationService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -66,10 +73,18 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SectionOfLawRepositoryInterface::class, SectionOfLawRepository::class);
         $this->app->bind(InstructionRepositoryInterface::class, InstructionRepository::class);
         $this->app->bind(BranchOfLawRepositoryInterface::class, BranchOfLawRepository::class);
+        $this->app->bind(DraftingContractRepositoryInterface::class, DraftingContractRepository::class);
+        $this->app->bind(DraftingLawsuitRepositoryInterface::class, DraftingLawsuitRepository::class);
         $this->app->bind(RegisterGradeInterface::class, RegisterGradeRepository::class);
         $this->app->bind(SubscriptionRepositoryInterface::class, SubscriptionRepository::class);
         $this->app->bind(AppointmentRepositoryInterface::class, AppointmentRepository::class);
         $this->app->bind(ReservationRepositoryInterface::class, ReservationRepository::class);
+        $this->app->bind(HostingSlotReservationRepositoryInterface::class, HostingSlotReservationRepository::class);
+        $this->app->singleton(HostingSlotReservationService::class, function ($app) {
+            return new HostingSlotReservationService(
+                $app->make(HostingSlotReservationRepositoryInterface::class)
+            );
+        });
     }
 
     /**

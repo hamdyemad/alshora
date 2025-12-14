@@ -23,4 +23,10 @@ return [
     'cancelled_successfully' => 'تم إلغاء الموعد بنجاح',
     'invalid_office_hour' => 'ساعة العمل المحددة غير صحيحة',
     'date_does_not_match_day' => 'التاريخ المحدد لا يتطابق مع يوم ساعة العمل',
+    'updated_successfully' => 'تم تحديث الموعد بنجاح',
+    'approved_successfully' => 'تم قبول الموعد بنجاح',
+    'rejected_successfully' => 'تم رفض الموعد بنجاح',
+    'unauthorized' => 'غير مصرح لك بتنفيذ هذا الإجراء',
+    'cannot_approve_non_pending' => 'يمكن فقط قبول المواعيد المعلقة',
+    'cannot_reject_non_pending' => 'يمكن فقط رفض المواعيد المعلقة',
 ];
