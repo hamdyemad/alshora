@@ -49,7 +49,6 @@ class CustomerRepository implements CustomerRepositoryInterface
             // Prepare customer data
             $customerData = [
                 'user_id' => $user->id,
-                'name' => $data['name'],
                 'phone' => $data['phone'],
                 'phone_country_id' => $data['phone_country_id'],
                 'address' => $data['address'] ?? null,
