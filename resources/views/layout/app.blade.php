@@ -23,16 +23,16 @@
             @include('partials._footer')
         </footer>
     </main>
-    
+
     {{-- WhatsApp Floating Button --}}
     @include('partials.whatsapp-button')
-    
+
     {{-- Message Wrapper for Notifications --}}
     <div class="message-wrapper"></div>
-    
+
     {{-- Loading Overlay Stack --}}
     @stack('after-body')
-    
+
     <div id="overlayer">
         <span class="loader-overlay">
             <div class="dm-spin-dots spin-lg">
@@ -68,7 +68,7 @@
 
             const messageId = 'msg-' + Date.now();
             const iconClass = icon;
-            
+
             const messageHTML = `
                 <div id="${messageId}" class="alert-message alert alert-${type} alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideInRight 0.3s ease;">
                     <div class="alert-content d-flex align-items-center">
@@ -78,9 +78,9 @@
                     </div>
                 </div>
             `;
-            
+
             messageWrapper.insertAdjacentHTML('beforeend', messageHTML);
-            
+
             // Auto remove after duration
             setTimeout(() => {
                 const msgElement = document.getElementById(messageId);
@@ -116,7 +116,7 @@
                 opacity: 1;
             }
         }
-        
+
         @keyframes slideOutRight {
             from {
                 transform: translateX(0);
@@ -149,6 +149,9 @@
         }
     </style>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     @stack('scripts')
 </body>
 </html>

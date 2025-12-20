@@ -9,6 +9,8 @@ return [
     'view' => 'عرض',
     'edit' => 'تعديل',
     'delete' => 'حذف',
+    'remove' => 'إزالة',
+    'change' => 'تغيير',
     'create' => 'إنشاء',
     'update' => 'تحديث',
     'save' => 'حفظ',
@@ -74,4 +76,6 @@ return [
     'egp' => 'جنية',
     'open_in_google_maps' => 'فتح في خرائط جوجل',
     'no_data_available' => 'لا توجد بيانات متاحة',
+    'select_lawyer' => 'اختر المحامي',
+    'action' => 'الإجراء',
 ];

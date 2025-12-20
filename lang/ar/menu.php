@@ -56,6 +56,13 @@
             'title' => 'العقود',
             'drafting_contracts' => 'صياغة العقود',
             'drafting_lawsuits' => 'صياغة الدعاوى',
+            'measures' => 'الإجراءات',
+        ],
+        'store' => [
+            'title' => 'المتجر',
+            'categories' => 'الفئات',
+            'products' => 'المنتجات',
+            'orders' => 'الطلبات',
         ],
         'destinations' => [
             'title' => 'الوجهات',

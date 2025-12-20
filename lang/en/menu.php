@@ -56,6 +56,13 @@
             'title' => 'Contracts',
             'drafting_contracts' => 'Drafting Contracts',
             'drafting_lawsuits' => 'Drafting Lawsuits',
+            'measures' => 'Measures',
+        ],
+        'store' => [
+            'title' => 'Store',
+            'categories' => 'Categories',
+            'products' => 'Products',
+            'orders' => 'Orders',
         ],
         'destinations' => [
             'title' => 'Destinations',

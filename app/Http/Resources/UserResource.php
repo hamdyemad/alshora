@@ -16,6 +16,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'type' => $this->user_type->name ?? 'user',
             'avatar' => null,
+            'fcm_token' => $this->fcm_token,
         ];
 
         // Try to get avatar from lawyer or customer profile

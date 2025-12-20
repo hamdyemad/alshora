@@ -24,6 +24,16 @@ use App\Interfaces\SubscriptionRepositoryInterface;
 use App\Interfaces\AppointmentRepositoryInterface;
 use App\Interfaces\ReservationRepositoryInterface;
 use App\Interfaces\HostingSlotReservationRepositoryInterface;
+use App\Interfaces\MeasureRepositoryInterface;
+use App\Interfaces\StoreCategoryRepositoryInterface;
+use App\Interfaces\StoreProductRepositoryInterface;
+use App\Interfaces\StoreOrderRepositoryInterface;
+use App\Interfaces\StoreCartRepositoryInterface;
+use App\Repositories\MeasureRepository;
+use App\Repositories\StoreCategoryRepository;
+use App\Repositories\StoreProductRepository;
+use App\Repositories\StoreOrderRepository;
+use App\Repositories\StoreCartRepository;
 use App\Repositories\CountryRepository;
 use App\Repositories\CityRepository;
 use App\Repositories\RegionRepository;
@@ -80,6 +90,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AppointmentRepositoryInterface::class, AppointmentRepository::class);
         $this->app->bind(ReservationRepositoryInterface::class, ReservationRepository::class);
         $this->app->bind(HostingSlotReservationRepositoryInterface::class, HostingSlotReservationRepository::class);
+        $this->app->bind(MeasureRepositoryInterface::class, MeasureRepository::class);
+        $this->app->bind(StoreCategoryRepositoryInterface::class, StoreCategoryRepository::class);
+        $this->app->bind(StoreProductRepositoryInterface::class, StoreProductRepository::class);
+        $this->app->bind(StoreOrderRepositoryInterface::class, StoreOrderRepository::class);
+        $this->app->bind(StoreCartRepositoryInterface::class, StoreCartRepository::class);
         $this->app->singleton(HostingSlotReservationService::class, function ($app) {
             return new HostingSlotReservationService(
                 $app->make(HostingSlotReservationRepositoryInterface::class)

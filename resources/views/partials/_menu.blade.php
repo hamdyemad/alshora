@@ -142,6 +142,7 @@
             <a href="#" class="{{ request()->routeIs('admin.branches-of-laws.*') ? 'active' : '' }}">
                 <span class="nav-icon uil uil-layers"></span>
                 <span class="menu-text">{{ trans('menu.branches_of_laws') }}</span>
+                <span class="toggle-icon"></span>
             </a>
             <ul>
                 <li><a href="{{ route('admin.branches-of-laws.index') }}" class="{{ request()->routeIs('admin.branches-of-laws.index') ? 'active' : '' }}">{{ trans('menu.all_branches') }}</a></li>
@@ -150,14 +151,30 @@
         </li>
 
         {{-- Contracts --}}
-        <li class="has-child {{ request()->routeIs('admin.drafting-contracts.*', 'admin.drafting-lawsuits.*') ? 'open' : '' }}">
-            <a href="#" class="{{ request()->routeIs('admin.drafting-contracts.*', 'admin.drafting-lawsuits.*') ? 'active' : '' }}">
+        <li class="has-child {{ request()->routeIs('admin.drafting-contracts.*', 'admin.drafting-lawsuits.*', 'admin.measures.*') ? 'open' : '' }}">
+            <a href="#" class="{{ request()->routeIs('admin.drafting-contracts.*', 'admin.drafting-lawsuits.*', 'admin.measures.*') ? 'active' : '' }}">
                 <span class="nav-icon uil uil-file-contract-dollar"></span>
                 <span class="menu-text">{{ trans('menu.contracts.title') }}</span>
+                <span class="toggle-icon"></span>
             </a>
             <ul>
                 <li><a href="{{ route('admin.drafting-contracts.index') }}" class="{{ request()->routeIs('admin.drafting-contracts.*') ? 'active' : '' }}">{{ trans('menu.contracts.drafting_contracts') }}</a></li>
                 <li><a href="{{ route('admin.drafting-lawsuits.index') }}" class="{{ request()->routeIs('admin.drafting-lawsuits.*') ? 'active' : '' }}">{{ trans('menu.contracts.drafting_lawsuits') }}</a></li>
+                <li><a href="{{ route('admin.measures.index') }}" class="{{ request()->routeIs('admin.measures.*') ? 'active' : '' }}">{{ trans('menu.contracts.measures') }}</a></li>
+            </ul>
+        </li>
+
+        {{-- Store --}}
+        <li class="has-child {{ request()->routeIs('admin.store.*') ? 'open' : '' }}">
+            <a href="#" class="{{ request()->routeIs('admin.store.*') ? 'active' : '' }}">
+                <span class="nav-icon uil uil-shopping-bag"></span>
+                <span class="menu-text">{{ trans('menu.store.title') }}</span>
+                <span class="toggle-icon"></span>
+            </a>
+            <ul>
+                <li><a href="{{ route('admin.store.categories.index') }}" class="{{ request()->routeIs('admin.store.categories.*') ? 'active' : '' }}">{{ trans('menu.store.categories') }}</a></li>
+                <li><a href="{{ route('admin.store.products.index') }}" class="{{ request()->routeIs('admin.store.products.*') ? 'active' : '' }}">{{ trans('menu.store.products') }}</a></li>
+                <li><a href="{{ route('admin.store.orders.index') }}" class="{{ request()->routeIs('admin.store.orders.*') ? 'active' : '' }}">{{ trans('menu.store.orders') }}</a></li>
             </ul>
         </li>
 

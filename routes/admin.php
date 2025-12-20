@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
@@ -23,6 +24,10 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DraftingContractController;
 use App\Http\Controllers\DraftingLawsuitController;
+use App\Http\Controllers\MeasureController;
+use App\Http\Controllers\StoreCategoryController;
+use App\Http\Controllers\StoreProductController;
+use App\Http\Controllers\StoreOrderController;
 use App\Http\Controllers\LawController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\HostingController;
@@ -102,6 +107,16 @@ Route::group(
         // Contracts
         Route::resource('drafting-contracts', DraftingContractController::class);
         Route::resource('drafting-lawsuits', DraftingLawsuitController::class);
+        Route::resource('measures', MeasureController::class);
+
+        // Store
+        Route::prefix('store')->name('store.')->group(function() {
+            Route::resource('categories', StoreCategoryController::class);
+            Route::get('products/search', [StoreProductController::class, 'search'])->name('products.search');
+            Route::resource('products', StoreProductController::class);
+            Route::resource('orders', StoreOrderController::class);
+            Route::post('orders/{order}/status', [StoreOrderController::class, 'updateStatus'])->name('orders.update-status');
+        });
 
         // Reviews
         Route::resource('reviews', ReviewController::class);

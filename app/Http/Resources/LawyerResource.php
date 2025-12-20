@@ -41,6 +41,7 @@ class LawyerResource extends JsonResource
             'twitter_url' => $this->twitter_url ?? '',
             'instagram_url' => $this->instagram_url ?? '',
             'telegram_url' => $this->telegram_url ?? '',
+            'fcm_token' => $this->user?->fcm_token ?? '',
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

@@ -9,6 +9,8 @@ return [
     'view' => 'View',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'remove' => 'Remove',
+    'change' => 'Change',
     'create' => 'Create',
     'update' => 'Update',
     'save' => 'Save',
@@ -74,4 +76,6 @@ return [
     'egp' => 'EGP',
     'open_in_google_maps' => 'Open in Google Maps',
     'no_data_available' => 'No data available',
+    'select_lawyer' => 'Select Lawyer',
+    'action' => 'Action',
 ];
