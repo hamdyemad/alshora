@@ -32,6 +32,8 @@ use App\Http\Controllers\LawController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\HostingController;
 use App\Http\Controllers\HostingReservationController;
+use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\PreparerAgendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +93,10 @@ Route::group(
 
         // News
         Route::resource('news', NewsController::class);
+
+        // Agendas
+        Route::resource('agendas', AgendaController::class)->only(['index', 'show', 'destroy']);
+        Route::resource('preparer-agendas', PreparerAgendaController::class)->only(['index', 'show', 'destroy']);
 
         // Sections of Laws
         Route::resource('sections-of-laws', SectionOfLawController::class);

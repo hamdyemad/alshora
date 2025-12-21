@@ -72,17 +72,20 @@
             </a>
             <ul class="px-0">
                 <li>
-                    <a href="{{ route('admin.hosting.index') }}" class="{{ request()->routeIs('admin.hosting.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.hosting.index') }}"
+                        class="{{ request()->routeIs('admin.hosting.index') ? 'active' : '' }}">
                         {{ trans('menu.hosting.hosting') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.hosting.settings') }}" class="{{ request()->routeIs('admin.hosting.settings') ? 'active' : '' }}">
+                    <a href="{{ route('admin.hosting.settings') }}"
+                        class="{{ request()->routeIs('admin.hosting.settings') ? 'active' : '' }}">
                         {{ trans('menu.hosting.hosting_settings') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.hosting.reservations.index') }}" class="{{ request()->routeIs('admin.hosting.reservations.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.hosting.reservations.index') }}"
+                        class="{{ request()->routeIs('admin.hosting.reservations.*') ? 'active' : '' }}">
                         {{ trans('menu.hosting.hosting_reservations') }}
                     </a>
                 </li>
@@ -121,6 +124,24 @@
             </a>
         </li>
 
+        {{-- Agenda --}}
+        <li>
+            <a href="{{ route('admin.agendas.index') }}"
+                class="{{ Request::is(LaravelLocalization::getCurrentLocale() . '/admin/agendas*') ? 'active' : '' }}">
+                <span class="nav-icon uil uil-clipboard-notes"></span>
+                <span class="menu-text">{{ trans('agenda.agenda_management') }}</span>
+            </a>
+        </li>
+
+        {{-- Preparer Agenda --}}
+        <li>
+            <a href="{{ route('admin.preparer-agendas.index') }}"
+                class="{{ Request::is(LaravelLocalization::getCurrentLocale() . '/admin/preparer-agendas*') ? 'active' : '' }}">
+                <span class="nav-icon uil uil-file-check-alt"></span>
+                <span class="menu-text">{{ trans('agenda.preparer_agenda_management') }}</span>
+            </a>
+        </li>
+
         {{-- Sections of Laws --}}
         <li>
             <a href="{{ route('admin.sections-of-laws.index') }}">
@@ -145,22 +166,34 @@
                 <span class="toggle-icon"></span>
             </a>
             <ul>
-                <li><a href="{{ route('admin.branches-of-laws.index') }}" class="{{ request()->routeIs('admin.branches-of-laws.index') ? 'active' : '' }}">{{ trans('menu.all_branches') }}</a></li>
-                <li><a href="{{ route('admin.branches-of-laws.create') }}" class="{{ request()->routeIs('admin.branches-of-laws.create') ? 'active' : '' }}">{{ trans('menu.add_branch') }}</a></li>
+                <li><a href="{{ route('admin.branches-of-laws.index') }}"
+                        class="{{ request()->routeIs('admin.branches-of-laws.index') ? 'active' : '' }}">{{ trans('menu.all_branches') }}</a>
+                </li>
+                <li><a href="{{ route('admin.branches-of-laws.create') }}"
+                        class="{{ request()->routeIs('admin.branches-of-laws.create') ? 'active' : '' }}">{{ trans('menu.add_branch') }}</a>
+                </li>
             </ul>
         </li>
 
         {{-- Contracts --}}
-        <li class="has-child {{ request()->routeIs('admin.drafting-contracts.*', 'admin.drafting-lawsuits.*', 'admin.measures.*') ? 'open' : '' }}">
-            <a href="#" class="{{ request()->routeIs('admin.drafting-contracts.*', 'admin.drafting-lawsuits.*', 'admin.measures.*') ? 'active' : '' }}">
+        <li
+            class="has-child {{ request()->routeIs('admin.drafting-contracts.*', 'admin.drafting-lawsuits.*', 'admin.measures.*') ? 'open' : '' }}">
+            <a href="#"
+                class="{{ request()->routeIs('admin.drafting-contracts.*', 'admin.drafting-lawsuits.*', 'admin.measures.*') ? 'active' : '' }}">
                 <span class="nav-icon uil uil-file-contract-dollar"></span>
                 <span class="menu-text">{{ trans('menu.contracts.title') }}</span>
                 <span class="toggle-icon"></span>
             </a>
             <ul>
-                <li><a href="{{ route('admin.drafting-contracts.index') }}" class="{{ request()->routeIs('admin.drafting-contracts.*') ? 'active' : '' }}">{{ trans('menu.contracts.drafting_contracts') }}</a></li>
-                <li><a href="{{ route('admin.drafting-lawsuits.index') }}" class="{{ request()->routeIs('admin.drafting-lawsuits.*') ? 'active' : '' }}">{{ trans('menu.contracts.drafting_lawsuits') }}</a></li>
-                <li><a href="{{ route('admin.measures.index') }}" class="{{ request()->routeIs('admin.measures.*') ? 'active' : '' }}">{{ trans('menu.contracts.measures') }}</a></li>
+                <li><a href="{{ route('admin.drafting-contracts.index') }}"
+                        class="{{ request()->routeIs('admin.drafting-contracts.*') ? 'active' : '' }}">{{ trans('menu.contracts.drafting_contracts') }}</a>
+                </li>
+                <li><a href="{{ route('admin.drafting-lawsuits.index') }}"
+                        class="{{ request()->routeIs('admin.drafting-lawsuits.*') ? 'active' : '' }}">{{ trans('menu.contracts.drafting_lawsuits') }}</a>
+                </li>
+                <li><a href="{{ route('admin.measures.index') }}"
+                        class="{{ request()->routeIs('admin.measures.*') ? 'active' : '' }}">{{ trans('menu.contracts.measures') }}</a>
+                </li>
             </ul>
         </li>
 
@@ -172,9 +205,15 @@
                 <span class="toggle-icon"></span>
             </a>
             <ul>
-                <li><a href="{{ route('admin.store.categories.index') }}" class="{{ request()->routeIs('admin.store.categories.*') ? 'active' : '' }}">{{ trans('menu.store.categories') }}</a></li>
-                <li><a href="{{ route('admin.store.products.index') }}" class="{{ request()->routeIs('admin.store.products.*') ? 'active' : '' }}">{{ trans('menu.store.products') }}</a></li>
-                <li><a href="{{ route('admin.store.orders.index') }}" class="{{ request()->routeIs('admin.store.orders.*') ? 'active' : '' }}">{{ trans('menu.store.orders') }}</a></li>
+                <li><a href="{{ route('admin.store.categories.index') }}"
+                        class="{{ request()->routeIs('admin.store.categories.*') ? 'active' : '' }}">{{ trans('menu.store.categories') }}</a>
+                </li>
+                <li><a href="{{ route('admin.store.products.index') }}"
+                        class="{{ request()->routeIs('admin.store.products.*') ? 'active' : '' }}">{{ trans('menu.store.products') }}</a>
+                </li>
+                <li><a href="{{ route('admin.store.orders.index') }}"
+                        class="{{ request()->routeIs('admin.store.orders.*') ? 'active' : '' }}">{{ trans('menu.store.orders') }}</a>
+                </li>
             </ul>
         </li>
 
@@ -209,7 +248,8 @@
                 <span class="toggle-icon"></span>
             </a>
             <ul class="px-0">
-                <li class="l_sidebar"><a href="#" data-layout="light">{{ trans('menu.layouts.light mode') }}</a>
+                <li class="l_sidebar"><a href="#"
+                        data-layout="light">{{ trans('menu.layouts.light mode') }}</a>
                 </li>
                 <li class="l_sidebar"><a href="#" data-layout="dark">{{ trans('menu.layouts.dark mode') }}</a>
                 </li>

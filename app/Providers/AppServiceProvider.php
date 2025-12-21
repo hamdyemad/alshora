@@ -29,6 +29,10 @@ use App\Interfaces\StoreCategoryRepositoryInterface;
 use App\Interfaces\StoreProductRepositoryInterface;
 use App\Interfaces\StoreOrderRepositoryInterface;
 use App\Interfaces\StoreCartRepositoryInterface;
+use App\Interfaces\AgendaRepositoryInterface;
+use App\Interfaces\PreparerAgendaRepositoryInterface;
+use App\Repositories\AgendaRepository;
+use App\Repositories\PreparerAgendaRepository;
 use App\Repositories\MeasureRepository;
 use App\Repositories\StoreCategoryRepository;
 use App\Repositories\StoreProductRepository;
@@ -95,6 +99,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(StoreProductRepositoryInterface::class, StoreProductRepository::class);
         $this->app->bind(StoreOrderRepositoryInterface::class, StoreOrderRepository::class);
         $this->app->bind(StoreCartRepositoryInterface::class, StoreCartRepository::class);
+        $this->app->bind(AgendaRepositoryInterface::class, AgendaRepository::class);
+        $this->app->bind(PreparerAgendaRepositoryInterface::class, PreparerAgendaRepository::class);
         $this->app->singleton(HostingSlotReservationService::class, function ($app) {
             return new HostingSlotReservationService(
                 $app->make(HostingSlotReservationRepositoryInterface::class)

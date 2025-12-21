@@ -37,4 +37,8 @@ return [
     'notification_failed' => 'Failed to send notification',
     'new_appointment_from' => 'New appointment from',
     'new_notification' => 'New notification',
+
+    // Agenda notifications
+    'agenda_reminder_title' => 'Agenda Reminder',
+    'agenda_reminder_body' => 'Notice: You have a scheduled item ":subject" in :days days (:date)',
 ];
