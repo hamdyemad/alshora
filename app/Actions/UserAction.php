@@ -2,6 +2,8 @@
 
 namespace App\Actions;
 
+use App\Http\Resources\CustomerResource;
+use App\Http\Resources\LawyerResource;
 use App\Interfaces\UserInterface;
 use App\Mail\ResetPasswordMail;
 use App\Models\User;
@@ -51,15 +53,21 @@ class UserAction {
             }
 
             $token = $user->createToken('Login');
+            
+            // Get full user profile resource based on user type
+            $userResource = null;
+            if ($user->user_type_id == UserType::LAWYER_TYPE) {
+                $lawyer = $user->lawyer->load(['city', 'region', 'phoneCountry', 'sectionsOfLaws', 'officeHours', 'subscription']);
+                $userResource = new LawyerResource($lawyer);
+            } else if ($user->user_type_id == UserType::CUSTOMER_TYPE) {
+                $customer = $user->customer->load(['city', 'region', 'phoneCountry']);
+                $userResource = new CustomerResource($customer);
+            }
+
             $responseData = [
                 'token' => $token->plainTextToken,
-                'user' => [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'user_type' => $user->user_type_id,
-                    'fcm_token_updated' => isset($data['fcm_token']) && !empty($data['fcm_token'])
-                ]
+                'user' => $userResource,
+                'fcm_token_updated' => isset($data['fcm_token']) && !empty($data['fcm_token'])
             ];
             return $this->sendData(__('validation.success'), true, $responseData, [], 200);
         } else {

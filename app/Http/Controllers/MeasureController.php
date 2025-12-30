@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class MeasureController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:measures.view')->only(['index', 'show']);
+        $this->middleware('can:measures.create')->only(['create', 'store']);
+        $this->middleware('can:measures.edit')->only(['edit', 'update']);
+        $this->middleware('can:measures.delete')->only(['destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      */

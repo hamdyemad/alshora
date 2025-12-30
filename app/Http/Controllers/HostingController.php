@@ -11,6 +11,12 @@ class HostingController extends Controller
 {
     use Res;
 
+    public function __construct()
+    {
+        $this->middleware('can:hosting.view')->only(['index']);
+        $this->middleware('can:hosting.settings')->only(['settings', 'storeSettings']);
+    }
+
     /**
      * Display the hosting index page
      */

@@ -17,6 +17,11 @@
             <div class="col-lg-12">
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body p-4">
+                        @php
+                            $headerReviews = $lawyer->reviews()->get();
+                            $headerAvgRating = $headerReviews->avg('rating') ?? 0;
+                            $headerTotalReviews = $headerReviews->count();
+                        @endphp
                         <div class="row align-items-center">
                             {{-- Profile Image --}}
                             <div class="col-auto">
@@ -47,8 +52,10 @@
                                     @endif
                                 </div>
                                 <p class="text-muted mb-2">
-                                    <i class="uil uil-star"></i>
-                                    <span class="fw-bold">0</span> (0 {{ trans('lawyer.client_review') }})
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <i class="uil uil-star" style="color: {{ $i <= round($headerAvgRating) ? '#ffc107' : '#e9ecef' }};"></i>
+                                    @endfor
+                                    <span class="fw-bold ms-1">{{ number_format($headerAvgRating, 1) }}</span> ({{ $headerTotalReviews }} {{ trans('lawyer.client_review') }})
                                 </p>
                                 <p class="mb-0">
                                     <span class="text-muted">{{ trans('lawyer.consultation_price') }}:</span>
@@ -90,11 +97,6 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings" type="button" role="tab">
                             <i class="uil uil-calendar-alt me-2"></i>{{ trans('lawyer.bookings') }}
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="agenda-tab" data-bs-toggle="tab" data-bs-target="#agenda" type="button" role="tab">
-                            <i class="uil uil-schedule me-2"></i>{{ trans('lawyer.agenda') }}
                         </button>
                     </li>
                 </ul>
@@ -520,7 +522,7 @@
 
                             {{-- Office Hours Section --}}
                             <div class="col-12 mb-30 mt-20">
-                                <div class="d-flex justify-content-between align-items-center border-bottom pb-15 mb-20">
+                                <div class="d-flex justify-content-between align-items-center border-bottom pb-15 mb-20 w-100">
                                     <h6 class="fw-500 color-dark mb-0">
                                         <i class="uil uil-clock me-2"></i>{{ trans('lawyer.office_hours') }}
                                     </h6>
@@ -597,7 +599,7 @@
 
                             {{-- Specializations Section --}}
                             <div class="col-12 mb-30 mt-20">
-                                <div class="d-flex justify-content-between align-items-center border-bottom pb-15 mb-20">
+                                <div class="d-flex justify-content-between align-items-center border-bottom pb-15 mb-20 w-100">
                                     <h6 class="fw-500 color-dark mb-0">
                                         <i class="uil uil-briefcase me-2"></i>{{ trans('lawyer.specializations') }}
                                     </h6>
@@ -631,9 +633,17 @@
 
                             {{-- Renewal Date --}}
                             <div class="col-12 mb-30 mt-20">
-                                <div class="alert alert-warning">
-                                    <i class="uil uil-calendar-alt me-2"></i>
-                                    <strong>{{ trans('lawyer.renewal_date') }}:</strong> 2022-11-30
+                                <div class="alert {{ $lawyer->subscription_expires_at && $lawyer->subscription_expires_at->isPast() ? 'alert-danger' : 'alert-warning' }}">
+                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                        <div>
+                                            <i class="uil uil-calendar-alt me-2"></i>
+                                            <strong>{{ trans('lawyer.renewal_date') }}:</strong> 
+                                            {{ $lawyer->subscription_expires_at ? $lawyer->subscription_expires_at->format('Y-m-d') : trans('lawyer.no_subscription') }}
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#renewSubscriptionModal">
+                                            <i class="uil uil-sync me-1"></i>{{ trans('lawyer.renew_subscription') }}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             {{-- Timestamps --}}
@@ -665,17 +675,88 @@
                     <div class="tab-pane fade" id="ratings" role="tabpanel">
                         <div class="card border-0 shadow-sm">
                             <div class="card-body p-4">
-                                <div class="text-center py-5">
-                                    <div class="mb-4">
-                                        <i class="uil uil-star" style="font-size: 64px; color: #ffc107;"></i>
+                                @php
+                                    $reviews = $lawyer->reviews()->with('customer.user')->latest()->get();
+                                    $averageRating = $reviews->avg('rating') ?? 0;
+                                    $totalReviews = $reviews->count();
+                                @endphp
+                                
+                                {{-- Rating Summary --}}
+                                <div class="row mb-4">
+                                    <div class="col-md-4 text-center border-end">
+                                        <div class="mb-2">
+                                            <span style="font-size: 48px; font-weight: bold; color: #272b41;">{{ number_format($averageRating, 1) }}</span>
+                                            <span class="text-muted">/5</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                <i class="uil uil-star" style="font-size: 20px; color: {{ $i <= round($averageRating) ? '#ffc107' : '#e9ecef' }};"></i>
+                                            @endfor
+                                        </div>
+                                        <p class="text-muted mb-0">{{ $totalReviews }} {{ trans('lawyer.client_review') }}</p>
                                     </div>
-                                    <h3 class="mb-3">{{ trans('lawyer.rating') }}: 1 / 5</h3>
-                                    <p class="text-muted mb-4">(0 {{ trans('lawyer.client_opinion') }})</p>
-
-                                    <div class="alert alert-info">
-                                        <i class="uil uil-info-circle me-2"></i>{{ trans('lawyer.no_reviews_yet') }}
+                                    <div class="col-md-8">
+                                        @php
+                                            $ratingCounts = $reviews->groupBy('rating')->map->count();
+                                        @endphp
+                                        @for($i = 5; $i >= 1; $i--)
+                                            @php
+                                                $count = $ratingCounts->get($i, 0);
+                                                $percentage = $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
+                                            @endphp
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="me-2" style="width: 60px;">{{ $i }} <i class="uil uil-star" style="color: #ffc107;"></i></span>
+                                                <div class="progress flex-grow-1" style="height: 8px;">
+                                                    <div class="progress-bar bg-warning" style="width: {{ $percentage }}%;"></div>
+                                                </div>
+                                                <span class="ms-2 text-muted" style="width: 40px;">{{ $count }}</span>
+                                            </div>
+                                        @endfor
                                     </div>
                                 </div>
+
+                                <hr>
+
+                                {{-- Reviews List --}}
+                                @if($reviews->count() > 0)
+                                    <div class="reviews-list">
+                                        @foreach($reviews as $review)
+                                            <div class="review-item p-3 mb-3 rounded" style="background: #f8f9fb;">
+                                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                                                            <span class="text-white fw-bold">
+                                                                {{ strtoupper(substr($review->customer?->user?->email ?? 'U', 0, 1)) }}
+                                                            </span>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-0">{{ $review->customer?->user?->email ?? trans('reviews.anonymous') }}</h6>
+                                                            <small class="text-muted">{{ $review->created_at->format('Y-m-d H:i') }}</small>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        @for($i = 1; $i <= 5; $i++)
+                                                            <i class="uil uil-star" style="color: {{ $i <= $review->rating ? '#ffc107' : '#e9ecef' }};"></i>
+                                                        @endfor
+                                                        @if($review->approved)
+                                                            <span class="badge bg-success ms-2">{{ trans('reviews.approved') }}</span>
+                                                        @else
+                                                            <span class="badge bg-warning ms-2">{{ trans('reviews.pending') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                @if($review->comment)
+                                                    <p class="mb-0 text-muted" style="padding-left: 58px;">{{ $review->comment }}</p>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div class="text-center py-4">
+                                        <i class="uil uil-comment-alt-slash" style="font-size: 48px; color: #ccc;"></i>
+                                        <p class="text-muted mt-3">{{ trans('lawyer.no_reviews_yet') }}</p>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -684,32 +765,101 @@
                     <div class="tab-pane fade" id="bookings" role="tabpanel">
                         <div class="card border-0 shadow-sm">
                             <div class="card-body p-4">
-                                <div class="text-center py-5">
-                                    <div class="mb-4">
-                                        <i class="uil uil-calendar-alt" style="font-size: 64px; color: #6c757d;"></i>
+                                @php
+                                    $appointments = $lawyer->appointments()->with('customer.user')->latest('appointment_date')->get();
+                                @endphp
+                                
+                                @if($appointments->count() > 0)
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>{{ trans('lawyer.customer') }}</th>
+                                                    <th>{{ trans('lawyer.appointment_date') }}</th>
+                                                    <th>{{ trans('lawyer.time') }}</th>
+                                                    <th>{{ trans('lawyer.consultation_type') }}</th>
+                                                    <th>{{ trans('lawyer.status') }}</th>
+                                                    <th>{{ trans('lawyer.notes') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($appointments as $index => $appointment)
+                                                    <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px;">
+                                                                    <span class="text-white fw-bold" style="font-size: 12px;">
+                                                                        {{ strtoupper(substr($appointment->customer?->user?->email ?? 'C', 0, 1)) }}
+                                                                    </span>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="fw-500">{{ $appointment->customer?->getTranslation('name', app()->getLocale()) ?? '-' }}</span>
+                                                                    <br>
+                                                                    <small class="text-muted">{{ $appointment->customer?->user?->email ?? '-' }}</small>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <i class="uil uil-calendar-alt me-1"></i>
+                                                            {{ $appointment->appointment_date?->format('Y-m-d') }}
+                                                            <br>
+                                                            <small class="text-muted">{{ trans('lawyer.' . ($appointment->day ?? 'saturday')) }}</small>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-round {{ $appointment->period == 'morning' ? 'bg-warning' : 'bg-info' }}">
+                                                                {{ trans('lawyer.' . ($appointment->period ?? 'morning')) }}
+                                                            </span>
+                                                            <br>
+                                                            <small>{{ $appointment->time_slot ? \Carbon\Carbon::parse($appointment->time_slot)->format('H:i') : '-' }}</small>
+                                                        </td>
+                                                        <td>
+                                                            @if($appointment->consultation_type == 'online')
+                                                                <span class="badge bg-primary"><i class="uil uil-video me-1"></i>{{ trans('lawyer.online') }}</span>
+                                                            @elseif($appointment->consultation_type == 'office')
+                                                                <span class="badge bg-secondary"><i class="uil uil-building me-1"></i>{{ trans('lawyer.office') }}</span>
+                                                            @else
+                                                                <span class="badge bg-light text-dark">{{ $appointment->consultation_type ?? '-' }}</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @php
+                                                                $statusColors = [
+                                                                    'pending' => 'warning',
+                                                                    'confirmed' => 'info',
+                                                                    'completed' => 'success',
+                                                                    'cancelled' => 'danger',
+                                                                ];
+                                                                $statusColor = $statusColors[$appointment->status] ?? 'secondary';
+                                                            @endphp
+                                                            <span class="badge bg-{{ $statusColor }}">
+                                                                {{ trans('lawyer.status_' . ($appointment->status ?? 'pending')) }}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            @if($appointment->notes)
+                                                                <span title="{{ $appointment->notes }}" style="cursor: help;">
+                                                                    {{ Str::limit($appointment->notes, 30) }}
+                                                                </span>
+                                                            @else
+                                                                <span class="text-muted">-</span>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <h4 class="mb-3">{{ trans('lawyer.bookings') }}</h4>
-                                    <div class="alert alert-info">
-                                        <i class="uil uil-info-circle me-2"></i>{{ trans('lawyer.no_bookings_yet') }}
+                                @else
+                                    <div class="text-center py-5">
+                                        <div class="mb-4">
+                                            <i class="uil uil-calendar-alt" style="font-size: 64px; color: #ccc;"></i>
+                                        </div>
+                                        <h4 class="mb-3 text-muted">{{ trans('lawyer.bookings') }}</h4>
+                                        <p class="text-muted">{{ trans('lawyer.no_bookings_yet') }}</p>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Agenda Tab --}}
-                    <div class="tab-pane fade" id="agenda" role="tabpanel">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body p-4">
-                                <div class="text-center py-5">
-                                    <div class="mb-4">
-                                        <i class="uil uil-schedule" style="font-size: 64px; color: #6c757d;"></i>
-                                    </div>
-                                    <h4 class="mb-3">{{ trans('lawyer.agenda') }}</h4>
-                                    <div class="alert alert-info">
-                                        <i class="uil uil-info-circle me-2"></i>{{ trans('lawyer.no_agenda_items') }}
-                                    </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -853,6 +1003,45 @@
             </div>
         </div>
     </div>
+
+    {{-- Renew Subscription Modal --}}
+    <div class="modal fade" id="renewSubscriptionModal" tabindex="-1" aria-labelledby="renewSubscriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title text-white" id="renewSubscriptionModalLabel">
+                        <i class="uil uil-sync me-2"></i>{{ trans('lawyer.renew_subscription') }}
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="renewSubscriptionForm">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="subscription_id" class="form-label">{{ trans('lawyer.select_subscription') }}</label>
+                            <select class="form-control" id="subscription_id" name="subscription_id" required>
+                                <option value="">{{ trans('lawyer.select_subscription') }}</option>
+                                @php
+                                    $subscriptions = \App\Models\Subscription::where('active', 1)->get();
+                                @endphp
+                                @foreach($subscriptions as $sub)
+                                    <option value="{{ $sub->id }}">
+                                        {{ $sub->getTranslation('name', app()->getLocale()) }} - {{ $sub->number_of_months }} {{ trans('subscription.months') }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('common.cancel') }}</button>
+                    <button type="button" class="btn btn-primary" onclick="renewSubscription({{ $lawyer->id }})">
+                        <i class="uil uil-check me-1"></i>{{ trans('common.save') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('styles')
@@ -888,45 +1077,6 @@
     }
 </style>
 @endpush
-
-{{-- Renew Subscription Modal --}}
-<div class="modal fade" id="renewSubscriptionModal" tabindex="-1" aria-labelledby="renewSubscriptionModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title text-white" id="renewSubscriptionModalLabel">
-                    <i class="uil uil-sync me-2"></i>{{ trans('lawyer.renew_subscription') }}
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="renewSubscriptionForm">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="subscription_id" class="form-label">{{ trans('lawyer.select_subscription') }}</label>
-                        <select class="form-control" id="subscription_id" name="subscription_id" required>
-                            <option value="">{{ trans('lawyer.select_subscription') }}</option>
-                            @php
-                                $subscriptions = \App\Models\Subscription::where('active', 1)->get();
-                            @endphp
-                            @foreach($subscriptions as $sub)
-                                <option value="{{ $sub->id }}">
-                                    {{ $sub->getTranslation('name', app()->getLocale()) }} - {{ $sub->number_of_months }} {{ trans('subscription.months') }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('common.cancel') }}</button>
-                <button type="button" class="btn btn-primary" onclick="renewSubscription({{ $lawyer->id }})">
-                    <i class="uil uil-check me-1"></i>{{ trans('common.save') }}
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 @push('scripts')
 <script>

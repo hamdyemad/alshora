@@ -13,6 +13,11 @@ class NewsController extends Controller
     public function __construct(NewsService $newsService)
     {
         $this->newsService = $newsService;
+        
+        $this->middleware('can:news.view')->only(['index', 'show']);
+        $this->middleware('can:news.create')->only(['create', 'store']);
+        $this->middleware('can:news.edit')->only(['edit', 'update']);
+        $this->middleware('can:news.delete')->only(['destroy']);
     }
 
     /**

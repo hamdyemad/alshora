@@ -77,6 +77,7 @@ return [
     'whatsapp_url' => 'WhatsApp URL',
     'telegram_url' => 'Telegram URL',
     'twitter_url' => 'Twitter URL',
+    'tiktok_url' => 'TikTok URL',
 
     'address' => 'Address',
     'enter_address' => 'Enter address',
@@ -111,7 +112,7 @@ return [
     'all' => 'All',
 
     // Index page
-    'search_placeholder' => 'Search by name or registration number',
+    'search_placeholder' => 'Search by name or email',
     'basic_data' => 'Basic Data',
     'contact_information' => 'Contact Information',
     'degree' => 'Degree',
@@ -136,7 +137,7 @@ return [
     'lawyer_data' => 'Lawyer Data',
     'ratings_about' => 'Ratings / About Lawyer',
     'bookings' => 'Bookings',
-    'agenda' => 'Agenda',
+    'judicial_agenda' => 'Judicial Agenda',
 
     // Office Hours
     'office_hours' => 'Office Hours',
@@ -212,8 +213,21 @@ return [
     'client_opinion' => 'Client Opinion',
     'no_reviews_yet' => 'No reviews yet',
     'no_bookings_yet' => 'No bookings yet',
-    'no_agenda_items' => 'No agenda items yet',
+    'no_judicial_agenda_items' => 'No judicial agenda items yet',
 
     // Buttons
     'cancel' => 'Cancel',
+
+    // Bookings/Appointments
+    'customer' => 'Customer',
+    'appointment_date' => 'Appointment Date',
+    'time' => 'Time',
+    'consultation_type' => 'Consultation Type',
+    'notes' => 'Notes',
+    'online' => 'Online',
+    'office' => 'Office',
+    'status_pending' => 'Pending',
+    'status_confirmed' => 'Confirmed',
+    'status_completed' => 'Completed',
+    'status_cancelled' => 'Cancelled',
 ];

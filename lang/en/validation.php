@@ -20,6 +20,8 @@ return [
     'not_found' => 'Not found',
     'liked_successfully' => 'Liked successfully',
     'unliked_successfully' => 'Unliked successfully',
+    'followed_successfully' => 'Followed successfully',
+    'unfollowed_successfully' => 'Unfollowed successfully',
     'error' => 'Error',
     'accepted' => 'The :attribute must be accepted.',
     'accepted_if' => 'The :attribute must be accepted when :other is :value.',

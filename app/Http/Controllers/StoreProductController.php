@@ -16,6 +16,11 @@ class StoreProductController extends Controller
     {
         $this->productService = $productService;
         $this->categoryService = $categoryService;
+        
+        $this->middleware('can:store-products.view')->only(['index', 'show', 'search']);
+        $this->middleware('can:store-products.create')->only(['create', 'store']);
+        $this->middleware('can:store-products.edit')->only(['edit', 'update']);
+        $this->middleware('can:store-products.delete')->only(['destroy']);
     }
 
     public function index(Request $request)

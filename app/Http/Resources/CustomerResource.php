@@ -22,6 +22,8 @@ class CustomerResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getTranslation('name', app()->getLocale()) ?? '',
+            'name_en' => $this->getTranslation('name', 'en') ?? '',
+            'name_ar' => $this->getTranslation('name', 'ar') ?? '',
             'email' => ($this->user) ? $this->user->email : '',
             'user_type' => 'customer',
             'phone' => $this->phone,

@@ -38,7 +38,7 @@ return [
     'new_appointment_from' => 'New appointment from',
     'new_notification' => 'New notification',
 
-    // Agenda notifications
-    'agenda_reminder_title' => 'Agenda Reminder',
+    // Judicial Agenda notifications
+    'agenda_reminder_title' => 'Judicial Agenda Reminder',
     'agenda_reminder_body' => 'Notice: You have a scheduled item ":subject" in :days days (:date)',
 ];

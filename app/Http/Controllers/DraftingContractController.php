@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Storage;
 
 class DraftingContractController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:drafting-contracts.view')->only(['index', 'show']);
+        $this->middleware('can:drafting-contracts.create')->only(['create', 'store']);
+        $this->middleware('can:drafting-contracts.edit')->only(['edit', 'update']);
+        $this->middleware('can:drafting-contracts.delete')->only(['destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      */

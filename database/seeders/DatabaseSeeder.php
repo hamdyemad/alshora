@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(LanguageSeeder::class);
         
         // Seed permissions with translations
-        // $this->call(PermessionSeeder::class);
+        $this->call(PermissionsSeeder::class);
         
         // Seed roles with permissions
         // $this->call(RoleSeeder::class);
@@ -34,6 +34,6 @@ class DatabaseSeeder extends Seeder
         // Seed users
         // $this->call(UserSeeder::class);
 
-        $this->call(RegisterationGradeSeeder::class);
+        // $this->call(RegisterationGradeSeeder::class);
     }
 }

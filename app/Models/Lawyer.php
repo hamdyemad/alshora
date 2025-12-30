@@ -148,4 +148,44 @@ class Lawyer extends Model
     public function getNameAttribute() {
         return $this->getTranslation('name', app()->getLocale());
     }
+
+    /**
+     * Get all likes for the lawyer
+     */
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+
+    /**
+     * Get all followers for the lawyer
+     */
+    public function followers()
+    {
+        return $this->hasMany(Follow::class);
+    }
+
+    /**
+     * Check if the lawyer is liked by a specific user
+     */
+    public function isLikedBy($userId): bool
+    {
+        return $this->likes()->where('user_id', $userId)->exists();
+    }
+
+    /**
+     * Check if the lawyer is followed by a specific user
+     */
+    public function isFollowedBy($userId): bool
+    {
+        return $this->followers()->where('user_id', $userId)->exists();
+    }
+
+    /**
+     * Get all appointments for the lawyer
+     */
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

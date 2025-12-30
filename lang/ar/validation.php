@@ -20,6 +20,8 @@ return [
     'not_found' => 'غير موجود',
     'liked_successfully' => 'تم الإعجاب بنجاح',
     'unliked_successfully' => 'تم إلغاء الإعجاب بنجاح',
+    'followed_successfully' => 'تمت المتابعة بنجاح',
+    'unfollowed_successfully' => 'تم إلغاء المتابعة بنجاح',
     'error' => 'فشل',
     'accepted' => 'يجب قبول :attribute.',
     'accepted_if' => 'يجب قبول :attribute عندما يكون :other هو :value.',

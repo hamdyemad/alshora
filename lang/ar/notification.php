@@ -38,7 +38,7 @@ return [
     'new_appointment_from' => 'موعد جديد من',
     'new_notification' => 'إشعار جديد',
 
-    // Agenda notifications
-    'agenda_reminder_title' => 'تذكير بالأجندة',
+    // Judicial Agenda notifications
+    'agenda_reminder_title' => 'تذكير بالأجندة القضائية',
     'agenda_reminder_body' => 'تنبيه: لديك موعد مسجل باسم ":subject" خلال :days أيام بتاريخ (:date)',
 ];

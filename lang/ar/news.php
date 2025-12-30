@@ -1,70 +1,64 @@
 <?php
 
 return [
-    // Page titles
+    // General
+    'news' => 'الأخبار',
     'news_management' => 'إدارة الأخبار',
-    'create_news' => 'إنشاء خبر',
-    'edit_news' => 'تعديل خبر',
     'add_news' => 'إضافة خبر',
-    'update_news' => 'تحديث خبر',
+    'create_news' => 'إنشاء خبر',
+    'edit_news' => 'تعديل الخبر',
     'view_news' => 'عرض الخبر',
     'news_details' => 'تفاصيل الخبر',
-
-    // Section headers
-    'basic_information' => 'المعلومات الأساسية',
-    'source_information' => 'معلومات المصدر',
-
-    // Form fields
-    'title_en' => 'العنوان (إنجليزي)',
-    'title_ar' => 'العنوان (عربي)',
-    'enter_title_en' => 'أدخل العنوان بالإنجليزية',
-    'enter_title_ar' => 'أدخل العنوان بالعربية',
+    'delete_news' => 'حذف الخبر',
     
-    'details_en' => 'التفاصيل (إنجليزي)',
-    'details_ar' => 'التفاصيل (عربي)',
-    'enter_details_en' => 'أدخل التفاصيل بالإنجليزية',
-    'enter_details_ar' => 'أدخل التفاصيل بالعربية',
-    
-    'source_en' => 'المصدر (إنجليزي)',
-    'source_ar' => 'المصدر (عربي)',
-    'enter_source_en' => 'أدخل المصدر بالإنجليزية',
-    'enter_source_ar' => 'أدخل المصدر بالعربية',
-    
-    'source_link' => 'رابط المصدر',
-    'enter_source_link' => 'أدخل رابط المصدر',
-    
+    // Fields
+    'title' => 'العنوان',
+    'title_en' => 'العنوان (بالإنجليزية)',
+    'title_ar' => 'العنوان (بالعربية)',
+    'details_en' => 'التفاصيل (بالإنجليزية)',
+    'details_ar' => 'التفاصيل (بالعربية)',
+    'content' => 'المحتوى',
     'date' => 'التاريخ',
-    'enter_date' => 'اختر التاريخ',
-    
+    'publish_date' => 'تاريخ النشر',
     'status' => 'الحالة',
     'active' => 'نشط',
     'inactive' => 'غير نشط',
     'all' => 'الكل',
     
-    // Table headers
-    'title' => 'العنوان',
+    // Source
     'source' => 'المصدر',
-    'publish_date' => 'تاريخ النشر',
+    'source_en' => 'المصدر (بالإنجليزية)',
+    'source_ar' => 'المصدر (بالعربية)',
+    'source_link' => 'رابط المصدر',
+    'source_information' => 'معلومات المصدر',
     
-    // Index page
-    'search_placeholder' => 'البحث بالعنوان أو المصدر',
-    'no_news_found' => 'لم يتم العثور على أخبار',
+    // Placeholders
+    'search_placeholder' => 'البحث بالعنوان...',
+    'enter_title_en' => 'أدخل العنوان بالإنجليزية',
+    'enter_title_ar' => 'أدخل العنوان بالعربية',
+    'enter_details_en' => 'أدخل التفاصيل بالإنجليزية',
+    'enter_details_ar' => 'أدخل التفاصيل بالعربية',
+    'enter_source_en' => 'أدخل المصدر بالإنجليزية',
+    'enter_source_ar' => 'أدخل المصدر بالعربية',
+    'enter_source_link' => 'أدخل رابط المصدر',
     
-    // Delete modal
-    'confirm_delete' => 'تأكيد الحذف',
-    'delete_confirmation_message' => 'هل أنت متأكد من حذف هذا الخبر؟',
-    'delete_news' => 'حذف الخبر',
+    // Sections
+    'basic_information' => 'المعلومات الأساسية',
+    
+    // Actions
+    'save' => 'حفظ',
+    'cancel' => 'إلغاء',
+    'update_news' => 'تحديث الخبر',
     
     // Messages
+    'retrieved_successfully' => 'تم جلب الأخبار بنجاح',
     'created_successfully' => 'تم إنشاء الخبر بنجاح',
     'updated_successfully' => 'تم تحديث الخبر بنجاح',
     'deleted_successfully' => 'تم حذف الخبر بنجاح',
     'not_found' => 'الخبر غير موجود',
-    'error_creating' => 'خطأ في إنشاء الخبر',
-    'error_updating' => 'خطأ في تحديث الخبر',
-    'error_deleting' => 'خطأ في حذف الخبر',
+    'no_news_found' => 'لا توجد أخبار',
     
-    // Buttons
-    'cancel' => 'إلغاء',
-    'save' => 'حفظ الخبر',
+    // Delete confirmation
+    'confirm_delete' => 'تأكيد الحذف',
+    'delete_confirmation_message' => 'هل أنت متأكد من حذف هذا الخبر؟',
 ];

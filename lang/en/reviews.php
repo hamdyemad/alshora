@@ -27,6 +27,7 @@ return [
     'review_approved' => 'Review approved successfully',
     'review_rejected' => 'Review rejected successfully',
     'already_reviewed' => 'You have already reviewed this lawyer',
+    'customer_profile_required' => 'Only customers can submit reviews',
     'login_required' => 'You must be logged in to submit a review',
     'unauthorized' => 'You are not authorized to perform this action',
     'confirm_delete' => 'Confirm Delete Review',
@@ -42,4 +43,9 @@ return [
     'average' => 'Average',
     'poor' => 'Poor',
     'very_poor' => 'Very Poor',
+    
+    // Status
+    'approved' => 'Approved',
+    'pending' => 'Pending',
+    'anonymous' => 'Anonymous',
 ];

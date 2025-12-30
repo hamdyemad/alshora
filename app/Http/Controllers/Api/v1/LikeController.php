@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Like;
+use App\Models\Lawyer;
 use App\Traits\Res;
 use Illuminate\Http\Request;
 
@@ -14,11 +15,16 @@ class LikeController extends Controller
     public function toggle(Request $request)
     {
         $request->validate([
-            'type' => 'required|in:post,comment',
+            'type' => 'required|in:post,comment,lawyer',
             'id' => 'required|integer',
         ]);
 
-        $modelClass = $request->type === 'post' ? \App\Models\Post::class : \App\Models\Comment::class;
+        $modelClass = match($request->type) {
+            'post' => \App\Models\Post::class,
+            'comment' => \App\Models\Comment::class,
+            'lawyer' => \App\Models\Lawyer::class,
+        };
+        
         $model = $modelClass::find($request->id);
 
         if (!$model) {
@@ -44,6 +50,13 @@ class LikeController extends Controller
             $liked = true;
         }
 
-        return $this->sendRes($message, true, ['liked' => $liked]);
+        $likesCount = Like::where('likeable_id', $request->id)
+            ->where('likeable_type', $modelClass)
+            ->count();
+
+        return $this->sendRes($message, true, [
+            'liked' => $liked,
+            'likes_count' => $likesCount
+        ]);
     }
 }

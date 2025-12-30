@@ -128,7 +128,14 @@ class UpdateOfficeHoursApiRequest extends FormRequest
                     }
                 }
 
-                if (!isset($data['is_available'])) {
+                if (isset($data['is_available'])) {
+                    $val = $data['is_available'];
+                    if ($val === true || $val === 'true' || $val == 1) {
+                        $officeHours[$day][$period]['is_available'] = 1;
+                    } else {
+                        $officeHours[$day][$period]['is_available'] = 0;
+                    }
+                } else {
                     $officeHours[$day][$period]['is_available'] = 0;
                 }
             }

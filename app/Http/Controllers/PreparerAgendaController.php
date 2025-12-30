@@ -12,6 +12,9 @@ class PreparerAgendaController extends Controller
     public function __construct(PreparerAgendaService $preparerAgendaService)
     {
         $this->preparerAgendaService = $preparerAgendaService;
+        
+        $this->middleware('can:preparer-agendas.view')->only(['index', 'show']);
+        $this->middleware('can:preparer-agendas.delete')->only(['destroy']);
     }
 
     /**

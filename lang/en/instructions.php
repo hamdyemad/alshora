@@ -1,52 +1,52 @@
 <?php
 
 return [
-    // Page titles
+    // General
+    'instructions' => 'Instructions',
     'instructions_management' => 'Instructions Management',
+    'add_instruction' => 'Add Instruction',
     'create_instruction' => 'Create Instruction',
     'edit_instruction' => 'Edit Instruction',
-    'add_instruction' => 'Add Instruction',
-    'update_instruction' => 'Update Instruction',
     'view_instruction' => 'View Instruction',
     'instruction_details' => 'Instruction Details',
-
-    // Form fields
+    'delete_instruction' => 'Delete Instruction',
+    
+    // Fields
     'title' => 'Title',
     'title_en' => 'Title (English)',
     'title_ar' => 'Title (Arabic)',
-    'enter_title_en' => 'Enter title in English',
-    'enter_title_ar' => 'Enter title in Arabic',
-    
-    'description' => 'Description',
-    'description_en' => 'Description (English)',
-    'description_ar' => 'Description (Arabic)',
-    'enter_description_en' => 'Enter description in English',
-    'enter_description_ar' => 'Enter description in Arabic',
-    
-    'activation' => 'Status',
+    'content' => 'Content',
+    'content_en' => 'Content (English)',
+    'content_ar' => 'Content (Arabic)',
+    'status' => 'Status',
     'active' => 'Active',
     'inactive' => 'Inactive',
     'all' => 'All',
     
-    // Index page
-    'search_by_title' => 'Search by title',
-    'no_instructions_found' => 'No instructions found',
+    // Placeholders
+    'search_placeholder' => 'Search by title...',
+    'enter_title_en' => 'Enter title in English',
+    'enter_title_ar' => 'Enter title in Arabic',
+    'enter_content_en' => 'Enter content in English',
+    'enter_content_ar' => 'Enter content in Arabic',
     
-    // Delete modal
-    'confirm_delete' => 'Confirm Delete',
-    'delete_confirmation' => 'Are you sure you want to delete this instruction? This action cannot be undone.',
-    'delete_instruction' => 'Delete Instruction',
+    // Sections
+    'basic_information' => 'Basic Information',
+    
+    // Actions
+    'save' => 'Save',
+    'cancel' => 'Cancel',
+    'update_instruction' => 'Update Instruction',
     
     // Messages
+    'retrieved_successfully' => 'Instructions retrieved successfully',
     'created_successfully' => 'Instruction created successfully',
     'updated_successfully' => 'Instruction updated successfully',
     'deleted_successfully' => 'Instruction deleted successfully',
     'not_found' => 'Instruction not found',
-    'error_creating' => 'Error creating instruction',
-    'error_updating' => 'Error updating instruction',
-    'error_deleting' => 'Error deleting instruction',
+    'no_instructions_found' => 'No instructions found',
     
-    // Buttons
-    'cancel' => 'Cancel',
-    'save' => 'Save Instruction',
+    // Delete confirmation
+    'confirm_delete' => 'Confirm Delete',
+    'delete_confirmation_message' => 'Are you sure you want to delete this instruction?',
 ];

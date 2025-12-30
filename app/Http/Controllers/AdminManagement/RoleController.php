@@ -17,6 +17,10 @@ class RoleController extends Controller
 
     public function __construct(protected RoleService $roleService, protected LanguageService $languageService)
     {
+        $this->middleware('can:roles.view')->only(['index', 'show']);
+        $this->middleware('can:roles.create')->only(['create', 'store']);
+        $this->middleware('can:roles.edit')->only(['edit', 'update']);
+        $this->middleware('can:roles.delete')->only(['destroy']);
     }
 
     /**
@@ -30,7 +34,7 @@ class RoleController extends Controller
         
         $roles = $this->roleService->getAllRoles();
         
-        return view('pages.admin_management.roles.index', compact('roles', 'search', 'dateFrom', 'dateTo'));
+        return view('pages.admin-management.roles.index', compact('roles', 'search', 'dateFrom', 'dateTo'));
     }
 
     /**
@@ -41,7 +45,7 @@ class RoleController extends Controller
         $languages = $this->roleService->getLanguages();
         $groupedPermissions = $this->roleService->getGroupedPermissions();
         
-        return view('pages.admin_management.roles.form', compact('groupedPermissions', 'languages'));
+        return view('pages.admin-management.roles.form', compact('groupedPermissions', 'languages'));
     }
 
     /**
@@ -67,7 +71,7 @@ class RoleController extends Controller
         $languages = $this->languageService->getAll();
         $role = $this->roleService->getRoleById($role->id);
         
-        return view('pages.admin_management.roles.show', compact('role', 'languages'));
+        return view('pages.admin-management.roles.show', compact('role', 'languages'));
     }
 
     /**
@@ -78,7 +82,7 @@ class RoleController extends Controller
         $role = $this->roleService->getRoleById($role->id);
         $languages = $this->roleService->getLanguages();
         $groupedPermissions = $this->roleService->getGroupedPermissions();
-        return view('pages.admin_management.roles.form', compact('role', 'groupedPermissions', 'languages'));
+        return view('pages.admin-management.roles.form', compact('role', 'groupedPermissions', 'languages'));
     }
 
     /**

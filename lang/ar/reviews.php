@@ -27,6 +27,7 @@ return [
     'review_approved' => 'تمت الموافقة على التقييم بنجاح',
     'review_rejected' => 'تم رفض التقييم بنجاح',
     'already_reviewed' => 'لقد قمت بتقييم هذا المحامي بالفعل',
+    'customer_profile_required' => 'فقط العملاء يمكنهم إرسال التقييمات',
     'login_required' => 'يجب أن تكون مسجل دخول لإرسال تقييم',
     'unauthorized' => 'أنت غير مصرح بإجراء هذا الإجراء',
     'confirm_delete' => 'تأكيد حذف التقييم',
@@ -42,4 +43,9 @@ return [
     'average' => 'متوسط',
     'poor' => 'ضعيف',
     'very_poor' => 'ضعيف جداً',
+    
+    // Status
+    'approved' => 'موافق عليه',
+    'pending' => 'قيد الانتظار',
+    'anonymous' => 'مجهول',
 ];

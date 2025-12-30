@@ -13,6 +13,10 @@ class BranchOfLawController extends Controller
         protected BranchOfLawService $branchOfLawService,
         protected LanguageService $languageService
     ) {
+        $this->middleware('can:branches-of-laws.view')->only(['index', 'show']);
+        $this->middleware('can:branches-of-laws.create')->only(['create', 'store']);
+        $this->middleware('can:branches-of-laws.edit')->only(['edit', 'update']);
+        $this->middleware('can:branches-of-laws.delete')->only(['destroy']);
     }
 
     /**

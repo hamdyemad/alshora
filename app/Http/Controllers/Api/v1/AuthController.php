@@ -40,23 +40,34 @@ class AuthController extends Controller
         try {
             // Prepare data for registration
             $data = $request->validated();
+            $responseData = [];
+            
             if($request->request_type == 'lawyer') {
                 // Set active to 0 by default for new registrations (pending admin approval)
                 $data['active'] = 0;
                 // Create the lawyer
                 $lawyer = $this->lawyerService->register($data);
                 $message = __('auth.your register is success but the account is under review');
+                // Don't return token for lawyers (need admin approval first)
             } else {
                 $data['active'] = 1;
                 // Create the customer
                 $customer = $this->customerService->register($data);
                 $message = __('auth.registered success');
+                
+                // For customers, create token and return full profile
+                $customer = $customer->load(['city', 'region', 'phoneCountry']);
+                $token = $customer->user->createToken('Register');
+                $responseData = [
+                    'token' => $token->plainTextToken,
+                    'user' => new \App\Http\Resources\CustomerResource($customer)
+                ];
             }
 
             return $this->sendRes(
                 $message,
                 true,
-                [],
+                $responseData,
                 [],
                 201
             );
@@ -80,7 +91,7 @@ class AuthController extends Controller
                 $res['status'],
                 $res['data'],
                 $res['errors'],
-                200
+                ($res['status']) ? 200 : 400
             );
         } catch (\Exception $e) {
             return $this->sendRes($e->getMessage(), false, [], [], 500);

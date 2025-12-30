@@ -13,6 +13,10 @@ class InstructionController extends Controller
         protected InstructionService $instructionService,
         protected LanguageService $languageService
     ) {
+        $this->middleware('can:instructions.view')->only(['index', 'show']);
+        $this->middleware('can:instructions.create')->only(['create', 'store']);
+        $this->middleware('can:instructions.edit')->only(['edit', 'update']);
+        $this->middleware('can:instructions.delete')->only(['destroy']);
     }
 
     /**

@@ -13,6 +13,11 @@ class StoreCategoryController extends Controller
     public function __construct(StoreCategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+        
+        $this->middleware('can:store-categories.view')->only(['index', 'show']);
+        $this->middleware('can:store-categories.create')->only(['create', 'store']);
+        $this->middleware('can:store-categories.edit')->only(['edit', 'update']);
+        $this->middleware('can:store-categories.delete')->only(['destroy']);
     }
 
     public function index(Request $request)

@@ -70,4 +70,9 @@
             'cities' => 'Cities',
             'regions' => 'Regions',
         ],
+        'admin_management' => [
+            'title' => 'Admin Management',
+            'admins' => 'Admins',
+            'roles' => 'Roles & Permissions',
+        ],
     ];

@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:reviews.view')->only(['index', 'show']);
+        $this->middleware('can:reviews.approve')->only(['approve']);
+        $this->middleware('can:reviews.reject')->only(['reject']);
+        $this->middleware('can:reviews.delete')->only(['destroy']);
+    }
+
     /**
      * Display all reviews (admin view)
      */

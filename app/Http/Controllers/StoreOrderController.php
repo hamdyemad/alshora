@@ -13,6 +13,9 @@ class StoreOrderController extends Controller
     public function __construct(StoreOrderService $orderService)
     {
         $this->orderService = $orderService;
+        
+        $this->middleware('can:store-orders.view')->only(['index', 'show']);
+        $this->middleware('can:store-orders.edit')->only(['create', 'store', 'edit', 'update', 'updateStatus', 'destroy']);
     }
 
     public function index(Request $request)

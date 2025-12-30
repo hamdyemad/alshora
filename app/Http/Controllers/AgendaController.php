@@ -12,6 +12,9 @@ class AgendaController extends Controller
     public function __construct(AgendaService $agendaService)
     {
         $this->agendaService = $agendaService;
+        
+        $this->middleware('can:agendas.view')->only(['index', 'show']);
+        $this->middleware('can:agendas.delete')->only(['destroy']);
     }
 
     /**

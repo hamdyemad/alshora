@@ -19,6 +19,10 @@ class CustomerController extends Controller
         protected RegionService $regionService,
         protected LanguageService $languageService
     ) {
+        $this->middleware('can:customers.view')->only(['index', 'show']);
+        $this->middleware('can:customers.create')->only(['create', 'store']);
+        $this->middleware('can:customers.edit')->only(['edit', 'update', 'toggleActive']);
+        $this->middleware('can:customers.delete')->only(['destroy']);
     }
 
     /**

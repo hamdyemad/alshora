@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class LawController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:laws.view')->only(['index', 'show']);
+        $this->middleware('can:laws.create')->only(['create', 'store']);
+        $this->middleware('can:laws.edit')->only(['edit', 'update']);
+        $this->middleware('can:laws.delete')->only(['destroy']);
+    }
+
     /**
      * Display a listing of laws for a specific branch
      */

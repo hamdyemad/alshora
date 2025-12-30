@@ -77,6 +77,7 @@ return [
     'whatsapp_url' => 'رابط واتساب',
     'telegram_url' => 'رابط تليجرام',
     'twitter_url' => 'رابط تويتر',
+    'tiktok_url' => 'رابط تيك توك',
 
     'address' => 'العنوان',
     'enter_address' => 'أدخل العنوان',
@@ -107,7 +108,7 @@ return [
     'all' => 'الكل',
 
     // Index page
-    'search_placeholder' => 'البحث بالاسم أو رقم التسجيل',
+    'search_placeholder' => 'البحث بالاسم أو البريد الإلكتروني',
     'basic_data' => 'البيانات الأساسية',
     'contact_information' => 'معلومات الاتصال',
     'degree' => 'الدرجة',
@@ -132,7 +133,7 @@ return [
     'lawyer_data' => 'بيانات المحامى',
     'ratings_about' => 'التقييمات / عن المحامى',
     'bookings' => 'الحجوزات',
-    'agenda' => 'الاجندة',
+    'judicial_agenda' => 'الأجندة القضائية',
 
     // Office Hours
     'office_hours' => 'مواعيد المكتب',
@@ -208,8 +209,21 @@ return [
     'client_opinion' => 'رأي العميل',
     'no_reviews_yet' => 'لا توجد تقييمات بعد',
     'no_bookings_yet' => 'لا توجد حجوزات بعد',
-    'no_agenda_items' => 'لا توجد عناصر في الأجندة بعد',
+    'no_judicial_agenda_items' => 'لا توجد عناصر في الأجندة القضائية بعد',
 
     // Buttons
     'cancel' => 'إلغاء',
+
+    // Bookings/Appointments
+    'customer' => 'العميل',
+    'appointment_date' => 'تاريخ الموعد',
+    'time' => 'الوقت',
+    'consultation_type' => 'نوع الاستشارة',
+    'notes' => 'ملاحظات',
+    'online' => 'أونلاين',
+    'office' => 'في المكتب',
+    'status_pending' => 'قيد الانتظار',
+    'status_confirmed' => 'مؤكد',
+    'status_completed' => 'مكتمل',
+    'status_cancelled' => 'ملغي',
 ];

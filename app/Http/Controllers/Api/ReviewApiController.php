@@ -54,9 +54,23 @@ class ReviewApiController extends Controller
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string|max:1000',
         ]);
+
+        $user = auth()->user();
+        
+        // Check if user has a customer profile
+        if (!$user->customer) {
+            return $this->sendRes(
+                trans('reviews.customer_profile_required'),
+                false,
+                [],
+                [],
+                403
+            );
+        }
+
         // Check if customer already reviewed this lawyer
         $existingReview = Review::where('lawyer_id', $lawyerId)
-            ->where('customer_id', auth()->user()->customer->id)
+            ->where('customer_id', $user->customer->id)
             ->first();
 
         if ($existingReview) {
@@ -71,7 +85,7 @@ class ReviewApiController extends Controller
 
         $review = Review::create([
             'lawyer_id' => $lawyerId,
-            'customer_id' => auth()->user()->customer->id,
+            'customer_id' => $user->customer->id,
             'rating' => $request->input('rating'),
             'comment' => $request->input('comment'),
             'approved' => false,

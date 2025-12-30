@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class HostingReservationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:hosting-reservations.view')->only(['index', 'show']);
+        $this->middleware('can:hosting-reservations.approve')->only(['approve']);
+        $this->middleware('can:hosting-reservations.reject')->only(['reject']);
+    }
+
     /**
      * Display a listing of pending hosting reservations
      */

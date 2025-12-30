@@ -9,7 +9,10 @@ class ReservationController extends Controller
 {
     public function __construct(
         protected ReservationService $reservationService
-    ) {}
+    ) {
+        $this->middleware('can:reservations.view')->only(['index', 'show', 'getDashboardStats']);
+        $this->middleware('can:reservations.edit')->only(['updateStatus']);
+    }
 
     /**
      * Display reservations/appointments dashboard

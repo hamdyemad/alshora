@@ -18,6 +18,10 @@ class CityController extends Controller
         protected CountryService $countryService,
         protected LanguageService $languageService
     ) {
+        $this->middleware('can:cities.view')->only(['index', 'show']);
+        $this->middleware('can:cities.create')->only(['create', 'store']);
+        $this->middleware('can:cities.edit')->only(['edit', 'update']);
+        $this->middleware('can:cities.delete')->only(['destroy']);
     }
 
     /**

@@ -27,6 +27,11 @@ class OfficeWorkController extends Controller
     {
         try {
             $lawyer = request()->user()->lawyer;
+
+            if (!$lawyer) {
+                return $this->sendRes(__('lawyer.not_found'), false, [], [], 404);
+            }
+
             // Prepare data for lawyer creation
             $data = $request->validated();
 
@@ -39,14 +44,14 @@ class OfficeWorkController extends Controller
                     ]
                 ]
             ];
-            $lawyer = $this->lawyerService->updateOfficeHours($lawyer,$officeHoursData);
+            $this->lawyerService->updateOfficeHours($lawyer, $officeHoursData);
 
             return $this->sendRes(
                 __('validation.success'),
                 true,
                 [],
                 [],
-                201
+                200
             );
         } catch (\Exception $e) {
             return $this->sendRes($e->getMessage(), false, [], [], 500);

@@ -13,6 +13,10 @@ class CountryController extends Controller
 
     public function __construct(protected CountryService $countryService, protected LanguageService $languageService)
     {
+        $this->middleware('can:countries.view')->only(['index', 'show']);
+        $this->middleware('can:countries.create')->only(['create', 'store']);
+        $this->middleware('can:countries.edit')->only(['edit', 'update']);
+        $this->middleware('can:countries.delete')->only(['destroy']);
     }
 
     /**

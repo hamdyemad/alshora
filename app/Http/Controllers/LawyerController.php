@@ -19,6 +19,10 @@ class LawyerController extends Controller
         protected LanguageService $languageService,
         protected RegisterGradeService $registerGradeService
     ) {
+        $this->middleware('can:lawyers.view')->only(['index', 'show']);
+        $this->middleware('can:lawyers.create')->only(['create', 'store']);
+        $this->middleware('can:lawyers.edit')->only(['edit', 'update', 'updateOfficeHours', 'toggleAds', 'toggleBlock', 'renewSubscription', 'updateSpecializations']);
+        $this->middleware('can:lawyers.delete')->only(['destroy']);
     }
 
     /**

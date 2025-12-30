@@ -2,158 +2,239 @@
 
 namespace App\Services;
 
-use App\Interfaces\RoleRepositoryInterface;
 use App\Models\Role;
-use App\Models\Language;
 use App\Models\Permession;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class RoleService
 {
-    public function __construct(public RoleRepositoryInterface $roleRepository)
+    /**
+     * Get all roles with filters and pagination
+     */
+    public function getAll($filters = [], $perPage = 10)
     {
+        $query = Role::with('permessions');
+
+        // Apply search filter
+        if (!empty($filters['search'])) {
+            $search = $filters['search'];
+            $query->whereHas('translations', function($q) use ($search) {
+                $q->where('lang_value', 'like', "%{$search}%");
+            });
+        }
+
+        // Apply date filters
+        if (!empty($filters['created_date_from'])) {
+            $query->whereDate('created_at', '>=', $filters['created_date_from']);
+        }
+
+        if (!empty($filters['created_date_to'])) {
+            $query->whereDate('created_at', '<=', $filters['created_date_to']);
+        }
+
+        return $perPage > 0 ? $query->latest()->paginate($perPage) : $query->latest()->get();
     }
 
     /**
-     * Get all roles with permissions
+     * Get role by ID
      */
-    public function getAllRoles(): Collection
+    public function getRoleById($id)
     {
-        return $this->roleRepository->getAllWithPermissions();
+        return Role::with('permessions')->findOrFail($id);
     }
 
     /**
-     * Get a single role by ID
+     * Create new role
      */
-    public function getRoleById(int $id): ?Role
+    public function createRole($data)
     {
-        return $this->roleRepository->findById($id);
+        DB::beginTransaction();
+        try {
+            $role = Role::create([]);
+
+            // Save translations - handle both formats: name_en/name_ar and name['en']/name['ar']
+            $languages = \App\Models\Language::all();
+            foreach ($languages as $language) {
+                $key = 'name_' . $language->code;
+                if (isset($data[$key]) && !empty($data[$key])) {
+                    $role->setTranslation('name', $language->code, $data[$key]);
+                }
+            }
+
+            // Attach permissions
+            if (!empty($data['permissions'])) {
+                $role->permessions()->attach($data['permissions']);
+            }
+
+            DB::commit();
+            return $role;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     /**
-     * Get all languages
+     * Update role
      */
-    public function getLanguages(): Collection
+    public function updateRole($role, $data)
     {
-        return Language::all();
+        DB::beginTransaction();
+        try {
+            // Update translations - handle both formats: name_en/name_ar and name['en']/name['ar']
+            $languages = \App\Models\Language::all();
+            foreach ($languages as $language) {
+                $key = 'name_' . $language->code;
+                if (isset($data[$key]) && !empty($data[$key])) {
+                    $role->setTranslation('name', $language->code, $data[$key]);
+                }
+            }
+
+            // Sync permissions
+            if (isset($data['permissions'])) {
+                $role->permessions()->sync($data['permissions']);
+            } else {
+                // If no permissions provided, remove all
+                $role->permessions()->sync([]);
+            }
+
+            DB::commit();
+            return $role;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Delete role
+     */
+    public function deleteRole($role)
+    {
+        DB::beginTransaction();
+        try {
+            $role->permessions()->detach();
+            $role->delete();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Get all permissions
+     */
+    public function getAllPermissions()
+    {
+        return Permession::all();
+    }
+
+    /**
+     * Get all roles (alias for getAll without pagination)
+     */
+    public function getAllRoles($filters = [])
+    {
+        return $this->getAll($filters, 0);
+    }
+
+    /**
+     * Get languages
+     */
+    public function getLanguages()
+    {
+        return \App\Models\Language::all();
     }
 
     /**
      * Get grouped permissions
      */
-    public function getGroupedPermissions(): Collection
+    public function getGroupedPermissions()
     {
         $permissions = Permession::all();
         
-        return $permissions->groupBy(function($permission) {
-            return $permission->getTranslation('group_by', app()->getLocale()) ?? 'Other';
+        // Define the order of actions
+        $actionOrder = ['view', 'create', 'edit', 'delete', 'manage', 'approve', 'reject', 'settings', 'send'];
+        
+        // Group permissions by group_by translation
+        $grouped = collect();
+        $locale = app()->getLocale();
+        
+        foreach ($permissions as $permission) {
+            $key = $permission->key;
+            
+            // Get group name from group_by translation, fallback to key parsing
+            $groupName = $permission->getTranslation('group_by', $locale);
+            
+            if (empty($groupName)) {
+                // Fallback: parse from key
+                if (strpos($key, '.') !== false) {
+                    $parts = explode('.', $key);
+                    array_pop($parts);
+                    $groupName = ucwords(str_replace(['-', '_'], ' ', end($parts)));
+                } else {
+                    $groupName = ucwords(str_replace(['-', '_'], ' ', $key));
+                }
+            }
+            
+            // Get action from key
+            $action = '';
+            if (strpos($key, '.') !== false) {
+                $parts = explode('.', $key);
+                $action = end($parts);
+            } else {
+                $action = 'other';
+            }
+            
+            if (!$grouped->has($groupName)) {
+                $grouped->put($groupName, collect());
+            }
+            
+            $grouped->get($groupName)->push([
+                'permission' => $permission,
+                'action' => $action
+            ]);
+        }
+        
+        // Sort permissions within each group by action order
+        $grouped = $grouped->map(function($permissions) use ($actionOrder) {
+            return $permissions->sortBy(function($item) use ($actionOrder) {
+                $index = array_search($item['action'], $actionOrder);
+                return $index !== false ? $index : 999;
+            })->values();
         });
-    }
-
-    /**
-     * Create a new role
-     */
-    public function createRole(array $data): Role
-    {
-        // Get all languages
-        $languages = Language::all();
         
-        // Create the role without name (name is stored only in translations)
-        $role = $this->roleRepository->create([]);
-
-        // Add translations for all languages
-        foreach ($languages as $language) {
-            if (isset($data['name_' . $language->code]) && !empty($data['name_' . $language->code])) {
-                $role->setTranslation(
-                    'name',
-                    $data['name_' . $language->code],
-                    $language->code
-                );
-            }
-        }
-
-        // Sync permissions if provided
-        if (isset($data['permissions']) && is_array($data['permissions'])) {
-            $this->roleRepository->syncPermissions($role, $data['permissions']);
-        }
-
-        // Refresh the role to get updated data
-        return $role->fresh('permessions');
+        // Sort groups alphabetically
+        return $grouped->sortKeys();
     }
-
+    
     /**
-     * Update an existing role
+     * Get action badge color
      */
-    public function updateRole(Role $role, array $data): Role
+    public function getActionBadgeColor($action)
     {
-        // Get all languages
-        $languages = Language::all();
-        
-        // Update translations for all languages (no name column to update)
-        foreach ($languages as $language) {
-            if (isset($data['name_' . $language->code]) && !empty($data['name_' . $language->code])) {
-                $role->setTranslation(
-                    'name',
-                    $data['name_' . $language->code],
-                    $language->code
-                );
-            }
-        }
-
-        // Sync permissions if provided
-        if (isset($data['permissions']) && is_array($data['permissions'])) {
-            $this->roleRepository->syncPermissions($role, $data['permissions']);
-        } else {
-            // Clear all permissions if none provided
-            $this->roleRepository->syncPermissions($role, []);
-        }
-
-        // Refresh the role to get updated data
-        return $role->fresh('permessions');
+        return match($action) {
+            'view' => 'info',
+            'create' => 'success',
+            'edit' => 'warning',
+            'delete' => 'danger',
+            'manage' => 'primary',
+            'approve', 'accept' => 'success',
+            'reject' => 'danger',
+            'send' => 'primary',
+            default => 'secondary'
+        };
     }
-
+    
     /**
-     * Delete a role
+     * Get resource display name
      */
-    public function deleteRole(Role $role): bool
+    public function getResourceDisplayName($resource)
     {
-        // Detach all permissions before deleting
-        $role->permessions()->detach();
-        
-        // Delete all translations
-        $role->translations()->delete();
-        
-        // Delete the role
-        return $this->roleRepository->delete($role);
-    }
-
-    /**
-     * Assign permissions to a role
-     */
-    public function assignPermissions(Role $role, array $permissionIds): void
-    {
-        $this->roleRepository->syncPermissions($role, $permissionIds);
-    }
-
-    /**
-     * Add permissions to a role
-     */
-    public function addPermissions(Role $role, array $permissionIds): void
-    {
-        $currentPermissions = $role->permessions->pluck('id')->toArray();
-        $allPermissions = array_unique(array_merge($currentPermissions, $permissionIds));
-        
-        $this->roleRepository->syncPermissions($role, $allPermissions);
-    }
-
-    /**
-     * Remove permissions from a role
-     */
-    public function removePermissions(Role $role, array $permissionIds): void
-    {
-        $currentPermissions = $role->permessions->pluck('id')->toArray();
-        $remainingPermissions = array_diff($currentPermissions, $permissionIds);
-        
-        $this->roleRepository->syncPermissions($role, $remainingPermissions);
+        // Convert to readable format
+        // e.g., 'roles' -> 'Roles'
+        // e.g., 'sections-of-laws' -> 'Sections Of Laws'
+        // e.g., 'products' -> 'Products'
+        return ucwords(str_replace(['-', '_'], ' ', $resource));
     }
 }

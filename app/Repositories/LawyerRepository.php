@@ -23,12 +23,16 @@ class LawyerRepository implements LawyerRepositoryInterface
     {
         $query = Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'attachments', 'sectionsOfLaws']);
 
-        // Apply search filter
+        // Apply search filter (name or email)
         if (!empty($filters['search'])) {
             $search = $filters['search'];
-            $query->whereHas('translations', function($q) use ($search) {
-                $q->where('lang_value', 'like', "%{$search}%")
-                  ->whereIn('lang_key', ['name']);
+            $query->where(function($q) use ($search) {
+                $q->whereHas('translations', function($q) use ($search) {
+                    $q->where('lang_value', 'like', "%{$search}%")
+                      ->whereIn('lang_key', ['name']);
+                })->orWhereHas('user', function($q) use ($search) {
+                    $q->where('email', 'like', "%{$search}%");
+                });
             });
         }
 
@@ -320,7 +324,7 @@ class LawyerRepository implements LawyerRepositoryInterface
                     [
                         'from_time' => $data['from_time'] ?? null,
                         'to_time' => $data['to_time'] ?? null,
-                        'is_available' => isset($data['is_available']) && $data['is_available'] == 1,
+                        'is_available' => filter_var($data['is_available'] ?? false, FILTER_VALIDATE_BOOLEAN) || ($data['is_available'] ?? 0) == 1,
                     ]
                 );
             }

@@ -24,6 +24,11 @@ class RegionController extends Controller
         $this->regionService = $regionService;
         $this->cityService = $cityService;
         $this->languageService = $languageService;
+        
+        $this->middleware('can:regions.view')->only(['index', 'show']);
+        $this->middleware('can:regions.create')->only(['create', 'store']);
+        $this->middleware('can:regions.edit')->only(['edit', 'update']);
+        $this->middleware('can:regions.delete')->only(['destroy']);
     }
 
     /**

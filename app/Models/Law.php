@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Translation;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -25,6 +26,20 @@ class Law extends Model
         return $this->belongsTo(BranchOfLaw::class);
     }
 
+    /**
+     * Scope to search laws by title or description
+     */
+    public function scopeSearch(Builder $query, ?string $search): Builder
+    {
+        if (empty($search)) {
+            return $query;
+        }
+
+        return $query->whereHas('translations', function ($q) use ($search) {
+            $q->where('lang_value', 'like', "%{$search}%")
+              ->whereIn('lang_key', ['title', 'description']);
+        });
+    }
 
     function getTitleAttribute()
     {
@@ -35,6 +50,4 @@ class Law extends Model
     {
         return $this->getTranslation('description', app()->getLocale());
     }
-
-
 }

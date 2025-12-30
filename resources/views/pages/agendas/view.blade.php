@@ -10,7 +10,7 @@
                         'url' => route('admin.dashboard'),
                         'icon' => 'uil uil-estate',
                     ],
-                    ['title' => trans('agenda.agenda_management'), 'url' => route('admin.agendas.index')],
+                    ['title' => trans('agenda.judicial_agenda_management'), 'url' => route('admin.agendas.index')],
                     ['title' => trans('agenda.view_agenda')],
                 ]" />
             </div>

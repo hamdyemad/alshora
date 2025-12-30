@@ -8,6 +8,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PaginationController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\AdminManagement\RoleController;
+use App\Http\Controllers\AdminManagement\AdminController;
 use App\Http\Controllers\AreaSettings\CountryController;
 use App\Http\Controllers\AreaSettings\CityController;
 use App\Http\Controllers\AreaSettings\RegionController;
@@ -34,6 +35,7 @@ use App\Http\Controllers\HostingController;
 use App\Http\Controllers\HostingReservationController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\PreparerAgendaController;
+use App\Http\Controllers\SupportMessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +62,8 @@ Route::group(
         // Admin Management
         Route::prefix('admin-management')->name('admin-management.')->group(function() {
             Route::resource('roles', RoleController::class);
+            Route::resource('admins', AdminController::class);
+            Route::post('admins/{admin}/toggle-blocked', [AdminController::class, 'toggleBlocked'])->name('admins.toggle-blocked');
         });
 
         // Vendors
@@ -94,9 +98,14 @@ Route::group(
         // News
         Route::resource('news', NewsController::class);
 
+        // Support Messages
+        Route::resource('support-messages', SupportMessageController::class)->only(['index', 'show', 'destroy']);
+        Route::post('support-messages/{id}/status', [SupportMessageController::class, 'updateStatus'])->name('support-messages.update-status');
+
         // Agendas
         Route::resource('agendas', AgendaController::class)->only(['index', 'show', 'destroy']);
         Route::resource('preparer-agendas', PreparerAgendaController::class)->only(['index', 'show', 'destroy']);
+        Route::resource('client-agendas', \App\Http\Controllers\ClientAgendaController::class)->only(['index', 'show', 'destroy']);
 
         // Sections of Laws
         Route::resource('sections-of-laws', SectionOfLawController::class);

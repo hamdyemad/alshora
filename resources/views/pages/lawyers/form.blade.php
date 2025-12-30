@@ -593,6 +593,23 @@
                                     </div>
                                 </div>
 
+                                {{-- TikTok URL --}}
+                                <div class="col-md-6 mb-25">
+                                    <div class="form-group">
+                                        <label for="tiktok_url" class="il-gray fs-14 fw-500 mb-10">
+                                            <i class="uil uil-video me-1" style="color: #000;"></i>{{ trans('lawyer.tiktok_url') }}
+                                        </label>
+                                        <input type="url"
+                                            class="form-control ih-medium ip-gray radius-xs b-light px-15 @error('tiktok_url') is-invalid @enderror"
+                                            id="tiktok_url" name="tiktok_url"
+                                            value="{{ isset($lawyer) ? $lawyer->tiktok_url : old('tiktok_url') }}"
+                                            placeholder="https://tiktok.com/@username">
+                                        @error('tiktok_url')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 {{-- Location Section --}}
                                 <div class="col-12 mb-20 mt-20">
                                     <h6 class="fw-500 color-dark border-bottom pb-15">

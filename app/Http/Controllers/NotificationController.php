@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:notifications.view')->only(['getUnreadNotifications']);
+        $this->middleware('can:notifications.manage')->only(['markAsRead', 'markAllAsRead']);
+    }
+
     /**
      * Get unread notifications for the authenticated user
      */

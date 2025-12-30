@@ -6,7 +6,7 @@
             <div class="col-lg-12">
                 <x-breadcrumb :items="[
                     ['title' => trans('dashboard.title'), 'url' => route('admin.dashboard'), 'icon' => 'uil uil-estate'],
-                    ['title' => trans('agenda.agenda_management')]
+                    ['title' => trans('agenda.judicial_agenda_management')]
                 ]" />
             </div>
         </div>
@@ -16,7 +16,7 @@
                 
                 <div class="userDatatable global-shadow border-light-0 p-30 bg-white radius-xl w-100 mb-30">
                     <div class="d-flex justify-content-between align-items-center mb-25">
-                        <h4 class="mb-0 fw-500">{{ trans('agenda.agenda_management') }}</h4>
+                        <h4 class="mb-0 fw-500">{{ trans('agenda.judicial_agenda_management') }}</h4>
                         <div class="d-flex gap-2">
                             <button class="btn btn-light btn-default btn-squared" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
                                 <i class="uil uil-filter"></i> {{ __('common.filter') }}

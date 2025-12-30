@@ -61,7 +61,7 @@ class BranchOfLawController extends Controller
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         try {
             $branch = $this->branchOfLawService->getBranchOfLawById($id);
@@ -70,9 +70,13 @@ class BranchOfLawController extends Controller
                 return $this->sendRes(__('branches_of_laws.not_found'), false, [], [], 404);
             }
 
-            // Load laws relationship
-            $branch->load(['laws' => function ($query) {
-                $query->where('active', true)->with('translations');
+            $search = $request->input('search');
+
+            // Load laws relationship with optional search
+            $branch->load(['laws' => function ($query) use ($search) {
+                $query->where('active', true)
+                      ->search($search)
+                      ->with('translations');
             }]);
 
             return $this->sendRes(

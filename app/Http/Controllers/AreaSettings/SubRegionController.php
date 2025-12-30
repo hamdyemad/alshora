@@ -24,6 +24,11 @@ class SubRegionController extends Controller
         $this->subregionService = $subregionService;
         $this->regionService = $regionService;
         $this->languageService = $languageService;
+        
+        $this->middleware('can:subregions.view')->only(['index', 'show']);
+        $this->middleware('can:subregions.create')->only(['create', 'store']);
+        $this->middleware('can:subregions.edit')->only(['edit', 'update']);
+        $this->middleware('can:subregions.delete')->only(['destroy']);
     }
 
     /**

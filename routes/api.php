@@ -14,6 +14,11 @@ Route::prefix('v1')->group(function () {
     require __DIR__ . '/api/v1/hosting.php';
     require __DIR__ . '/api/v1/branches_of_laws.php';
     require __DIR__ . '/api/v1/agenda.php';
+    require __DIR__ . '/api/v1/client_agenda.php';
+    require __DIR__ . '/api/v1/social.php';
+    require __DIR__ . '/api/v1/support.php';
+    require __DIR__ . '/api/v1/news.php';
+    require __DIR__ . '/api/v1/instructions.php';
 });
 
 // Notification routes

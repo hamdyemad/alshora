@@ -13,6 +13,10 @@ class SubscriptionController extends Controller
         protected SubscriptionService $subscriptionService,
         protected LanguageService $languageService
     ) {
+        $this->middleware('can:subscriptions.view')->only(['index', 'show']);
+        $this->middleware('can:subscriptions.create')->only(['create', 'store']);
+        $this->middleware('can:subscriptions.edit')->only(['edit', 'update']);
+        $this->middleware('can:subscriptions.delete')->only(['destroy']);
     }
 
     /**

@@ -13,6 +13,10 @@ class SectionOfLawController extends Controller
         protected SectionOfLawService $sectionOfLawService,
         protected LanguageService $languageService
     ) {
+        $this->middleware('can:sections-of-laws.view')->only(['index', 'show']);
+        $this->middleware('can:sections-of-laws.create')->only(['create', 'store']);
+        $this->middleware('can:sections-of-laws.edit')->only(['edit', 'update']);
+        $this->middleware('can:sections-of-laws.delete')->only(['destroy']);
     }
 
     /**
