@@ -15,9 +15,10 @@ class CustomerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $logo = $this->whenLoaded('attachments', function() {
-            return $this->attachments->where('type', 'logo')->first();
-        });
+        $logo = null;
+        if ($this->relationLoaded('attachments')) {
+            $logo = $this->attachments->where('type', 'logo')->first();
+        }
 
         return [
             'id' => $this->id,

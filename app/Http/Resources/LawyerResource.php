@@ -38,9 +38,15 @@ class LawyerResource extends JsonResource
             'experience_ar' => $this->getTranslation('experience', 'ar') ?? '',
             'latitude' => $this->latitude ?? '',
             'longitude' => $this->longitude ?? '',
-            'officeHours' => $this->whenLoaded('officeHours', $this->officeHours->groupBy('period')),
-            'profile_image' => $this->profile_image ? Storage::disk('public')->url($this->profile_image->path) : '',
-            'id_card' => $this->id_card ? Storage::disk('public')->url($this->id_card->path) : '',
+            'officeHours' => $this->whenLoaded('officeHours', function() {
+                return $this->officeHours->groupBy('period');
+            }),
+            'profile_image' => $this->when($this->relationLoaded('profile_image') && $this->profile_image, function() {
+                return Storage::disk('public')->url($this->profile_image->path);
+            }, ''),
+            'id_card' => $this->when($this->relationLoaded('id_card') && $this->id_card, function() {
+                return Storage::disk('public')->url($this->id_card->path);
+            }, ''),
             'facebook_url' => $this->facebook_url ?? '',
             'twitter_url' => $this->twitter_url ?? '',
             'instagram_url' => $this->instagram_url ?? '',

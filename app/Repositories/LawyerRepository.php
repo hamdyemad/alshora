@@ -66,7 +66,7 @@ class LawyerRepository implements LawyerRepositoryInterface
      */
     public function findById($id): ?Lawyer
     {
-        return Lawyer::with(['user', 'city', 'sectionsOfLaws', 'region', 'phoneCountry', 'attachments', 'officeHours', 'subscription', 'sectionsOfLaws'])->find($id);
+        return Lawyer::with(['user', 'city', 'sectionsOfLaws', 'region', 'phoneCountry', 'attachments', 'officeHours', 'subscription', 'sectionsOfLaws', 'profile_image', 'id_card'])->find($id);
     }
 
     /**

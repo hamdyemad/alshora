@@ -57,10 +57,10 @@ class UserAction {
             // Get full user profile resource based on user type
             $userResource = null;
             if ($user->user_type_id == UserType::LAWYER_TYPE) {
-                $lawyer = $user->lawyer->load(['city', 'region', 'phoneCountry', 'sectionsOfLaws', 'officeHours', 'subscription']);
+                $lawyer = $user->lawyer->load(['city', 'region', 'phoneCountry', 'sectionsOfLaws', 'officeHours', 'subscription', 'profile_image', 'id_card']);
                 $userResource = new LawyerResource($lawyer);
             } else if ($user->user_type_id == UserType::CUSTOMER_TYPE) {
-                $customer = $user->customer->load(['city', 'region', 'phoneCountry']);
+                $customer = $user->customer->load(['city', 'region', 'phoneCountry', 'attachments']);
                 $userResource = new CustomerResource($customer);
             }
 
