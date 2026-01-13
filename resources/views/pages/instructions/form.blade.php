@@ -100,20 +100,23 @@
 
                                 <div class="col-md-6 mb-25">
                                     <div class="form-group">
-                                        <label for="active" class="il-gray fs-14 fw-500 mb-10">
-                                            {{ __('instructions.activation') }} <span class="text-danger">*</span>
+                                        <label class="il-gray fs-14 fw-500 mb-10 d-block">
+                                            {{ __('instructions.activation') }}
                                         </label>
-                                        <select class="form-control ih-medium ip-gray radius-xs b-light px-15 @error('active') is-invalid @enderror"
-                                            id="active" name="active">
-                                            <option value="1"
-                                                {{ (isset($instruction) && $instruction->active == 1) || old('active') == 1 ? 'selected' : '' }}>
-                                                {{ __('instructions.active') }}</option>
-                                            <option value="0"
-                                                {{ (isset($instruction) && $instruction->active == 0) || old('active') == 0 ? 'selected' : '' }}>
-                                                {{ __('instructions.inactive') }}</option>
-                                        </select>
+                                        <div class="form-check form-switch form-switch-primary form-switch-md">
+                                            <input type="hidden" name="active" value="0">
+                                            <input type="checkbox"
+                                                   class="form-check-input"
+                                                   id="active"
+                                                   name="active"
+                                                   value="1"
+                                                   {{ (isset($instruction) && $instruction->active) || (!isset($instruction) && old('active', 1)) ? 'checked' : '' }}>
+                                            <label class="form-check-label ms-2" for="active">
+                                                {{ __('instructions.active') }}
+                                            </label>
+                                        </div>
                                         @error('active')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
