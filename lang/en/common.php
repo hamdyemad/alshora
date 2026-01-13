@@ -82,4 +82,8 @@ return [
     'select_lawyer' => 'Select Lawyer',
     'action' => 'Action',
     'loading' => 'Loading',
+    'no_data_found' => 'No data found',
+    'reject' => 'Reject',
+    'accept' => 'Accept',
+    'send' => 'Send',
 ];

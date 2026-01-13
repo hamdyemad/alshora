@@ -167,6 +167,13 @@ return [
     'blocked_successfully' => 'تم حظر المحامي بنجاح',
     'unblocked_successfully' => 'تم إلغاء حظر المحامي بنجاح',
     'error_toggling_block' => 'خطأ في تغيير حالة الحظر',
+    
+    // Featured
+    'is_featured' => 'محامي متميز',
+    'marked_as_featured' => 'تم تحديد المحامي كمتميز',
+    'removed_from_featured' => 'تم إزالة المحامي من المتميزين',
+    'error_toggling_featured' => 'خطأ في تغيير حالة التميز',
+    
     'period' => 'الفترة',
     'day' => 'اليوم',
     'from_time' => 'من',

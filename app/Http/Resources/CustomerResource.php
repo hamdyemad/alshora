@@ -28,7 +28,7 @@ class CustomerResource extends JsonResource
             'email' => ($this->user) ? $this->user->email : '',
             'user_type' => 'customer',
             'phone' => $this->phone,
-            'phone_country' => new CountryResource($this->whenLoaded('phoneCountry')),
+            'phone_country' => $this->whenLoaded('phoneCountry', fn() => new CountryResource($this->phoneCountry)),
             'address' => $this->address,
             'city' => $this->whenLoaded('city', function() {
                 return new CityResource($this->city);

@@ -346,4 +346,16 @@ class LawyerRepository implements LawyerRepositoryInterface
     {
         $lawyer->setTranslation($key, $locale, $value);
     }
+
+    /**
+     * Get featured lawyers by is_featured flag
+     */
+    public function getFeaturedByRating(int $limit = 10): Collection
+    {
+        return Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'attachments', 'sectionsOfLaws', 'profile_image'])
+            ->where('active', true)
+            ->where('is_featured', true)
+            ->limit($limit)
+            ->get();
+    }
 }

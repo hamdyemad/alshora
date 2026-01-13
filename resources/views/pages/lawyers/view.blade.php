@@ -271,6 +271,20 @@
                                 </div>
                             </div>
 
+                            {{-- Featured Toggle --}}
+                            <div class="col-md-3 mb-25">
+                                <div class="view-item">
+                                    <label class="il-gray fs-14 fw-500 mb-10 d-block">{{ trans('lawyer.is_featured') }}</label>
+                                    <div class="form-check form-switch form-switch-warning form-switch-md">
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               id="featuredToggle"
+                                               {{ $lawyer->is_featured ? 'checked' : '' }}
+                                               onchange="toggleFeatured({{ $lawyer->id }}, this)">
+                                    </div>
+                                </div>
+                            </div>
+
                             {{-- Block Toggle --}}
                             <div class="col-md-3 mb-25">
                                 <div class="view-item">
@@ -1135,6 +1149,34 @@
             console.error('Toggle Block Error:', error);
             checkbox.checked = !checkbox.checked;
             showToast('{{ trans("lawyer.error_toggling_block") }}', 'error');
+        });
+    }
+
+    // Toggle Featured
+    function toggleFeatured(lawyerId, checkbox) {
+        const url = `{{ route('admin.lawyers.toggle-featured', ':id') }}`.replace(':id', lawyerId);
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showToast(data.message, 'success');
+            } else {
+                checkbox.checked = !checkbox.checked;
+                showToast(data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Toggle Featured Error:', error);
+            checkbox.checked = !checkbox.checked;
+            showToast('{{ trans("lawyer.error_toggling_featured") }}', 'error');
         });
     }
 

@@ -21,9 +21,11 @@
                             <button class="btn btn-light btn-default btn-squared" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
                                 <i class="uil uil-filter"></i> {{ __('common.filter') }}
                             </button>
+                            @can('lawyers.create')
                             <a href="{{ route('admin.lawyers.create') }}" class="btn btn-primary btn-default btn-squared text-capitalize">
                                 <i class="uil uil-plus"></i> {{ trans('lawyer.add_lawyer') }}
                             </a>
+                            @endcan
                         </div>
                     </div>
 
@@ -205,16 +207,21 @@
                                         {{-- Actions Column --}}
                                         <td class="align-middle text-center">
                                             <ul class="orderDatatable_actions mb-0 d-flex flex-wrap justify-content-center gap-1">
+                                                @can('lawyers.view')
                                                 <li>
                                                     <a href="{{ route('admin.lawyers.show', $lawyer->id) }}" class="view" title="{{ trans('common.view') }}">
                                                         <i class="uil uil-eye"></i>
                                                     </a>
                                                 </li>
+                                                @endcan
+                                                @can('lawyers.edit')
                                                 <li>
                                                     <a href="{{ route('admin.lawyers.edit', $lawyer->id) }}" class="edit" title="{{ trans('common.edit') }}">
                                                         <i class="uil uil-edit"></i>
                                                     </a>
                                                 </li>
+                                                @endcan
+                                                @can('lawyers.delete')
                                                 <li>
                                                     <a href="javascript:void(0);" 
                                                        class="remove" 
@@ -226,6 +233,7 @@
                                                         <i class="uil uil-trash-alt"></i>
                                                     </a>
                                                 </li>
+                                                @endcan
                                             </ul>
                                         </td>
                                     </tr>

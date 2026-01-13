@@ -93,4 +93,22 @@ class LawyerService
     {
         return $this->lawyerRepositoryInterface->updateOfficeHours($lawyer, $officeHoursData);
     }
+
+    /**
+     * Get featured lawyers by is_featured flag
+     */
+    public function getFeaturedLawyers(int $limit = 10)
+    {
+        return $this->lawyerRepositoryInterface->getFeaturedByRating($limit);
+    }
+
+    /**
+     * Toggle featured status for a lawyer
+     */
+    public function toggleFeatured(Lawyer $lawyer): Lawyer
+    {
+        $lawyer->is_featured = !$lawyer->is_featured;
+        $lawyer->save();
+        return $lawyer;
+    }
 }

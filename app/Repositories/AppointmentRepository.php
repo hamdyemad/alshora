@@ -92,7 +92,7 @@ class AppointmentRepository implements AppointmentRepositoryInterface
      */
     public function getCustomerAppointments(Customer $customer, array $filters = [], int $perPage = 10)
     {
-        $query = Appointment::with(['lawyer.user', 'lawyer.phoneCountry'])
+        $query = Appointment::with(['lawyer.user', 'lawyer.phoneCountry', 'lawyer.profile_image'])
             ->where('customer_id', $customer->id)
             ->latest();
 

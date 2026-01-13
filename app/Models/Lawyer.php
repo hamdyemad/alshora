@@ -19,6 +19,7 @@ class Lawyer extends Model
         'subscription_expires_at' => 'date',
         'ads_enabled' => 'boolean',
         'active' => 'boolean',
+        'is_featured' => 'boolean',
     ];
 
     /**

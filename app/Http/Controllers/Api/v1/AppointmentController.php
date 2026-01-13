@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ReserveAppointmentRequest;
+use App\Http\Resources\AppointmentResource;
 use App\Services\AppointmentService;
 use App\Traits\Res;
 use Illuminate\Http\Request;
@@ -40,14 +41,12 @@ class AppointmentController extends Controller
 
             // Reserve appointment through service
             $appointment = $this->appointmentService->reserve($data, $customer);
+            $appointment->load(['lawyer.profile_image', 'customer']);
 
             return $this->sendRes(
                 __('appointment.reserved_successfully'),
                 true,
-                [
-                    'appointment_id' => $appointment->id,
-                    'status' => $appointment->status,
-                ],
+                new AppointmentResource($appointment),
                 [],
                 201
             );
@@ -82,10 +81,10 @@ class AppointmentController extends Controller
 
             $perPage = $request->input('per_page', 10);
             $appointments = $this->appointmentService->getCustomerAppointments($customer, $filters, $perPage);
-
+            
             if ($perPage > 0) {
                 $data = [
-                    'items' => $appointments->items(),
+                    'items' => AppointmentResource::collection($appointments->items()),
                     'pagination' => [
                         'current_page' => $appointments->currentPage(),
                         'last_page' => $appointments->lastPage(),
@@ -98,7 +97,7 @@ class AppointmentController extends Controller
                 return $this->sendRes(__('validation.success'), true, $data);
             }
 
-            return $this->sendRes(__('validation.success'), true, $appointments);
+            return $this->sendRes(__('validation.success'), true, AppointmentResource::collection($appointments));
         } catch (\Exception $e) {
             return $this->sendRes($e->getMessage(), false, [], [], 500);
         }

@@ -23,6 +23,13 @@ class LawyerController extends Controller
     public function index(Request $request)
     {
         try {
+            // Check if featured lawyers requested
+            if ($request->boolean('featured')) {
+                $limit = $request->get('limit', 10);
+                $lawyers = $this->lawyerService->getFeaturedLawyers($limit);
+                return $this->sendRes(__('validation.success'), true, LawyerResource::collection($lawyers));
+            }
+
             $filters = $request->all();
             $per_page = request('per_page') ?? 0;
             $lawyers = $this->lawyerService->getAllLawyers($filters, $per_page);
@@ -58,7 +65,4 @@ class LawyerController extends Controller
             return $this->sendRes($e->getMessage(), false, [], [], 500);
         }
     }
-
-
-
 }

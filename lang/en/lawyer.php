@@ -171,6 +171,13 @@ return [
     'blocked_successfully' => 'Lawyer blocked successfully',
     'unblocked_successfully' => 'Lawyer unblocked successfully',
     'error_toggling_block' => 'Error toggling block status',
+    
+    // Featured
+    'is_featured' => 'Featured Lawyer',
+    'marked_as_featured' => 'Lawyer marked as featured',
+    'removed_from_featured' => 'Lawyer removed from featured',
+    'error_toggling_featured' => 'Error toggling featured status',
+    
     'period' => 'Period',
     'day' => 'Day',
     'from_time' => 'From',

@@ -60,4 +60,9 @@ interface LawyerRepositoryInterface
 
 
     public function updateOfficeHours(Lawyer $lawyer, array $officeHoursData);
+
+    /**
+     * Get featured lawyers by average rating
+     */
+    public function getFeaturedByRating(int $limit = 10): Collection;
 }

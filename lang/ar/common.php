@@ -82,4 +82,8 @@ return [
     'select_lawyer' => 'اختر المحامي',
     'action' => 'الإجراء',
     'loading' => 'جاري التحميل',
+    'no_data_found' => 'لا توجد بيانات',
+    'reject' => 'رفض',
+    'accept' => 'قبول',
+    'send' => 'إرسال',
 ];

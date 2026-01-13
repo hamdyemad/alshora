@@ -21,9 +21,11 @@
                             <button class="btn btn-light btn-default btn-squared" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
                                 <i class="uil uil-filter"></i> {{ __('common.filter') }}
                             </button>
+                            @can('news.create')
                             <a href="{{ route('admin.news.create') }}" class="btn btn-primary btn-default btn-squared text-capitalize">
                                 <i class="uil uil-plus"></i> {{ trans('news.add_news') }}
                             </a>
+                            @endcan
                         </div>
                     </div>
 
@@ -165,16 +167,21 @@
                                         {{-- Actions Column --}}
                                         <td class="align-middle text-center">
                                             <ul class="orderDatatable_actions mb-0 d-flex flex-wrap justify-content-center gap-1">
+                                                @can('news.view')
                                                 <li>
                                                     <a href="{{ route('admin.news.show', $item->id) }}" class="view" title="{{ trans('common.view') }}">
                                                         <i class="uil uil-eye"></i>
                                                     </a>
                                                 </li>
+                                                @endcan
+                                                @can('news.edit')
                                                 <li>
                                                     <a href="{{ route('admin.news.edit', $item->id) }}" class="edit" title="{{ trans('common.edit') }}">
                                                         <i class="uil uil-edit"></i>
                                                     </a>
                                                 </li>
+                                                @endcan
+                                                @can('news.delete')
                                                 <li>
                                                     <a href="javascript:void(0);" 
                                                        class="remove" 
@@ -186,6 +193,7 @@
                                                         <i class="uil uil-trash-alt"></i>
                                                     </a>
                                                 </li>
+                                                @endcan
                                             </ul>
                                         </td>
                                     </tr>

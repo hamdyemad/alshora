@@ -19,6 +19,7 @@ Route::prefix('v1')->group(function () {
     require __DIR__ . '/api/v1/support.php';
     require __DIR__ . '/api/v1/news.php';
     require __DIR__ . '/api/v1/instructions.php';
+    require __DIR__ . '/api/v1/lawyer.php';
 });
 
 // Notification routes

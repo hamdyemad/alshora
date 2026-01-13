@@ -87,6 +87,7 @@ Route::group(
         Route::post('lawyers/{lawyer}/toggle-ads', [LawyerController::class, 'toggleAds'])->name('lawyers.toggle-ads');
         Route::post('lawyers/{lawyer}/toggle-block', [LawyerController::class, 'toggleBlock'])->name('lawyers.toggle-block');
         Route::post('lawyers/{lawyer}/renew-subscription', [LawyerController::class, 'renewSubscription'])->name('lawyers.renew-subscription');
+        Route::post('lawyers/{lawyer}/toggle-featured', [LawyerController::class, 'toggleFeatured'])->name('lawyers.toggle-featured');
 
         // Customers
         Route::resource('customers', CustomerController::class);

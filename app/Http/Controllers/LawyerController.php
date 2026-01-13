@@ -21,7 +21,7 @@ class LawyerController extends Controller
     ) {
         $this->middleware('can:lawyers.view')->only(['index', 'show']);
         $this->middleware('can:lawyers.create')->only(['create', 'store']);
-        $this->middleware('can:lawyers.edit')->only(['edit', 'update', 'updateOfficeHours', 'toggleAds', 'toggleBlock', 'renewSubscription', 'updateSpecializations']);
+        $this->middleware('can:lawyers.edit')->only(['edit', 'update', 'updateOfficeHours', 'toggleAds', 'toggleBlock', 'renewSubscription', 'updateSpecializations', 'toggleFeatured']);
         $this->middleware('can:lawyers.delete')->only(['destroy']);
     }
 
@@ -184,7 +184,8 @@ class LawyerController extends Controller
     public function destroy(Request $request, string $id)
     {
         try {
-            $this->lawyerService->deleteLawyer($id);
+            $lawyer = $this->lawyerService->getLawyerById($id);
+            $this->lawyerService->deleteLawyer($lawyer);
 
             // Check if request is AJAX
             if ($request->ajax() || $request->wantsJson()) {
@@ -351,6 +352,30 @@ class LawyerController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => __('lawyer.error_updating_specializations') . ': ' . $e->getMessage()
+            ], 422);
+        }
+    }
+
+    /**
+     * Toggle featured status for a lawyer
+     */
+    public function toggleFeatured(Request $request, string $id)
+    {
+        try {
+            $lawyer = $this->lawyerService->getLawyerById($id);
+            $lawyer = $this->lawyerService->toggleFeatured($lawyer);
+
+            return response()->json([
+                'success' => true,
+                'message' => $lawyer->is_featured 
+                    ? __('lawyer.marked_as_featured') 
+                    : __('lawyer.removed_from_featured'),
+                'is_featured' => $lawyer->is_featured
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
             ], 422);
         }
     }

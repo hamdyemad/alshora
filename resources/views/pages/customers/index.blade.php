@@ -21,9 +21,11 @@
                             <button class="btn btn-light btn-default btn-squared" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
                                 <i class="uil uil-filter"></i> {{ __('common.filter') }}
                             </button>
+                            @can('customers.create')
                             <a href="{{ route('admin.customers.create') }}" class="btn btn-primary btn-default btn-squared text-capitalize">
                                 <i class="uil uil-plus"></i> {{ trans('customer.add_customer') }}
                             </a>
+                            @endcan
                         </div>
                     </div>
 
@@ -202,16 +204,21 @@
                                         {{-- Actions Column --}}
                                         <td class="align-middle text-center">
                                             <ul class="orderDatatable_actions mb-0 d-flex flex-wrap justify-content-center gap-1">
+                                                @can('customers.view')
                                                 <li>
                                                     <a href="{{ route('admin.customers.show', $customer->id) }}" class="view" title="{{ trans('common.view') }}">
                                                         <i class="uil uil-eye"></i>
                                                     </a>
                                                 </li>
+                                                @endcan
+                                                @can('customers.edit')
                                                 <li>
                                                     <a href="{{ route('admin.customers.edit', $customer->id) }}" class="edit" title="{{ trans('common.edit') }}">
                                                         <i class="uil uil-edit"></i>
                                                     </a>
                                                 </li>
+                                                @endcan
+                                                @can('customers.delete')
                                                 <li>
                                                     <a href="javascript:void(0);" 
                                                        class="remove" 
@@ -223,6 +230,7 @@
                                                         <i class="uil uil-trash-alt"></i>
                                                     </a>
                                                 </li>
+                                                @endcan
                                             </ul>
                                         </td>
                                     </tr>

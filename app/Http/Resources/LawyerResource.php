@@ -31,6 +31,7 @@ class LawyerResource extends JsonResource
             'region' => $this->whenLoaded('region', new RegionResource($this->region)),
             'consultation_price' => $this->consultation_price,
             'active' => $this->active,
+            'is_featured' => $this->is_featured,
             'register_grade' => new RegisterGradeResource($this->RegisterGrade),
             'section_of_law' => $this->whenLoaded('sectionsOfLaws', SectionOfLawResource::collection($this->sectionsOfLaws)),
             'experience' => $this->getTranslation('experience', app()->getLocale()) ?? '',
@@ -59,6 +60,8 @@ class LawyerResource extends JsonResource
             'is_followed_by_me' => auth()->check() ? $this->isFollowedBy(auth()->id()) : false,
             'likes_count' => $this->likes()->count(),
             'is_liked_by_me' => auth()->check() ? $this->isLikedBy(auth()->id()) : false,
+            'average_rating' => $this->when(isset($this->reviews_avg_rating), round($this->reviews_avg_rating, 1)),
+            'reviews_count' => $this->when(isset($this->reviews_count), $this->reviews_count),
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];
