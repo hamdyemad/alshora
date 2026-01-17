@@ -12,6 +12,88 @@ use Illuminate\Http\Request;
 class ReviewApiController extends Controller
 {
     use Res;
+    
+    /**
+     * Get reviews for the authenticated user
+     * - If customer: get reviews they wrote
+     * - If lawyer: get reviews they received
+     */
+    public function myReviews(Request $request)
+    {
+        $user = auth()->user();
+        
+        // Check if user is a customer
+        if ($user->customer) {
+            $reviews = Review::where('customer_id', $user->customer->id)
+                ->with(['lawyer.user', 'lawyer.profile_image'])
+                ->latest()
+                ->paginate(10);
+            
+            $data = [
+                'type' => 'customer_reviews',
+                'items' => ReviewResource::collection($reviews),
+                'pagination' => [
+                    'current_page' => $reviews->currentPage(),
+                    'last_page' => $reviews->lastPage(),
+                    'per_page' => $reviews->perPage(),
+                    'total' => $reviews->total(),
+                    'from' => $reviews->firstItem(),
+                    'to' => $reviews->lastItem(),
+                ]
+            ];
+            
+            return $this->sendRes(
+                __('validation.success'),
+                true,
+                $data,
+                []
+            );
+        }
+        
+        // Check if user is a lawyer
+        if ($user->lawyer) {
+            $reviews = Review::where('lawyer_id', $user->lawyer->id)
+                ->approved()
+                ->with(['customer.user', 'customer.logo'])
+                ->latest()
+                ->paginate(10);
+            
+            $averageRating = Review::getAverageRating($user->lawyer->id);
+            $totalReviews = Review::getTotalReviews($user->lawyer->id);
+            
+            $data = [
+                'type' => 'lawyer_reviews',
+                'average_rating' => round($averageRating, 2),
+                'total_reviews' => $totalReviews,
+                'items' => ReviewResource::collection($reviews),
+                'pagination' => [
+                    'current_page' => $reviews->currentPage(),
+                    'last_page' => $reviews->lastPage(),
+                    'per_page' => $reviews->perPage(),
+                    'total' => $reviews->total(),
+                    'from' => $reviews->firstItem(),
+                    'to' => $reviews->lastItem(),
+                ]
+            ];
+            
+            return $this->sendRes(
+                __('validation.success'),
+                true,
+                $data,
+                []
+            );
+        }
+        
+        // User is neither customer nor lawyer
+        return $this->sendRes(
+            trans('reviews.no_profile_found'),
+            false,
+            [],
+            [],
+            403
+        );
+    }
+    
     /**
      * Get all reviews for a lawyer
      */

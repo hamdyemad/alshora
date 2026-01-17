@@ -28,6 +28,7 @@ return [
     'review_rejected' => 'Review rejected successfully',
     'already_reviewed' => 'You have already reviewed this lawyer',
     'customer_profile_required' => 'Only customers can submit reviews',
+    'no_profile_found' => 'No customer or lawyer profile found',
     'login_required' => 'You must be logged in to submit a review',
     'unauthorized' => 'You are not authorized to perform this action',
     'confirm_delete' => 'Confirm Delete Review',
