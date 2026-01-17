@@ -66,7 +66,7 @@ class ReservationController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:pending,approved,rejected'
+            'status' => 'required|in:pending,approved,rejected,completed,cancelled'
         ]);
 
         try {
@@ -112,6 +112,56 @@ class ReservationController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Error loading dashboard statistics: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Search lawyers for Select2 (API endpoint)
+     */
+    public function searchLawyers(Request $request)
+    {
+        try {
+            $search = $request->get('search', '');
+            $page = $request->get('page', 1);
+            $perPage = 10;
+
+            $query = \App\Models\Lawyer::with(['user', 'profile_image'])
+                ->where('active', true);
+
+            if ($search) {
+                $query->where(function($q) use ($search) {
+                    $q->whereHas('translations', function($qt) use ($search) {
+                        $qt->where('lang_value', 'like', "%{$search}%")
+                           ->where('lang_key', 'name');
+                    })->orWhereHas('user', function($qu) use ($search) {
+                        $qu->where('email', 'like', "%{$search}%");
+                    });
+                });
+            }
+
+            $lawyers = $query->paginate($perPage, ['*'], 'page', $page);
+
+            $data = $lawyers->map(function($lawyer) {
+                return [
+                    'id' => $lawyer->id,
+                    'name' => $lawyer->getTranslation('name', app()->getLocale()),
+                    'email' => $lawyer->user?->email,
+                    'profile_image' => $lawyer->profile_image 
+                        ? \Illuminate\Support\Facades\Storage::disk('public')->url($lawyer->profile_image->path)
+                        : null
+                ];
+            });
+
+            return response()->json([
+                'data' => $data,
+                'current_page' => $lawyers->currentPage(),
+                'last_page' => $lawyers->lastPage(),
+                'total' => $lawyers->total()
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error searching lawyers: ' . $e->getMessage()
             ], 500);
         }
     }

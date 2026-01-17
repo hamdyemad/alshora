@@ -20,6 +20,8 @@ return [
     'not_found' => 'غير موجود',
     'liked_successfully' => 'تم الإعجاب بنجاح',
     'unliked_successfully' => 'تم إلغاء الإعجاب بنجاح',
+    'disliked_successfully' => 'تم عدم الإعجاب بنجاح',
+    'undisliked_successfully' => 'تم إلغاء عدم الإعجاب بنجاح',
     'followed_successfully' => 'تمت المتابعة بنجاح',
     'unfollowed_successfully' => 'تم إلغاء المتابعة بنجاح',
     'error' => 'فشل',

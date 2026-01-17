@@ -101,6 +101,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(StoreCartRepositoryInterface::class, StoreCartRepository::class);
         $this->app->bind(AgendaRepositoryInterface::class, AgendaRepository::class);
         $this->app->bind(PreparerAgendaRepositoryInterface::class, PreparerAgendaRepository::class);
+        $this->app->bind(\App\Interfaces\LawyerTransactionRepositoryInterface::class, \App\Repositories\LawyerTransactionRepository::class);
         $this->app->singleton(HostingSlotReservationService::class, function ($app) {
             return new HostingSlotReservationService(
                 $app->make(HostingSlotReservationRepositoryInterface::class)
@@ -115,6 +116,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Register Appointment Observer
+        \App\Models\Appointment::observe(\App\Observers\AppointmentObserver::class);
     }
 }

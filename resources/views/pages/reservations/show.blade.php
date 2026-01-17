@@ -78,14 +78,25 @@
                                         @php
                                             $statusColors = [
                                                 'pending' => 'warning',
-                                                'confirmed' => 'info',
+                                                'approved' => 'info',
+                                                'rejected' => 'danger',
                                                 'completed' => 'success',
-                                                'cancelled' => 'danger'
+                                                'cancelled' => 'secondary'
                                             ];
                                         @endphp
                                         <span class="badge badge-round badge-lg bg-{{ $statusColors[$appointment->status] ?? 'secondary' }}">
                                             {{ trans('reservation.' . $appointment->status) }}
                                         </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-25">
+                                <div class="view-item">
+                                    <label class="il-gray fs-14 fw-500 mb-10">{{ trans('reservation.consultation_price') }}</label>
+                                    <p class="fs-15 color-dark fw-500">
+                                        <span class="text-success">{{ number_format($appointment->consultation_price ?? 0, 2) }}</span>
+                                        <small class="text-muted">{{ trans('common.egp') }}</small>
                                     </p>
                                 </div>
                             </div>

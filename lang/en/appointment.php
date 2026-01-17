@@ -29,4 +29,10 @@ return [
     'unauthorized' => 'You are not authorized to perform this action',
     'cannot_approve_non_pending' => 'Can only approve pending appointments',
     'cannot_reject_non_pending' => 'Can only reject pending appointments',
+    'already_completed' => 'Appointment is already completed',
+    'cannot_complete_invalid_status' => 'Can only complete pending or approved appointments',
+    'completed_successfully' => 'Appointment completed successfully and transaction recorded',
+    'transaction_description' => 'Consultation with customer :customer on :date',
+    'cannot_change_completed_status' => 'Cannot change status of a completed appointment',
+    'no_reason_provided' => 'No reason provided',
 ];

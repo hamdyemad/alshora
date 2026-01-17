@@ -44,6 +44,17 @@
         </li>
         @endcan
 
+        {{-- Accounting --}}
+        @can('lawyers.view')
+        <li>
+            <a href="{{ route('admin.accounting.index') }}"
+                class="{{ Request::is(LaravelLocalization::getCurrentLocale() . '/admin/accounting*') ? 'active' : '' }}">
+                <span class="nav-icon uil uil-dollar-alt"></span>
+                <span class="menu-text">{{ trans('menu.accounting.title') }}</span>
+            </a>
+        </li>
+        @endcan
+
         {{-- Reservations --}}
         @can('reservations.view')
         <li>

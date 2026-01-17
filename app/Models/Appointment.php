@@ -18,6 +18,7 @@ class Appointment extends Model
         'period',
         'time_slot',
         'consultation_type',
+        'consultation_price',
         'notes',
         'status',
         'cancellation_reason',
@@ -26,6 +27,7 @@ class Appointment extends Model
     protected $casts = [
         'appointment_date' => 'date',
         'time_slot' => 'datetime:H:i',
+        'consultation_price' => 'decimal:2',
     ];
 
     /**

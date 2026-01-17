@@ -29,4 +29,10 @@ return [
     'unauthorized' => 'غير مصرح لك بتنفيذ هذا الإجراء',
     'cannot_approve_non_pending' => 'يمكن فقط قبول المواعيد المعلقة',
     'cannot_reject_non_pending' => 'يمكن فقط رفض المواعيد المعلقة',
+    'already_completed' => 'الموعد مكتمل بالفعل',
+    'cannot_complete_invalid_status' => 'لا يمكن إكمال الموعد إلا إذا كان معلقاً أو مقبولاً',
+    'completed_successfully' => 'تم إكمال الموعد بنجاح وتسجيل المعاملة',
+    'transaction_description' => 'استشارة مع العميل :customer بتاريخ :date',
+    'cannot_change_completed_status' => 'لا يمكن تغيير حالة موعد مكتمل',
+    'no_reason_provided' => 'لم يتم تقديم سبب',
 ];

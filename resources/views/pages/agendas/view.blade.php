@@ -37,12 +37,6 @@
                             </div>
                             <div class="col-md-6 mb-25">
                                 <div class="view-item">
-                                    <label class="il-gray fs-14 fw-500 mb-10">{{ trans('agenda.user_name') }}</label>
-                                    <p class="fs-15 color-dark fw-500">{{ $agenda->user->name ?? '-' }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-25">
-                                <div class="view-item">
                                     <label class="il-gray fs-14 fw-500 mb-10">{{ trans('agenda.user_email') }}</label>
                                     <p class="fs-15 color-dark fw-500">{{ $agenda->user->email ?? '-' }}</p>
                                 </div>

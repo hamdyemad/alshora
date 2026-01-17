@@ -16,6 +16,9 @@
         'customers' => [
             'title' => 'العملاء'
         ],
+        'accounting' => [
+            'title' => 'الحسابات'
+        ],
         'reservations' => [
             'title' => 'الحجوزات'
         ],

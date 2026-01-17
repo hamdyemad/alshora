@@ -22,7 +22,7 @@
                                 <p class="text-muted mb-0">{{ trans('reservation.manage_all_appointments') }}</p>
                             </div>
                             <div class="d-flex gap-2">
-                                <span class="badge badge-round badge-lg bg-primary fs-14 px-3 py-2">
+                                <span class="badge badge-lg badge-round badge badge-lg badge-round-round badge badge-lg badge-round-lg bg-primary fs-14 px-3 py-2">
                                     {{ $appointments->total() }} {{ trans('reservation.total_reservations') }}
                                 </span>
                             </div>
@@ -63,14 +63,11 @@
                                 {{-- Lawyer Filter --}}
                                 <div class="col-md-2 mb-3">
                                     <label class="form-label">{{ trans('reservation.lawyer') }}</label>
-                                    <select name="lawyer_id" class="form-select">
-                                        <option value="">{{ trans('reservation.all_lawyers') }}</option>
-                                        @foreach($lawyers as $lawyer)
-                                            <option value="{{ $lawyer->id }}" {{ request('lawyer_id') == $lawyer->id ? 'selected' : '' }}>
-                                                {{ $lawyer->name ?? trans('reservation.unknown_lawyer') }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <x-lawyer-select 
+                                        name="lawyer_id" 
+                                        :selected="request('lawyer_id')"
+                                        :placeholder="trans('reservation.all_lawyers')"
+                                    />
                                 </div>
 
                                 {{-- Date From --}}
@@ -94,6 +91,16 @@
                                     </button>
                                 </div>
                             </div>
+                            
+                            {{-- Reset Button Row --}}
+                            <div class="row">
+                                <div class="col-12">
+                                    <a href="{{ route('admin.reservations.index') }}" class="btn btn-outline-secondary btn-sm">
+                                        <i class="uil uil-redo me-1"></i>
+                                        {{ trans('common.clear_filters') }}
+                                    </a>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -109,13 +116,14 @@
                             <table class="table table-hover mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th class="border-0 fw-bold">ID</th>
-                                        <th class="border-0 fw-bold">Customer</th>
-                                        <th class="border-0 fw-bold">Lawyer</th>
-                                        <th class="border-0 fw-bold">Date & Time</th>
-                                        <th class="border-0 fw-bold">Status</th>
-                                        <th class="border-0 fw-bold">Created</th>
-                                        <th class="border-0 fw-bold">Actions</th>
+                                        <th class="border-0 fw-bold">{{ trans('reservation.id') }}</th>
+                                        <th class="border-0 fw-bold">{{ trans('reservation.customer') }}</th>
+                                        <th class="border-0 fw-bold">{{ trans('reservation.lawyer') }}</th>
+                                        <th class="border-0 fw-bold">{{ trans('reservation.date_time') }}</th>
+                                        <th class="border-0 fw-bold">{{ trans('reservation.consultation_price') }}</th>
+                                        <th class="border-0 fw-bold">{{ trans('reservation.status') }}</th>
+                                        <th class="border-0 fw-bold">{{ trans('reservation.created') }}</th>
+                                        <th class="border-0 fw-bold">{{ trans('reservation.actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -177,19 +185,43 @@
                                                 </div>
                                             </td>
                                             <td class="py-3">
-                                                <select class="form-select form-select-sm status-select"
-                                                        data-appointment-id="{{ $appointment->id }}"
-                                                        style="width: auto;">
-                                                    <option value="pending" {{ $appointment->status == 'pending' ? 'selected' : '' }}>
-                                                        {{ trans('reservation.pending') }}
-                                                    </option>
-                                                    <option value="approved" {{ $appointment->status == 'approved' ? 'selected' : '' }}>
-                                                        {{ trans('reservation.approved') }}
-                                                    </option>
-                                                    <option value="rejected" {{ $appointment->status == 'rejected' ? 'selected' : '' }}>
-                                                        {{ trans('reservation.rejected') }}
-                                                    </option>
-                                                </select>
+                                                <div class="fw-medium text-success">
+                                                    {{ number_format($appointment->consultation_price ?? 0, 2) }} 
+                                                    <small class="text-muted">{{ trans('common.egp') }}</small>
+                                                </div>
+                                            </td>
+                                            <td class="py-3">
+                                                @if(in_array($appointment->status, ['completed', 'rejected']))
+                                                    {{-- Show badge badge-lg badge-round for final statuses --}}
+                                                    <span class="badge badge-lg badge-round 
+                                                        @if($appointment->status == 'completed') bg-success
+                                                        @elseif($appointment->status == 'rejected') bg-danger
+                                                        @endif
+                                                        px-3 py-2">
+                                                        {{ trans('reservation.' . $appointment->status) }}
+                                                    </span>
+                                                @else
+                                                    {{-- Show select for editable statuses --}}
+                                                    <select class="form-select form-select-sm status-select"
+                                                            data-appointment-id="{{ $appointment->id }}"
+                                                            style="width: auto;">
+                                                        <option value="pending" {{ $appointment->status == 'pending' ? 'selected' : '' }}>
+                                                            {{ trans('reservation.pending') }}
+                                                        </option>
+                                                        <option value="approved" {{ $appointment->status == 'approved' ? 'selected' : '' }}>
+                                                            {{ trans('reservation.approved') }}
+                                                        </option>
+                                                        <option value="rejected" {{ $appointment->status == 'rejected' ? 'selected' : '' }}>
+                                                            {{ trans('reservation.rejected') }}
+                                                        </option>
+                                                        <option value="completed" {{ $appointment->status == 'completed' ? 'selected' : '' }}>
+                                                            {{ trans('reservation.completed') }}
+                                                        </option>
+                                                        <option value="cancelled" {{ $appointment->status == 'cancelled' ? 'selected' : '' }}>
+                                                            {{ trans('reservation.cancelled') }}
+                                                        </option>
+                                                    </select>
+                                                @endif
                                             </td>
                                             <td class="py-3">
                                                 <small class="text-muted">{{ $appointment->created_at->format('M d, Y') }}</small>
@@ -197,7 +229,7 @@
                                             <td class="py-3">
                                                 <div class="d-flex gap-1">
                                                     <a href="{{ route('admin.reservations.show', $appointment->id) }}"
-                                                       class="btn btn-sm btn-outline-primary" title="View Details">
+                                                       class="btn btn-sm btn-outline-primary" title="{{ trans('reservation.view_details') }}">
                                                         <i class="uil uil-eye m-0"></i>
                                                     </a>
                                                 </div>
@@ -205,7 +237,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7" class="text-center py-5">
+                                            <td colspan="8" class="text-center py-5">
                                                 <div class="text-muted">
                                                     <i class="uil uil-calendar-alt" style="font-size: 48px;"></i>
                                                     <p class="mt-3 mb-0">{{ trans('reservation.no_reservations_found') }}</p>
@@ -222,8 +254,11 @@
                             <div class="card-footer bg-transparent border-top-0">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="text-muted">
-                                        Showing {{ $appointments->firstItem() }} to {{ $appointments->lastItem() }}
-                                        of {{ $appointments->total() }} results
+                                        {{ trans('reservation.showing_results', [
+                                            'first' => $appointments->firstItem(),
+                                            'last' => $appointments->lastItem(),
+                                            'total' => $appointments->total()
+                                        ]) }}
                                     </div>
                                     {{ $appointments->withQueryString()->links() }}
                                 </div>
@@ -259,8 +294,10 @@
                         if (data.success) {
                             // Show success message using the custom message system
                             showMessage('success', '{{ trans('reservation.appointment_status_updated') }}', 'check-circle');
-                            // Update the original value to the new one
-                            select.dataset.originalValue = newStatus;
+                            // Reload page after short delay to show the message
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             // Revert the select value
                             select.value = select.dataset.originalValue;

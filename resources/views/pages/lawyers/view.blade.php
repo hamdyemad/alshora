@@ -1049,13 +1049,23 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('common.cancel') }}</button>
-                    <button type="button" class="btn btn-primary" onclick="renewSubscription({{ $lawyer->id }})">
+                    <button type="button" class="btn btn-primary" id="renewSubscriptionBtn" onclick="renewSubscription({{ $lawyer->id }})">
                         <i class="uil uil-check me-1"></i>{{ trans('common.save') }}
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Reset modal when closed
+        document.getElementById('renewSubscriptionModal').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('subscription_id').value = '';
+            const saveBtn = document.getElementById('renewSubscriptionBtn');
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = '<i class="uil uil-check me-1"></i>{{ trans("common.save") }}';
+        });
+    </script>
 @endsection
 
 @push('styles')
@@ -1189,6 +1199,12 @@
             return;
         }
 
+        // Disable button and show loading
+        const saveBtn = event.target;
+        const originalText = saveBtn.innerHTML;
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>{{ trans("common.loading") }}';
+
         const url = `{{ route('admin.lawyers.renew-subscription', ':id') }}`.replace(':id', lawyerId);
 
         fetch(url, {
@@ -1202,7 +1218,12 @@
                 subscription_id: subscriptionId
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => Promise.reject(err));
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
                 showToast(data.message, 'success');
@@ -1216,11 +1237,24 @@
                     window.location.reload();
                 }, 1500);
             } else {
-                showToast(data.message, 'error');
+                showToast(data.message || '{{ trans("lawyer.error_renewing_subscription") }}', 'error');
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = originalText;
             }
         })
         .catch(error => {
-            showToast('{{ trans("lawyer.error_renewing_subscription") }}', 'error');
+            console.error('Renew Subscription Error:', error);
+            let errorMessage = '{{ trans("lawyer.error_renewing_subscription") }}';
+            
+            if (error.message) {
+                errorMessage = error.message;
+            } else if (error.errors) {
+                errorMessage = Object.values(error.errors).flat().join('\n');
+            }
+            
+            showToast(errorMessage, 'error');
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = originalText;
         });
     }
 

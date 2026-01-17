@@ -16,6 +16,9 @@
         'customers' => [
             'title' => 'Customers'
         ],
+        'accounting' => [
+            'title' => 'Accounting'
+        ],
         'reservations' => [
             'title' => 'Reservations'
         ],

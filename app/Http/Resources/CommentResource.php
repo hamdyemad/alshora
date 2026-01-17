@@ -14,7 +14,9 @@ class CommentResource extends JsonResource
             'content' => $this->content,
             'user' => new UserResource($this->whenLoaded('user')),
             'likes_count' => $this->likes_count,
+            'dislikes_count' => $this->dislikes_count ?? 0,
             'is_liked' => $this->is_liked,
+            'is_disliked' => $this->is_disliked ?? false,
             'created_at' => $this->created_at->diffForHumans(),
         ];
     }

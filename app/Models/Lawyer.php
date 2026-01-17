@@ -159,6 +159,14 @@ class Lawyer extends Model
     }
 
     /**
+     * Get all dislikes for the lawyer
+     */
+    public function dislikes()
+    {
+        return $this->morphMany(Dislike::class, 'dislikeable');
+    }
+
+    /**
      * Get all followers for the lawyer
      */
     public function followers()
@@ -175,6 +183,14 @@ class Lawyer extends Model
     }
 
     /**
+     * Check if the lawyer is disliked by a specific user
+     */
+    public function isDislikedBy($userId): bool
+    {
+        return $this->dislikes()->where('user_id', $userId)->exists();
+    }
+
+    /**
      * Check if the lawyer is followed by a specific user
      */
     public function isFollowedBy($userId): bool
@@ -188,5 +204,56 @@ class Lawyer extends Model
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    /**
+     * Get all transactions for the lawyer
+     */
+    public function transactions()
+    {
+        return $this->hasMany(LawyerTransaction::class);
+    }
+
+    /**
+     * Scope for applying filters
+     */
+    public function scopeFilter($query, array $filters)
+    {
+        // Apply search filter (name or email)
+        if (!empty($filters['search'])) {
+            $search = $filters['search'];
+            $query->where(function($q) use ($search) {
+                $q->whereHas('translations', function($q) use ($search) {
+                    $q->where('lang_value', 'like', "%{$search}%")
+                      ->whereIn('lang_key', ['name']);
+                })->orWhereHas('user', function($q) use ($search) {
+                    $q->where('email', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        // Apply active filter
+        if (isset($filters['active']) && $filters['active'] !== '') {
+            $query->where('active', $filters['active']);
+        }
+
+        // Apply section of law filter
+        if (isset($filters['section_of_law_id']) && $filters['section_of_law_id'] !== '') {
+            $query->whereHas('sectionsOfLaws', function ($q) use ($filters) {
+                $q->where('section_of_law_id', $filters['section_of_law_id']);
+            });
+        }
+
+        // Apply date from filter
+        if (!empty($filters['created_date_from'])) {
+            $query->whereDate('date', '>=', $filters['created_date_from']);
+        }
+
+        // Apply date to filter
+        if (!empty($filters['created_date_to'])) {
+            $query->whereDate('date', '<=', $filters['created_date_to']);
+        }
+
+        return $query;
     }
 }

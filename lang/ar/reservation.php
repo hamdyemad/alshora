@@ -25,11 +25,15 @@ return [
     'all_lawyers' => 'جميع المحامين',
     'date_from' => 'من تاريخ',
     'date_to' => 'إلى تاريخ',
+    'reset_search' => 'إعادة تعيين البحث',
 
     // Status values
     'pending' => 'في الانتظار',
     'approved' => 'مقبول',
     'rejected' => 'مرفوض',
+    'completed' => 'مكتمل',
+    'cancelled' => 'ملغي',
+    'select_lawyer' => 'اختر محامي',
 
     // Appointment information
     'appointment_information' => 'معلومات الموعد',
@@ -37,6 +41,7 @@ return [
     'time_slot' => 'وقت الموعد',
     'day_period' => 'اليوم والفترة',
     'notes' => 'ملاحظات',
+    'consultation_price' => 'سعر الاستشارة',
 
     // Customer information
     'customer_information' => 'معلومات العميل',

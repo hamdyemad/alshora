@@ -36,6 +36,7 @@ use App\Http\Controllers\HostingReservationController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\PreparerAgendaController;
 use App\Http\Controllers\SupportMessageController;
+use App\Http\Controllers\AccountingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +104,14 @@ Route::group(
         Route::resource('support-messages', SupportMessageController::class)->only(['index', 'show', 'destroy']);
         Route::post('support-messages/{id}/status', [SupportMessageController::class, 'updateStatus'])->name('support-messages.update-status');
 
+        // Accounting
+        Route::prefix('accounting')->name('accounting.')->group(function() {
+            Route::get('/', [AccountingController::class, 'index'])->name('index');
+            Route::get('lawyers/{lawyer}', [AccountingController::class, 'show'])->name('show');
+            Route::post('transactions', [AccountingController::class, 'store'])->name('transactions.store');
+            Route::delete('transactions/{transaction}', [AccountingController::class, 'destroy'])->name('transactions.destroy');
+        });
+
         // Agendas
         Route::resource('agendas', AgendaController::class)->only(['index', 'show', 'destroy']);
         Route::resource('preparer-agendas', PreparerAgendaController::class)->only(['index', 'show', 'destroy']);
@@ -142,6 +151,9 @@ Route::group(
         // Reservations
         Route::resource('reservations', ReservationController::class)->only(['index', 'show']);
         Route::post('reservations/{reservation}/status', [ReservationController::class, 'updateStatus'])->name('reservations.update-status');
+        
+        // API endpoints for reservations
+        Route::get('api/lawyers/search', [ReservationController::class, 'searchLawyers'])->name('api.lawyers.search');
 
         // Notifications routes
         Route::get('notifications/unread', [NotificationController::class, 'getUnreadNotifications'])->name('notifications.unread');

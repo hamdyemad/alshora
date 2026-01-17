@@ -94,8 +94,9 @@ class AppointmentService
                 throw new \Exception(__('appointment.time_slot_already_booked'));
             }
 
-            // Add customer_id to data
+            // Add customer_id and consultation_price to data
             $data['customer_id'] = $customer->id;
+            $data['consultation_price'] = $lawyer->consultation_price ?? 0;
 
             // Create appointment
             $appointment = $this->appointmentRepository->create($data);
@@ -169,6 +170,37 @@ class AppointmentService
             return $this->appointmentRepository->update($appointment, $data);
         } catch (\Exception $e) {
             Log::error('Error updating appointment: ' . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    /**
+     * Complete an appointment
+     */
+    public function completeAppointment(Appointment $appointment, Lawyer $lawyer)
+    {
+        try {
+            // Check if appointment belongs to lawyer
+            if ($appointment->lawyer_id !== $lawyer->id) {
+                throw new \Exception(__('appointment.unauthorized'));
+            }
+
+            // Check if appointment is in valid status to complete
+            if (!in_array($appointment->status, ['pending', 'approved'])) {
+                throw new \Exception(__('appointment.cannot_complete_invalid_status'));
+            }
+
+            // Check if appointment is already completed
+            if ($appointment->status === 'completed') {
+                throw new \Exception(__('appointment.already_completed'));
+            }
+
+            // Complete the appointment (Observer will handle transaction and notification)
+            $completedAppointment = $this->appointmentRepository->complete($appointment);
+
+            return $completedAppointment;
+        } catch (\Exception $e) {
+            Log::error('Error completing appointment: ' . $e->getMessage());
             throw $e;
         }
     }

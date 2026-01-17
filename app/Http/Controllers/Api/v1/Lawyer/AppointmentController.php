@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api\v1\Lawyer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LawyerAppointmentResource;
 use App\Services\AppointmentService;
-use App\Services\FirebaseNotificationService;
 use App\Traits\Res;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AppointmentController extends Controller
 {
     use Res;
 
     public function __construct(
-        protected AppointmentService $appointmentService,
-        protected FirebaseNotificationService $firebaseService
+        protected AppointmentService $appointmentService
     ) {
     }
 
@@ -48,7 +48,7 @@ class AppointmentController extends Controller
 
             if (isset($perPage) && $perPage > 0) {
                 $data = [
-                    'data' => $appointments->items(),
+                    'items' => LawyerAppointmentResource::collection($appointments->items()),
                     'pagination' => [
                         'current_page' => $appointments->currentPage(),
                         'last_page' => $appointments->lastPage(),
@@ -61,7 +61,7 @@ class AppointmentController extends Controller
                 return $this->sendRes(__('validation.success'), true, $data);
             }
 
-            return $this->sendRes(__('validation.success'), true, $appointments);
+            return $this->sendRes(__('validation.success'), true, LawyerAppointmentResource::collection($appointments));
         } catch (\Exception $e) {
             return $this->sendRes($e->getMessage(), false, [], [], 500);
         }
@@ -91,6 +91,11 @@ class AppointmentController extends Controller
                 return $this->sendRes(__('appointment.not_found'), false, [], [], 404);
             }
 
+            // Check if appointment is completed - cannot change status
+            if ($appointment->status === 'completed') {
+                return $this->sendRes(__('appointment.cannot_change_completed_status'), false, [], [], 400);
+            }
+
             $data = ['status' => $request->status];
             if ($request->status === 'rejected' && $request->has('cancellation_reason')) {
                 $data['cancellation_reason'] = $request->cancellation_reason;
@@ -101,7 +106,7 @@ class AppointmentController extends Controller
             return $this->sendRes(
                 __('appointment.updated_successfully'),
                 true,
-                $appointment->fresh()
+                new LawyerAppointmentResource($appointment->fresh())
             );
 
         } catch (\Exception $e) {
@@ -147,23 +152,14 @@ class AppointmentController extends Controller
             }
             $this->appointmentService->updateAppointment($appointment, $data);
 
-            // Send Firebase notification to customer
-            if ($appointment->customer && $appointment->customer->user) {
-                $this->firebaseService->sendAppointmentApprovedNotification(
-                    $appointment->customer->user,
-                    $appointment,
-                    $lawyer
-                );
-            }
-
             return $this->sendRes(
                 __('appointment.approved_successfully'),
                 true,
-                $appointment->fresh()
+                new LawyerAppointmentResource($appointment->fresh())
             );
 
         } catch (\Exception $e) {
-            \Log::error('Appointment approval error: ' . $e->getMessage());
+            Log::error('Appointment approval error: ' . $e->getMessage());
             return $this->sendRes($e->getMessage(), false, [], [], 500);
         }
     }
@@ -206,24 +202,60 @@ class AppointmentController extends Controller
             ];
             $this->appointmentService->updateAppointment($appointment, $data);
 
-            // Send Firebase notification to customer
-            if ($appointment->customer && $appointment->customer->user) {
-                $this->firebaseService->sendAppointmentRejectedNotification(
-                    $appointment->customer->user,
-                    $appointment,
-                    $lawyer,
-                    $request->cancellation_reason
-                );
-            }
-
             return $this->sendRes(
                 __('appointment.rejected_successfully'),
                 true,
-                $appointment->fresh()
+                new LawyerAppointmentResource($appointment->fresh())
             );
 
         } catch (\Exception $e) {
-            \Log::error('Appointment rejection error: ' . $e->getMessage());
+            Log::error('Appointment rejection error: ' . $e->getMessage());
+            return $this->sendRes($e->getMessage(), false, [], [], 500);
+        }
+    }
+
+    /**
+     * Complete appointment
+     */
+    public function complete(Request $request, $id)
+    {
+        try {
+            $user = $request->user();
+            $lawyer = $user->lawyer;
+
+            if (!$lawyer) {
+                return $this->sendRes(__('appointment.lawyer_not_found'), false, [], [], 404);
+            }
+
+            $appointment = $this->appointmentService->getAppointmentById($id);
+
+            if (!$appointment) {
+                return $this->sendRes(__('appointment.not_found'), false, [], [], 404);
+            }
+
+            if ($appointment->lawyer_id !== $lawyer->id) {
+                return $this->sendRes(__('appointment.unauthorized'), false, [], [], 403);
+            }
+
+            if ($appointment->status === 'completed') {
+                return $this->sendRes(__('appointment.already_completed'), false, [], [], 400);
+            }
+
+            if (!in_array($appointment->status, ['pending', 'approved'])) {
+                return $this->sendRes(__('appointment.cannot_complete_invalid_status'), false, [], [], 400);
+            }
+
+            // Complete appointment and create transaction
+            $completedAppointment = $this->appointmentService->completeAppointment($appointment, $lawyer);
+
+            return $this->sendRes(
+                __('appointment.completed_successfully'),
+                true,
+                new LawyerAppointmentResource($completedAppointment)
+            );
+
+        } catch (\Exception $e) {
+            Log::error('Appointment completion error: ' . $e->getMessage());
             return $this->sendRes($e->getMessage(), false, [], [], 500);
         }
     }

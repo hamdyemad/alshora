@@ -20,6 +20,8 @@ return [
     'not_found' => 'Not found',
     'liked_successfully' => 'Liked successfully',
     'unliked_successfully' => 'Unliked successfully',
+    'disliked_successfully' => 'Disliked successfully',
+    'undisliked_successfully' => 'Undisliked successfully',
     'followed_successfully' => 'Followed successfully',
     'unfollowed_successfully' => 'Unfollowed successfully',
     'error' => 'Error',

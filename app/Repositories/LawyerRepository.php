@@ -21,42 +21,14 @@ class LawyerRepository implements LawyerRepositoryInterface
      */
     public function getAllWithFilters(array $filters = [], int $perPage = 10): LengthAwarePaginator
     {
-        $query = Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'attachments', 'sectionsOfLaws']);
-
-        // Apply search filter (name or email)
-        if (!empty($filters['search'])) {
-            $search = $filters['search'];
-            $query->where(function($q) use ($search) {
-                $q->whereHas('translations', function($q) use ($search) {
-                    $q->where('lang_value', 'like', "%{$search}%")
-                      ->whereIn('lang_key', ['name']);
-                })->orWhereHas('user', function($q) use ($search) {
-                    $q->where('email', 'like', "%{$search}%");
-                });
-            });
-        }
-
-        // Apply active filter
-        if (isset($filters['active']) && $filters['active'] !== '') {
-            $query->where('active', $filters['active']);
-        }
-
-        // Apply active filter
-        if (isset($filters['section_of_law_id']) && $filters['section_of_law_id'] !== '') {
-            $query->whereHas('sectionsOfLaws', function ($q) use ($filters) {
-                $q->where('section_of_law_id', $filters['section_of_law_id']);
-            });
-        }
-
-        // Apply date from filter
-        if (!empty($filters['created_date_from'])) {
-            $query->whereDate('date', '>=', $filters['created_date_from']);
-        }
-
-        // Apply date to filter
-        if (!empty($filters['created_date_to'])) {
-            $query->whereDate('date', '<=', $filters['created_date_to']);
-        }
+        $query = Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'attachments', 'sectionsOfLaws'])
+            ->withCount(['reviews' => function($query) {
+                $query->where('approved', true);
+            }])
+            ->withAvg(['reviews as reviews_avg_rating' => function($query) {
+                $query->where('approved', true);
+            }], 'rating')
+            ->filter($filters);
 
         return $query->latest()->paginate($perPage);
     }
@@ -66,7 +38,25 @@ class LawyerRepository implements LawyerRepositoryInterface
      */
     public function findById($id): ?Lawyer
     {
-        return Lawyer::with(['user', 'city', 'sectionsOfLaws', 'region', 'phoneCountry', 'attachments', 'officeHours', 'subscription', 'sectionsOfLaws', 'profile_image', 'id_card'])->find($id);
+        return Lawyer::with([
+            'user', 
+            'city', 
+            'sectionsOfLaws', 
+            'region', 
+            'phoneCountry', 
+            'attachments', 
+            'officeHours', 
+            'subscription', 
+            'sectionsOfLaws', 
+            'profile_image', 
+            'id_card',
+            'reviews' => function($query) {
+                $query->where('approved', true)
+                      ->with('customer.user')
+                      ->latest()
+                      ->take(10);
+            }
+        ])->find($id);
     }
 
     /**
@@ -78,7 +68,7 @@ class LawyerRepository implements LawyerRepositoryInterface
             $lawyerData = $this->lawyerData($incommingData);
             $lawyer = Lawyer::create($this->lawyerData($lawyerData));
             $user = $lawyer->user()->create([
-                'uuid' => \Str::uuid(),
+                'uuid' => Str::uuid(),
                 'user_type_id' => UserType::LAWYER_TYPE,
                 'email' => $incommingData['email'],
                 'password' => Hash::make($incommingData['password']),
@@ -257,7 +247,15 @@ class LawyerRepository implements LawyerRepositoryInterface
      */
     public function getAll(): Collection
     {
-        return Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'sectionsOfLaws'])->latest()->get();
+        return Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'sectionsOfLaws'])
+            ->withCount(['reviews' => function($query) {
+                $query->where('approved', true);
+            }])
+            ->withAvg(['reviews as reviews_avg_rating' => function($query) {
+                $query->where('approved', true);
+            }], 'rating')
+            ->latest()
+            ->get();
     }
 
     /**
@@ -353,6 +351,12 @@ class LawyerRepository implements LawyerRepositoryInterface
     public function getFeaturedByRating(int $limit = 10): Collection
     {
         return Lawyer::with(['user', 'city', 'region', 'phoneCountry', 'attachments', 'sectionsOfLaws', 'profile_image'])
+            ->withCount(['reviews' => function($query) {
+                $query->where('approved', true);
+            }])
+            ->withAvg(['reviews as reviews_avg_rating' => function($query) {
+                $query->where('approved', true);
+            }], 'rating')
             ->where('active', true)
             ->where('is_featured', true)
             ->limit($limit)

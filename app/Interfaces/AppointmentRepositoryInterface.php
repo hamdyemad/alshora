@@ -41,4 +41,9 @@ interface AppointmentRepositoryInterface
      * Check if time slot is available
      */
     public function isTimeSlotAvailable(int $lawyerId, string $date, string $timeSlot): bool;
+
+    /**
+     * Complete an appointment
+     */
+    public function complete(Appointment $appointment): Appointment;
 }

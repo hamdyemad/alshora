@@ -60,8 +60,40 @@ class LawyerResource extends JsonResource
             'is_followed_by_me' => auth()->check() ? $this->isFollowedBy(auth()->id()) : false,
             'likes_count' => $this->likes()->count(),
             'is_liked_by_me' => auth()->check() ? $this->isLikedBy(auth()->id()) : false,
-            'average_rating' => $this->when(isset($this->reviews_avg_rating), round($this->reviews_avg_rating, 1)),
-            'reviews_count' => $this->when(isset($this->reviews_count), $this->reviews_count),
+            'dislikes_count' => $this->dislikes()->count(),
+            'is_disliked_by_me' => auth()->check() ? $this->isDislikedBy(auth()->id()) : false,
+            'average_rating' => round($this->reviews_avg_rating ?? 0, 2),
+            'reviews_count' => $this->reviews_count ?? 0,
+            'rating_statistics' => $this->when($this->relationLoaded('reviews'), function() {
+                $ratingDistribution = $this->reviews()
+                    ->where('approved', true)
+                    ->selectRaw('rating, COUNT(*) as count')
+                    ->groupBy('rating')
+                    ->pluck('count', 'rating')
+                    ->toArray();
+                
+                $totalReviews = array_sum($ratingDistribution);
+                $averageRating = $totalReviews > 0 
+                    ? $this->reviews()->where('approved', true)->avg('rating') 
+                    : 0;
+
+                return [
+                    'average_rating' => round($averageRating ?? 0, 2),
+                    'total_reviews' => $totalReviews,
+                    'rating_distribution' => [
+                        '5_stars' => $ratingDistribution[5] ?? 0,
+                        '4_stars' => $ratingDistribution[4] ?? 0,
+                        '3_stars' => $ratingDistribution[3] ?? 0,
+                        '2_stars' => $ratingDistribution[2] ?? 0,
+                        '1_star' => $ratingDistribution[1] ?? 0,
+                    ]
+                ];
+            }),
+            'reviews' => $this->when($this->relationLoaded('reviews'), function() {
+                return ReviewResource::collection(
+                    $this->reviews()->where('approved', true)->latest()->take(10)->get()
+                );
+            }),
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

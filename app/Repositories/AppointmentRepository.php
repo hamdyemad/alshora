@@ -13,7 +13,7 @@ class AppointmentRepository implements AppointmentRepositoryInterface
      */
     public function getAll(array $filters = [], int $perPage = 10)
     {
-        $query = Appointment::with(['customer.user', 'lawyer.user', 'lawyer.phoneCountry'])
+        $query = Appointment::with(['customer.user', 'customer.attachments', 'lawyer.user', 'lawyer.phoneCountry'])
             ->latest();
 
         // Apply filters
@@ -62,6 +62,7 @@ class AppointmentRepository implements AppointmentRepositoryInterface
             'period' => $data['period'],
             'time_slot' => $data['time_slot'],
             'consultation_type' => $data['consultation_type'] ?? 'office',
+            'consultation_price' => $data['consultation_price'] ?? 0,
             'notes' => $data['notes'] ?? null,
             'status' => $data['status'] ?? 'pending',
         ]);
@@ -119,5 +120,14 @@ class AppointmentRepository implements AppointmentRepositoryInterface
             ->where('time_slot', $timeSlot)
             ->whereIn('status', ['pending', 'confirmed'])
             ->exists();
+    }
+
+    /**
+     * Complete an appointment
+     */
+    public function complete(Appointment $appointment): Appointment
+    {
+        $appointment->update(['status' => 'completed']);
+        return $appointment->fresh(['customer.user', 'customer.attachments', 'lawyer.user']);
     }
 }

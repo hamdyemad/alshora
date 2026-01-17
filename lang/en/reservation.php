@@ -25,11 +25,15 @@ return [
     'all_lawyers' => 'All Lawyers',
     'date_from' => 'Date From',
     'date_to' => 'Date To',
+    'reset_search' => 'Reset Search',
 
     // Status values
     'pending' => 'Pending',
     'approved' => 'Approved',
     'rejected' => 'Rejected',
+    'completed' => 'Completed',
+    'cancelled' => 'Cancelled',
+    'select_lawyer' => 'Select Lawyer',
 
     // Appointment information
     'appointment_information' => 'Appointment Information',
@@ -37,6 +41,7 @@ return [
     'time_slot' => 'Time Slot',
     'day_period' => 'Day & Period',
     'notes' => 'Notes',
+    'consultation_price' => 'Consultation Price',
 
     // Customer information
     'customer_information' => 'Customer Information',
